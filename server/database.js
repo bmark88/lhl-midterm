@@ -22,9 +22,16 @@ const getUserWithEmail = function(email) {
   FROM users
   WHERE users.email = $1;
   `, values)
-    .then(res => res.rows);
+    .then(res => {
+      console.log(res.rows);
+      return res.rows;
+    })
+    .catch(err => {
+      console.log('ERR =>>', err.stack);
+      return err.stack;
+    });
 };
-exports.getUsersWithEmail = getUsersWithEmail;
+exports.getUserWithEmail = getUserWithEmail;
 
 // LIKES
 /**
@@ -89,5 +96,3 @@ const getPinComments = function(id) {
   `)
     .then(res => res.rows);
 };
-
-getUsersWithEmail('check chk');

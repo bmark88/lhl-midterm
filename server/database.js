@@ -15,7 +15,7 @@ const pool = new Pool({
  * @param {String} email User email.
  * @return {Promise} A promise to user.  This returns the whole table with information regarding 1 user
  */
-const getUserWithEmail = function(email) {
+const getUserWithEmail = (email) => {
   const values = [email];
   return pool.query(`
   SELECT *
@@ -31,7 +31,7 @@ const getUserWithEmail = function(email) {
       return err.stack;
     });
 };
-exports.getUserWithEmail = getUserWithEmail;
+module.exports = getUserWithEmail;
 
 // LIKES
 /**

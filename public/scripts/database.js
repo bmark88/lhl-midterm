@@ -23,8 +23,9 @@ const getUserWithEmail = (email) => {
   WHERE users.email = $1;
   `, values)
     .then(res => {
-      console.log(res.rows);
-      return res.rows;
+      console.log('test4');
+      console.log(res.rows[0]);
+      return res.rows[0];
     })
     .catch(err => {
       console.log('ERR =>>', err.stack);

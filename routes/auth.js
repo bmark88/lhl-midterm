@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const router = require('express').Router();
-const getUserWithEmail = require('../server/database');
+const getUserWithEmail = require('../public/scripts/database');
 
 module.exports = function(database) {
 
@@ -26,7 +26,7 @@ module.exports = function(database) {
     //save the email and password that were entered into variables
     const {email, password} = req.body;
     //if either email or password form is empty, redirect to error page.
-    if (!(email || password)) {
+    if (!email || !password) {
       res.send("ERROR: empty field");
       return;
     }
@@ -36,7 +36,9 @@ module.exports = function(database) {
         res.send("no user");
       };
       // req.session.userId = user.id;
-      res.send({user: {name: user.name, email: user.email, id: user.id}});
+      // res.send({user: {name: user.name, email: user.email, id: user.id}});
+      console.log('test7')
+      res.send(user);
     })
     .catch(e => res.send(e));
   });

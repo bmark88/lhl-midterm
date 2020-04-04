@@ -1,0 +1,16 @@
+* {
+  color: gray;
+}
+
+body {
+  background-color: black;
+}
+
+img {
+  filter: invert(25%);
+}
+
+input {
+  color: black;
+  background-color: lightgray;
+}

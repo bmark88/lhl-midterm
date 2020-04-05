@@ -38,6 +38,8 @@ app.use(cookieSession({
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
+  let userID = req.session.user_id;
+
   res.render("categories");
 });
 
@@ -53,9 +55,6 @@ app.get("/register", (req, res) => {
 
 app.get("/categories", (req, res) => {
   let userID = req.session.user_id;
-  console.log(userID);
-  console.log('~~~~~~~')
-  console.log(req.session);
 
   res.render("categories");
 });
@@ -69,10 +68,14 @@ app.get("/pins", (req, res) => {
 });
 
 app.get("/settings", (req, res) => {
+  let userID = req.session.user_id;
+  
   res.render("settings");
 });
 
 app.get("/likes", (req, res) => {
+  let userID = req.session.user_id;
+
   res.render("likes");
 });
 

@@ -23,6 +23,9 @@ const getUserWithEmail = (email) => {
   WHERE users.email = $1;
   `, values)
     .then(res => {
+      if (res.rows.length === 0) {
+        return false;
+      }
       return res.rows[0];
     })
     .catch(err => {
@@ -95,4 +98,23 @@ const getPinComments = function(id) {
     .then(res => res.rows);
 };
 
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments };
+const getUserWithUsername = (username) => {
+  const values = [username];
+  return pool.query(`
+  SELECT *
+  FROM users
+  WHERE users.username = $1;
+  `, values)
+    .then(res => {
+      if (res.rows.length === 0) {
+        return false;
+      }
+      return res.rows[0];
+    })
+    .catch(err => {
+      console.log('ERR =>>', err.stack);
+      return err.stack;
+    });
+};
+
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername };

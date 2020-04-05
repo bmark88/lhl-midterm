@@ -14,3 +14,9 @@ input {
   color: black;
   background-color: lightgray;
 }
+
+.pin-container .box {
+  background-color: black;
+  border: lightgray;
+  border: solid;
+}

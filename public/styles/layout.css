@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: lightgray;
+}
+
+.pin-container {
+  width: 90%;
+  margin: 20px auto;
+  columns: 4;
+  column-gap: 40px;
+}
+
+.pin-container .box {
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 10px;
+  background: #fff;
+  overflow: hiden;
+  border-radius: 7%;
+  justify-items: center;
+}
+
+.pin-container .box img {
+  max-width: 100%;
+  border-radius: 7%;
+}
+
+.pin-container .box h2 {
+  margin: 10px 0 0;
+  padding: 0;
+  font-size: 28px;
+}
+
+.pin-container .box p {
+  margin: 0;
+  padding: 0 0 10px;
+  font-size: 18px;
+}
+
+#timestamp {
+  margin: 0;
+  padding: 0 0 10px;
+  font-size: 10px;
+}

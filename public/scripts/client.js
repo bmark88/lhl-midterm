@@ -1,6 +1,7 @@
 $(() => {
   scrollToTop();
   addNewPin();
+  addNewCategory();
 });
 
 // scrolls to the top of the page
@@ -12,14 +13,14 @@ const scrollToTop = () => {
   });
 };
 
-// adds a new post
+// adds a new pin
 const addNewPin = () => {
-  // need to add category id and user id
+  // need to add pin id and user id
 
 // title
 // description
 // thumbnail_url
-// category_id - NOT COMPLETE, NEED TO UPDATE DATABASE
+// pin_id - NOT COMPLETE, NEED TO UPDATE DATABASE
 // user_id - NOT COMPLETE, NEED TO UPDATE DATABASE
 // created_at
   let pin = {};
@@ -29,14 +30,39 @@ const addNewPin = () => {
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0,25)
 
-    $('.flex-container').html(`<div>
-    <h1>${pin.name}</h1>
-    <p>${pin.description}</p>
+    $('.pin-container').html(`<div class="box">
     <img src='https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif'>
     <img src='${pin.image}'>
-    <div>Created at: ${pin.created_at}</div>
+    <h2>${pin.name}</h2>
+    <p>${pin.description}</p>
+    <p id="timestamp">Created at: ${pin.created_at}</p>
     </div>`)
   })
+};
 
+// adds a new post
+const addNewCategory = () => {
+  // need to add category id and user id
 
-}
+// title
+// description
+// thumbnail_url
+// category_id - NOT COMPLETE, NEED TO UPDATE DATABASE
+// user_id - NOT COMPLETE, NEED TO UPDATE DATABASE
+// created_at
+  let category = {};
+  $('#add-category-button').on('mouseover', () => {
+    category.name = $('#new-category-name').val();
+    category.description = $('#new-category-description').val();
+    category.image = $('#new-category-image').val();
+    category.created_at = new Date(Date.now()).toString().slice(0,25)
+
+      $('.pin-container').html(`<div class="box">
+      <img src='https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif'>
+      <img src='${category.image}'>
+      <h2>${category.name}</h2>
+      <p>${category.description}</p>
+      <p id="timestamp">Created at: ${category.created_at}</p>
+      </div>`)
+  })
+};

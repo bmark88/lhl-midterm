@@ -15,12 +15,14 @@
   <!-- <link rel="stylesheet" href="/styles/nightmode.css" type="text/css" /> -->
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js" defer></script>
+  <script type="text/javascript" src="/scripts/client.js" defer></script> 
 </head>
 
 <body>
   <header>
     <%- include('partials/navbar') %>
   </header>
+  <h1>Home Page</h1>
   <div class="pin-container">
     <div class="box">
       <img src="https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif">
@@ -185,13 +187,8 @@
     </div>
 
   </div>
-  <main class="flex-container">
-    <!-- load categories.ejs -->
-    <!-- OR -->
-    <!-- load pins.ejs -->
-    <!-- OR -->
-    <!-- load likes.ejs -->
-  </main>
+
+  <button class="scroll-top" style="height: 200px; width: 200px; background-color: red; border-radius: 50%; font-size: 20px; font-weight: bold; float: right; margin: 3em;">Press me to scroll top!</button>
 </body>
 
 </html>

@@ -38,3 +38,9 @@ body {
   padding: 0 0 10px;
   font-size: 18px;
 }
+
+#timestamp {
+  margin: 0;
+  padding: 0 0 10px;
+  font-size: 10px;
+}

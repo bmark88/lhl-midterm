@@ -23,8 +23,6 @@ const getUserWithEmail = (email) => {
   WHERE users.email = $1;
   `, values)
     .then(res => {
-      console.log('test4');
-      console.log(res.rows[0]);
       return res.rows[0];
     })
     .catch(err => {
@@ -32,7 +30,6 @@ const getUserWithEmail = (email) => {
       return err.stack;
     });
 };
-module.exports = getUserWithEmail;
 
 // LIKES
 /**
@@ -97,3 +94,5 @@ const getPinComments = function(id) {
   `)
     .then(res => res.rows);
 };
+
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments };

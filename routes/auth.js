@@ -53,9 +53,12 @@ module.exports = function () {
     }
     login(email, password)
       .then(user => {
+        console.log(user);
         if (!user) {
-          return res.send("no user");
-        };
+          return res.send("Email or password is incorrect!");
+        }
+
+        
         req.session.user_id = user.id;
         // res.send(user);
         // console.log('user ======>', user)

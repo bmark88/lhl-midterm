@@ -1,6 +1,12 @@
 const bcrypt = require('bcrypt');
 const router = require('express').Router();
-const getUserWithEmail = require('../public/scripts/database');
+const { getUserWithEmail } = require('../public/scripts/database');
+const cookieSession = require('cookie-session');
+
+router.use(cookieSession({
+  name: 'session',
+  keys: ['user_id'],
+  }));
 
 module.exports = function(database) {
 
@@ -13,10 +19,12 @@ module.exports = function(database) {
   const login =  function(email, password) {
     return getUserWithEmail(email)
     .then(user => {
-      if (bcrypt.compareSync(password, user.password)) {
+      // if (bcrypt.compareSync(password, user.password)) {
+        if (password === user.password) {
         return user;
+      } else {
+        return null;
       }
-      return null;
     });
   }
   exports.login = login;
@@ -35,10 +43,11 @@ module.exports = function(database) {
       if (!user) {
         res.send("no user");
       };
-      // req.session.userId = user.id;
-      // res.send({user: {name: user.name, email: user.email, id: user.id}});
-      console.log('test7')
-      res.send(user);
+      req.session.user_id = user.id;
+      // res.send(user);
+      // console.log('user ======>', user)
+      // console.log('req.session ======>', req.session);
+      res.redirect('pins');
     })
     .catch(e => res.send(e));
   });

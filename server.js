@@ -85,6 +85,10 @@ app.get("/likes", (req, res) => {
   res.render("likes");
 });
 
+app.get("/modal", (req, res) => {
+  res.render("modal");
+})
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

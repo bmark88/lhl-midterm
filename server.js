@@ -59,6 +59,12 @@ app.get("/categories", (req, res) => {
   res.render("categories");
 });
 
+app.post("/categories", (req, res) => {
+  console.log(req.body);
+  
+  res.render("categories");
+})
+
 app.get("/contact", (req, res) => {
   res.render("contact");
 });

@@ -34,6 +34,31 @@ const login = function (email, password) {
     });
 }
 
+const isNewEmail = (input) => {
+  return getUserWithEmail(input)
+  .then(user => {
+    if (user.id) {
+      //this email is already in the db
+      console.log("isNewEmail = false");
+      return false;
+    }
+    console.log("isNewEmail = true")
+    return true;
+  })
+}
+const isNewUsername = (input) => {
+  return getUserWithUsername(input)
+  .then(user => {
+    if (user.id) {
+      //this email is already in the db
+      console.log("isNewUsername = false");
+      return false;
+    }
+    console.log("isNewUsername = true")
+    return true;
+  })
+}
+
 module.exports = function () {
 
   //log in
@@ -58,7 +83,7 @@ module.exports = function () {
           return res.send("Email or password is incorrect!");
         }
 
-        
+
         req.session.user_id = user.id;
         // res.send(user);
         // console.log('user ======>', user)
@@ -74,52 +99,73 @@ module.exports = function () {
       email,
       password
     } = req.body;
-    let alreadyExists = false;
+    // let alreadyExists = false;
+    Promise.all([isNewEmail(email), isNewUsername(username)])
+    .then(
+      (values) => {
+        if (values[0] && values[1]) {
+          console.log(values)
+          // if neither username or email matches any in db, create new user
+              const queryString = `
+              INSERT INTO users (username, email, password)
+              VALUES ($1, $2, $3)
+              `;
+              const queryParams = [username, email, password]
+              pool.query(queryString, queryParams);
+              return res.render('login');
+        } else {
+          res.send("user or email has been taken")
+        }
+      }
+    )
+
 
     // cross reference email/username with db email
-    getUserWithEmail(email)
-      .then(user => {
-        if (email === user.email) {
-          alreadyExists = true;
-          return res.send('Email already exists!');
-        }
+    // getUserWithEmail(email)
+    //   .then(user => {
+    //     if (email === user.email) {
+    //       alreadyExists = true;
+    //       return res.send('Email already exists!');
+    //     }
 
-        if (username === user.username) {
-          alreadyExists = true;
-          return res.send('Username already exists!');
-        }
+    //     if (username === user.username) {
+    //       alreadyExists = true;
+    //       return res.send('Username already exists!');
+    //     }
 
-        return alreadyExists;
-      })
-      .then(
-        // cross reference email/username with db username
-        getUserWithUsername(username)
-        .then(user => {
-          if (username === user.username) {
-            alreadyExists = true;
-            return res.send('@@Username already exists!');
-          }
+    //     return alreadyExists;
+    //   })
+    //   .then(
+    //     // cross reference email/username with db username
+    //     getUserWithUsername(username)
+    //     .then(user => {
+    //       if (username === user.username) {
+    //         alreadyExists = true;
+    //         return res.send('@@Username already exists!');
+    //       }
 
-          if (email === user.email) {
-            alreadyExists = true;
-            return res.send('@@Email already exists!');
-          }
+    //       if (email === user.email) {
+    //         alreadyExists = true;
+    //         return res.send('@@Email already exists!');
+    //       }
 
-          return alreadyExists;
-        }))
-      .then(exists => {
-        // if neither username or email matches any in db, create new user
-        if (exists === false) {
-          const queryString = `
-          INSERT INTO users (username, email, password)
-          VALUES ($1, $2, $3)
-          `;
-          const queryParams = [username, email, password]
-          pool.query(queryString, queryParams);
-          return res.render('login');
-        }
-      })
+    //       return alreadyExists;
+    //     }))
+    //   .then(exists => {
+    //     // if neither username or email matches any in db, create new user
+    //     if (exists === false) {
+    //       const queryString = `
+    //       INSERT INTO users (username, email, password)
+    //       VALUES ($1, $2, $3)
+    //       `;
+    //       const queryParams = [username, email, password]
+    //       pool.query(queryString, queryParams);
+    //       return res.render('login');
+    //     }
+    //   })
   });
 
   return router;
 };
+
+

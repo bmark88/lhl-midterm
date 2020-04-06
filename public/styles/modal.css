@@ -1,0 +1,91 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.button {
+  background-color: blue;
+  padding: 1em 2em;
+  color: white;
+  border: 0;
+}
+
+.button:hover {
+  background-color: #333;
+}
+
+.modal {
+  /* display: none; */
+  position: fixed;
+  z-index: 5000;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+  border-radius: 1%;
+  position: relative;
+  background-color: white;
+  margin: 5% auto;
+  padding: 20px;
+  width: 70%;
+  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0.2);
+}
+
+.box {
+  vertical-align: center;
+}
+
+.box img {
+  width: 75%;
+  position: relative;
+  margin: auto;
+}
+
+.close-button {
+  color: #ccc;
+  float: right;
+  font-size: 30px;
+}
+
+.close-button:hover,.closeBtn:focus{
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-comment {
+  border-bottom: solid;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.comment {
+  border: solid;
+  font-size: 14px;
+  padding: 2em;
+}
+
+.comment-options {
+  float: right;
+}
+
+.edit-comment {
+  padding: 5px 15px;
+  font-size: 20px;
+  margin: 0 5px;
+}
+
+.delete-comment {
+  padding: 5px 15px;
+  font-size: 20px;
+}
+
+p #timestamp {
+  font-size: 10px;
+}

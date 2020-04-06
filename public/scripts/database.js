@@ -82,6 +82,27 @@ const getCategory = function(name) {
     .then(res => res.rows);
 };
 
+// Get all categories. Takes a parameter to use for taking a limit (for pagination) later
+const getCategories = function(limit) {
+  let queryString = `
+  SELECT *
+  FROM categories
+  `;
+
+  if (limit) {
+    queryString += ` LIMIT ${limit}`
+  }
+  queryString += ';';
+  console.log(queryString);
+  return pool.query(queryString)
+    .then(res => res.rows)
+    .catch(err => {
+      console.log('ERR =>>', err.stack);
+      return err.stack;
+    });
+};
+module.exports = getCategories;
+
 // COMMENTS
 /**
  * Get all the comments on a pin

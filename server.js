@@ -29,10 +29,12 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const auth = require('./routes/auth');
+const front_page = require('./routes/front_page');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use(auth(db));
+app.use(front_page(db));
 
 // Note: mount other resources here, using the same pattern above
 

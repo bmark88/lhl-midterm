@@ -44,3 +44,44 @@ body {
   padding: 0 0 10px;
   font-size: 10px;
 }
+
+/* categories */
+#content-container {
+  width: 100vw;
+  min-height: min-content;
+  background:red;
+  padding: 20px auto;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+}
+
+.category-container {
+  position: relative;
+  height: min-content;
+  width: 100%;
+  background-color: peachpuff;
+  padding: 10px 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-title {
+  position: absolute;
+  padding: 5px 10px;
+  background-color: rgba(139, 133, 133, 0.774);
+  border-radius: 5px;
+  box-shadow: inset 0 0 4px black;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+}
+
+.category-thumbnail {
+  border-radius: 5px;
+  box-shadow: 0 0 4px black;
+}
+

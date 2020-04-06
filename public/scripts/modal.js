@@ -42,3 +42,15 @@ function outsideClick(e) {
     modal.css('display', 'none');
   }
 }
+
+$('.box').on('click', function() {
+  // $(this).next().css('display', 'block');
+  // console.log($(this).find('#simpleModal'));
+  console.log($(this));
+  console.log(this);
+
+  
+  $(this).find('#simpleModal').css('display', 'block');
+
+  // $(this).siblings()[0].css('display', 'block');
+})

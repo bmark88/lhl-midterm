@@ -45,6 +45,7 @@ body {
   width: 75%;
   position: relative;
   margin: auto;
+  left: 12%;
 }
 
 .close-button {

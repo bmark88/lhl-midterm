@@ -21,7 +21,7 @@ $(document).ready(() => {
         .append(newTitle)
         .append(newThumbnail);
       $('#categories-container')
-        .append(newDiv);
+        .prepend(newDiv);
     });
   });
 

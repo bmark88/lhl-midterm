@@ -16,16 +16,6 @@ const scrollToTop = () => {
 
 // adds a new pin
 const addNewPin = () => {
-  
-  // need to add pin id and user id
-
-// title
-// description
-// thumbnail_url
-// pin_id - NOT COMPLETE, NEED TO UPDATE DATABASE
-// user_id - NOT COMPLETE, NEED TO UPDATE DATABASE
-// created_at
-
   let pin = {};
   $('#add-pin-button').on('click', (e) => {
     e.preventDefault();
@@ -44,30 +34,11 @@ const addNewPin = () => {
       url: '/pins',
         method: 'POST',
         dataType: 'json',
-        data: pin,
+        data: pin,i
       })
       .then(res => {
         $('pin-container').prepend()
       });
-
-
-
-
-      // CREATE TABLE pins (
-      //   id SERIAL PRIMARY KEY NOT NULL,
-      //   title VARCHAR(255) NOT NULL,
-      //   description TEXT NOT NULL,
-      //   thumbnail_url VARCHAR(255) NOT NULL DEFAULT './public/images/default_pin_thumbnail_url.png',
-      //   category_id INTEGER REFERENCES categories(id),
-      //   user_id INTEGER REFERENCES users(id),
-      //   created_at TIMESTAMP
-      // );
-
-
-    // pin.name = $('#new-pin-name').val();
-    // pin.description = $('#new-pin-description').val();
-    // pin.image = $('#new-pin-image').val();
-    // pin.created_at = new Date(Date.now()).toString().slice(0,25)
 
     $('.pin-container').html(`<div class="box">
     <img src='https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif'>
@@ -90,15 +61,20 @@ const addNewCategory = () => {
 // user_id - NOT COMPLETE, NEED TO UPDATE DATABASE
 // created_at
   let category = {};
-  $('#add-category-button').on('mouseover', () => {
+  $('#add-category-button').on('click', (e) => {
+    // e.preventDefault();
+
     category.name = $('#new-category-name').val();
     category.description = $('#new-category-description').val();
+    // console.log('new cat image .val ====> ', $('#new-category-description').val())
     category.image = $('#new-category-image').val();
     category.created_at = new Date(Date.now()).toString().slice(0,25)
 
+    console.log(category);
+
       $('.pin-container').html(`<div class="box">
-      <img src='https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif'>
-      <img src='${category.image}'>
+      <img src='https://images.hgmsites.net/hug/2018-mclaren-720s_100652805_h.jpg'>
+      <img src= './public/images/default_category_thumbnail_url.jpg'>
       <h2>${category.name}</h2>
       <p>${category.description}</p>
       <p id="timestamp">Created at: ${category.created_at}</p>
@@ -116,7 +92,7 @@ const addComment = () => {
     evt.preventDefault();
 
     console.log($('#new-comment-form textarea').val());
-    const user_id = 'test'
+    // const user_id = 'test'
     const content = $('#new-comment-form textarea').val();
     const pin_id = '2'
     $.ajax({
@@ -124,7 +100,7 @@ const addComment = () => {
         method: 'POST',
         dataType: 'json',
         data: {
-          user_id,
+          // user_id,
           content,
           pin_id,
         }

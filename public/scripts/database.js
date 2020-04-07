@@ -159,11 +159,11 @@ const getUserWithUsername = (username) => {
       `, values);
     }
 
-    const addPinToDb = (pinObject) => {
-    const values = [pinObject.name, pinObject.description, pinObject.image, pinObject.created_at];
+    const addPinToDb = (pinObject, ownerOfPin) => {
+    const values = [pinObject.name, pinObject.description, pinObject.image, ownerOfPin, pinObject.created_at];
     const queryString = `
-    INSERT INTO pins (title, description, thumbnail_url, created_at)
-    VALUES ($1, $2, $3, $4);
+    INSERT INTO pins (title, description, thumbnail_url, user_id, created_at)
+    VALUES ($1, $2, $3, $4, $5);
     `;
   
     return pool
@@ -173,13 +173,23 @@ const getUserWithUsername = (username) => {
         return res.rows;
       })
       .catch(e => console.error('query error ====>', e.stack));
-
-
-
     }
 
+    const addCategoryToDb = (categoryObject) => {
+      const values = [categoryObject.name, categoryObject.thumbnail_url];
+      console.log("object ======= > ", categoryObject)
+      const queryString = `
+      INSERT INTO categories (name, thumbnail_url)
+      VALUES ($1, $2);
+      `;
 
+      return pool
+        .query(queryString, values)
+        .then(res => {
+          console.log("Succesful DB insert",res.rows)
+          return res.rows;
+        })
+        .catch(e => console.error('ERROR WITH CATEGORY DB ====>', e.stack));
+      }
 
-
-
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb };
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb };

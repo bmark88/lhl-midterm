@@ -73,16 +73,14 @@ app.get("/register", (req, res) => {
 
 app.get("/categories", (req, res) => {
   let userID = req.session.user_id;
-
-
   res.render("categories");
 });
 
-app.post("/categories", (req, res) => {
-  console.log(req.body);
+// app.post("/categories", (req, res) => {
+//   console.log(req.body);
 
-  res.render("categories");
-})
+//   res.render("categories");
+// })
 
 app.get("/contact", (req, res) => {
   res.render("contact");
@@ -90,18 +88,29 @@ app.get("/contact", (req, res) => {
 
 app.get("/pins", (req, res) => {
   let userID = req.session.user_id;
-  res.render("pins");
+  let templateVars = [userID];
+  if (userID) {
+    res.render('pins', templateVars);
+  } 
+  res.render('index');
 });
 
 app.get("/settings", (req, res) => {
   let userID = req.session.user_id;
-  res.render("settings");
+  let templateVars = [userID];
+  if (userID) {
+    res.render('settings', templateVars);
+  } 
+  res.render('index');  
 });
 
 app.get("/likes", (req, res) => {
   let userID = req.session.user_id;
-
-  res.render("likes");
+  let templateVars = [userID];
+  if (userID) {
+    res.render('likes', templateVars);
+  } 
+  res.render('index');
 });
 
 app.get('/comments', (req, res) => {

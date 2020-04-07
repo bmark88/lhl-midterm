@@ -22,7 +22,7 @@ const dbQuery = require('../public/scripts/database');
 // }));
 
 const login = function (email, password) {
-  return getUserWithEmail(email)
+  return dbQuery.getUserWithEmail(email)
     .then(user => {
       // if (bcrypt.compareSync(password, user.password)) {
       if (password === user.password) {
@@ -34,7 +34,7 @@ const login = function (email, password) {
 }
 
 const isNewEmail = (input) => {
-  return getUserWithEmail(input)
+  return dbQuery.getUserWithEmail(input)
   .then(user => {
     if (user.id) {
       //this email is already in the db
@@ -46,7 +46,7 @@ const isNewEmail = (input) => {
   })
 }
 const isNewUsername = (input) => {
-  return getUserWithUsername(input)
+  return dbQuery.getUserWithUsername(input)
   .then(user => {
     if (user.id) {
       //this email is already in the db
@@ -66,16 +66,16 @@ module.exports = function (router) {
    * @param {String} email
    * @param {String} password encrypted
    */
-  const login =  function(email, password) {
-    return dbQuery.getUserWithEmail(email)
-    .then(user => {
-      if (bcrypt.compareSync(password, user.password)) {
-        return user;
-      }
-      return null;
-    });
-  }
-  exports.login = login;
+  // const login =  function(email, password) {
+  //   return dbQuery.getUserWithEmail(email)
+  //   .then(user => {
+  //     if (bcrypt.compareSync(password, user.password)) {
+  //       return user;
+  //     }
+  //     return null;
+  //   });
+  // }
+  // exports.login = login;
 
   router.post("/login", (req, res) => {
     const {

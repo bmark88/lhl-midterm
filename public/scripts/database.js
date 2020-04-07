@@ -159,4 +159,27 @@ const getUserWithUsername = (username) => {
       `, values);
     }
 
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins };
+    const addPinToDb = (pinObject) => {
+    const values = [pinObject.name, pinObject.description, pinObject.image, pinObject.created_at];
+    const queryString = `
+    INSERT INTO pins (title, description, thumbnail_url, created_at)
+    VALUES ($1, $2, $3, $4);
+    `;
+  
+    return pool
+      .query(queryString, values)
+      .then(res => {
+        console.log("Succesful DB insert",res.rows)
+        return res.rows;
+      })
+      .catch(e => console.error('query error ====>', e.stack));
+
+
+
+    }
+
+
+
+
+
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb };

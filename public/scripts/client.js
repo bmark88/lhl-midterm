@@ -1,4 +1,3 @@
-
 $(() => {
   scrollToTop();
   addNewPin();
@@ -17,6 +16,7 @@ const scrollToTop = () => {
 
 // adds a new pin
 const addNewPin = () => {
+  
   // need to add pin id and user id
 
 // title
@@ -25,12 +25,49 @@ const addNewPin = () => {
 // pin_id - NOT COMPLETE, NEED TO UPDATE DATABASE
 // user_id - NOT COMPLETE, NEED TO UPDATE DATABASE
 // created_at
+
   let pin = {};
-  $('#add-pin-button').on('mouseover', () => {
+  $('#add-pin-button').on('click', (e) => {
+    e.preventDefault();
+    
     pin.name = $('#new-pin-name').val();
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0,25)
+
+    console.log('this is the pin object ====>', pin);
+
+    // const { name, description, image, created_at } = pin
+    // console.log(name, description, image, created_at);
+    
+    $.ajax({
+      url: '/pins',
+        method: 'POST',
+        dataType: 'json',
+        data: pin,
+      })
+      .then(res => {
+        $('pin-container').prepend()
+      });
+
+
+
+
+      // CREATE TABLE pins (
+      //   id SERIAL PRIMARY KEY NOT NULL,
+      //   title VARCHAR(255) NOT NULL,
+      //   description TEXT NOT NULL,
+      //   thumbnail_url VARCHAR(255) NOT NULL DEFAULT './public/images/default_pin_thumbnail_url.png',
+      //   category_id INTEGER REFERENCES categories(id),
+      //   user_id INTEGER REFERENCES users(id),
+      //   created_at TIMESTAMP
+      // );
+
+
+    // pin.name = $('#new-pin-name').val();
+    // pin.description = $('#new-pin-description').val();
+    // pin.image = $('#new-pin-image').val();
+    // pin.created_at = new Date(Date.now()).toString().slice(0,25)
 
     $('.pin-container').html(`<div class="box">
     <img src='https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif'>
@@ -106,7 +143,7 @@ const addComment = () => {
         <span>$(commenter)</span>
         <div>
         `;
-        return $markup;
+        // return $markup;
     $('section.comments-list').append(markup)
     })
   }

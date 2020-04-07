@@ -28,10 +28,10 @@
 
   <form id="new-category" method="POST" action="/categories">
     <label>Create a new category!</label>
-    <input type="text" id="new-category-name" name="new-category-name" placeholder="Title of Category">
+    <input type="text" id="new-category-name" name="new-category-name" placeholder="Title of Category" required>
     <label>Description</label>
-    <input type="text" id="new-category-type" name="new-category-type" placeholder="Type of Category">
-    <textarea placeholder="Type the description of your category" id="new-category-description"></textarea>
+    <input type="text" id="new-category-type" name="new-category-type" placeholder="Type of Category" required>
+    <textarea placeholder="Type the description of your category" id="new-category-description" required></textarea>
     <label>Category image:</label>
     <input id="new-category-image" type="file" />
   </form>

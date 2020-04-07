@@ -21,5 +21,13 @@ module.exports = function(router) {
       });
   });
 
+  router.post('/pins', (req, res) => {
+    console.log('FORM DATA =====>', req.body);
+    dbQuery.addPinToDb(req.body)
+      .then(() => {
+        return res.redirect('/pins/display');
+      })
+      .catch(e => console.error('ERROR: ', e.stack));
+  })
   return router;
 };

@@ -93,10 +93,6 @@ app.get("/pins", (req, res) => {
   res.render("pins");
 });
 
-app.post("/pins", (req, res) => {
-  res.render('/pins');
-});
-
 app.get("/settings", (req, res) => {
   let userID = req.session.user_id;
   res.render("settings");

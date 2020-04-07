@@ -1,7 +1,9 @@
+
 $(() => {
   scrollToTop();
   addNewPin();
   addNewCategory();
+  addComment();
 });
 
 // scrolls to the top of the page
@@ -63,6 +65,48 @@ const addNewCategory = () => {
       <h2>${category.name}</h2>
       <p>${category.description}</p>
       <p id="timestamp">Created at: ${category.created_at}</p>
+      <form class="new-comment-form">
+        <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
+        <button type="submit">Add Comment</button>
+      </form>
       </div>`)
   })
 };
+
+//show comments on a pin
+const addComment = () => {
+  $('#new-comment-form').on('submit', function(evt) {
+    evt.preventDefault();
+
+    console.log($('#new-comment-form textarea').val());
+    const user_id = 'test'
+    const content = $('#new-comment-form textarea').val();
+    const pin_id = '2'
+    $.ajax({
+        url: '/comments',
+        method: 'POST',
+        dataType: 'json',
+        data: {
+          user_id,
+          content,
+          pin_id,
+        }
+      })
+      //append comments to comment-list
+        //safeguard agains XSS, escape userEnteredText
+        const escape =  function(str) {
+          let p = document.createElement('p');
+          p.appendChild(document.createTextNode(str));
+          return p.innerHTML;
+        };
+        //framework for each comment in comments
+        const markup = `
+        <div class='comment'>
+        <span>${escape(content)}</span>
+        <span>$(commenter)</span>
+        <div>
+        `;
+        return $markup;
+    $('section.comments-list').append(markup)
+    })
+  }

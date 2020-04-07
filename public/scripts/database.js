@@ -23,8 +23,9 @@ const getUserWithEmail = (email) => {
   WHERE users.email = $1;
   `, values)
     .then(res => {
-      console.log('test4');
-      console.log(res.rows[0]);
+      if (res.rows.length === 0) {
+        return false;
+      }
       return res.rows[0];
     })
     .catch(err => {
@@ -132,8 +133,38 @@ const getPinComments = function(id) {
     .then(res => res.rows);
 };
 
+<<<<<<< HEAD
 module.exports = {
   getUserWithEmail,
   getCategories,
   getAllPins
 };
+=======
+const getUserWithUsername = (username) => {
+  const values = [username];
+  return pool.query(`
+  SELECT *
+  FROM users
+  WHERE users.username = $1;
+  `, values)
+    .then(res => {
+      if (res.rows.length === 0) {
+        return false;
+      }
+      return res.rows[0];
+    })
+    .catch(err => {
+      console.log('ERR =>>', err.stack);
+      return err.stack;
+    });
+};
+   const addCommentToDb = (pinID, commenter, content) => {
+      const values = [pinID, commenter, content];
+      pool.query(`
+      INSERT INTO comments(pin_id, user_id, content)
+      VALUES($1, $2, $3)
+      `, values);
+    }
+
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb };
+>>>>>>> 94b63c952b40ed782f6a87aec94dbbc521f40204

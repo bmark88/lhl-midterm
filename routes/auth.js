@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const router = require('express').Router();
-const getUserWithEmail = require('../public/scripts/database');
+const dbQuery = require('../public/scripts/database');
 
 module.exports = function(database) {
 
@@ -11,7 +11,7 @@ module.exports = function(database) {
    * @param {String} password encrypted
    */
   const login =  function(email, password) {
-    return getUserWithEmail(email)
+    return dbQuery.getUserWithEmail(email)
     .then(user => {
       if (bcrypt.compareSync(password, user.password)) {
         return user;

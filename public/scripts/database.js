@@ -32,7 +32,6 @@ const getUserWithEmail = (email) => {
       return err.stack;
     });
 };
-module.exports = getUserWithEmail;
 
 // LIKES
 /**
@@ -66,6 +65,22 @@ const getUserPins = function(id) {
     .then(res => res.rows);
 };
 
+const getAllPins = function(limit) {
+  const values = [limit];
+  let queryString = `
+  SELECT *
+  FROM pins
+  LIMIT $1;
+  `;
+
+  return pool.query(queryString, values)
+    .then(res => res.rows)
+    .catch(err => {
+      console.log('ERR =>>', err.stack);
+      return err.stack;
+    });
+};
+
 // CATEGORIES
 /**
  * Get the table for all of categories in the db
@@ -93,7 +108,6 @@ const getCategories = function(limit) {
     queryString += ` LIMIT ${limit}`
   }
   queryString += ';';
-  console.log(queryString);
   return pool.query(queryString)
     .then(res => res.rows)
     .catch(err => {
@@ -101,7 +115,6 @@ const getCategories = function(limit) {
       return err.stack;
     });
 };
-module.exports = getCategories;
 
 // COMMENTS
 /**
@@ -117,4 +130,10 @@ const getPinComments = function(id) {
   JOIN pins ON comments.pin_id = $1
   `)
     .then(res => res.rows);
+};
+
+module.exports = {
+  getUserWithEmail,
+  getCategories,
+  getAllPins
 };

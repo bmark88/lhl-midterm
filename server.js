@@ -58,22 +58,22 @@ app.use(comments(router));
 app.get("/", (req, res) => {
   let userID = req.session.user_id;
 
-  res.render("categories");
+  return res.render("categories");
 });
 
 app.get("/login", (req, res) => {
   let userID = req.session.user_id;
 
-  res.render("login");
+  return res.render("login");
 });
 
 app.get("/register", (req, res) => {
-  res.render("register");
+  return res.render("register");
 });
 
 app.get("/categories", (req, res) => {
   let userID = req.session.user_id;
-  res.render("categories");
+  return res.render("categories");
 });
 
 // app.post("/categories", (req, res) => {
@@ -83,44 +83,44 @@ app.get("/categories", (req, res) => {
 // })
 
 app.get("/contact", (req, res) => {
-  res.render("contact");
+  return res.render("contact");
 });
 
 app.get("/pins", (req, res) => {
   let userID = req.session.user_id;
   let templateVars = [userID];
   if (userID) {
-    res.render('pins', templateVars);
+    return res.render('pins', templateVars);
   } 
-  res.render('index');
+  return res.render('index');
 });
 
 app.get("/settings", (req, res) => {
   let userID = req.session.user_id;
   let templateVars = [userID];
   if (userID) {
-    res.render('settings', templateVars);
+    return res.render('settings', templateVars);
   } 
-  res.render('index');  
+  return res.render('index');  
 });
 
 app.get("/likes", (req, res) => {
   let userID = req.session.user_id;
   let templateVars = [userID];
   if (userID) {
-    res.render('likes', templateVars);
+    return res.render('likes', templateVars);
   } 
-  res.render('index');
+  return res.render('index');
 });
 
 app.get('/comments', (req, res) => {
   let userID = req.session.user_id;
   console.log(req.body);
-  res.render('pins');
+  return res.render('pins');
 });
 
 app.get("/modal", (req, res) => {
-  res.render("modal");
+  return res.render("modal");
 })
 
 app.listen(PORT, () => {

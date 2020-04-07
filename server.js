@@ -34,6 +34,7 @@ app.use(cookieSession({
   keys: ['user_id'],
   }));
 
+  
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
@@ -71,6 +72,10 @@ app.get("/contact", (req, res) => {
 
 app.get("/pins", (req, res) => {
   res.render("pins");
+});
+
+app.post("/pins", (req, res) => {
+  res.render('/pins');
 });
 
 app.get("/settings", (req, res) => {

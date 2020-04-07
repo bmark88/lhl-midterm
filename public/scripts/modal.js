@@ -8,8 +8,9 @@ $(() => {
   window.$(this).on('click', (e) => {
     outsideClick(e);
   });
-
+  // displayModal();
   ratingScore();
+  checkIfLiked();
 });
 
 const modal = $('#simpleModal');
@@ -95,14 +96,51 @@ function outsideClick(e) {
   }
 }
 
-$('.box').on('click', function () {
-  // $(this).next().css('display', 'block');
-  // console.log($(this).find('#simpleModal'));
-  console.log($(this));
-  console.log(this);
+const displayModal = () => {
+  $('.box').on('click', function () {
+    $(this).find('#simpleModal').css('display', 'block');
+  })
+};
 
+const checkIfLiked = () => {
+  $('.like-checkbox').on('click', () => {
+    let pinIsLiked;
 
-  $(this).find('#simpleModal').css('display', 'block');
+    if ($(".like-checkbox").prop('checked') === true) {
+      // console.log('this is checked')
+      pinIsLiked = true;
+    } 
+    
+    if ($(".like-checkbox").prop('checked') === false) {
+      // console.log('this is unchecked')
+      pinIsLiked = false;
+    }
+// console.log({pinIsLiked})
 
-  // $(this).siblings()[0].css('display', 'block');
-})
+    const liked = { pinIsLiked };
+    if($('.like-checkbox').is(':checked')){
+      const queryString = `
+        INSERT INTO likes (user_id, pin_id)
+        VALUES (500, 600);
+      `;
+      
+      console.log({pinIsLiked})
+      $.ajax({
+        url: '/pins',
+        type: 'GET',
+        // data: liked
+        dataType: 'html'
+      })
+      .then(res => {
+        // $('.pin-container').html('<h1>HELLO WORLD</h1>')
+        // $('.pin-container').html(res)
+        console.log(res);
+      })
+      .catch(e => console.error('ERROR ====>', e.stack));
+    }
+  })
+};
+
+// const deletePost = () => {
+
+// };

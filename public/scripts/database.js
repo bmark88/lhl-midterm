@@ -66,6 +66,22 @@ const getUserPins = function(id) {
     .then(res => res.rows);
 };
 
+const getAllPins = function(limit) {
+  const values = [limit];
+  let queryString = `
+  SELECT *
+  FROM pins
+  LIMIT $1;
+  `;
+
+  return pool.query(queryString, values)
+    .then(res => res.rows)
+    .catch(err => {
+      console.log('ERR =>>', err.stack);
+      return err.stack;
+    });
+};
+
 // CATEGORIES
 /**
  * Get the table for all of categories in the db
@@ -80,6 +96,25 @@ const getCategory = function(name) {
   WHERE name = $1
   `, values)
     .then(res => res.rows);
+};
+
+// Get all categories. Takes a parameter to use for taking a limit (for pagination) later
+const getCategories = function(limit) {
+  let queryString = `
+  SELECT *
+  FROM categories
+  `;
+
+  if (limit) {
+    queryString += ` LIMIT ${limit}`
+  }
+  queryString += ';';
+  return pool.query(queryString)
+    .then(res => res.rows)
+    .catch(err => {
+      console.log('ERR =>>', err.stack);
+      return err.stack;
+    });
 };
 
 // COMMENTS
@@ -116,5 +151,12 @@ const getUserWithUsername = (username) => {
       return err.stack;
     });
 };
+   const addCommentToDb = (pinID, commenter, content) => {
+      const values = [pinID, commenter, content];
+      pool.query(`
+      INSERT INTO comments(pin_id, user_id, content)
+      VALUES($1, $2, $3)
+      `, values);
+    }
 
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername };
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins };

@@ -14,8 +14,17 @@
   <!-- NIGHTMODE -->
   <!-- <link rel="stylesheet" href="/styles/nightmode.css" type="text/css" /> -->
 
+  <!-- EXTERNAL SCRIPTS -->
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+
+
+  <!-- SCRIPTS -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js" defer></script>
-  <script type="text/javascript" src="/scripts/client.js" defer></script> 
+  <script type="text/javascript" src="/scripts/client.js" defer></script>
+  <script type="text/javascript" src="/scripts/view_manager.js" defer></script>
 </head>
 
 <body>
@@ -23,6 +32,27 @@
     <%- include('partials/navbar') %>
   </header>
   <h1>Home Page</h1>
+
+  <h1>Categories</h1>
+  <section id="categories-container">
+    <!-- fill with dynamic posts -->
+    <div class="category-container">
+      <span class="category-title">CATEGORY TITLE</span>
+      <img src="https://picsum.photos/200/300" class="category-thumbnail">
+    </div>
+  </section>
+
+  <h1>Pins</h1>
+  <section id="pins-container">
+    <div class="pin-container">
+      <img src="https://picsum.photos/200/300" class="pin-thumbnail">
+      <span class="pin-title">PIN TITLE</span>
+      <p class="pin-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, perspiciatis.</p>
+      <span class="pin-date">2019-2-01</span>
+    </div>
+  </section>
+
+  <button class="scroll-top" style="height: 200px; width: 200px; background-color: red; border-radius: 50%; font-size: 20px; font-weight: bold; float: right; margin: 3em;">Press me to scroll top!</button>
   <!-- <div class="pin-container">
     <div class="box">
       <img src="https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif">
@@ -211,7 +241,7 @@
     </div>
 
   </div> -->
-<!-- 
+<!--
   <button class="scroll-top" style="height: 200px; width: 200px; background-color: red; border-radius: 50%; font-size: 20px; font-weight: bold; float: right; margin: 3em;">Press me to scroll top!</button> -->
 </body>
 

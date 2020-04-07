@@ -133,13 +133,6 @@ const getPinComments = function(id) {
     .then(res => res.rows);
 };
 
-<<<<<<< HEAD
-module.exports = {
-  getUserWithEmail,
-  getCategories,
-  getAllPins
-};
-=======
 const getUserWithUsername = (username) => {
   const values = [username];
   return pool.query(`
@@ -166,5 +159,4 @@ const getUserWithUsername = (username) => {
       `, values);
     }
 
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb };
->>>>>>> 94b63c952b40ed782f6a87aec94dbbc521f40204
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins };

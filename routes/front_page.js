@@ -2,7 +2,7 @@ const router = require('express').Router();
 const dbQuery = require('../public/scripts/database')
 
 
-module.exports = function(database) {
+module.exports = function(router) {
   router.get('/testing', (req, res) => {
     res.json({ message: "Hey Adrian" });
   });

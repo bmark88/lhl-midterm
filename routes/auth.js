@@ -10,17 +10,11 @@ const pool = new Pool({
 });
 
 const bcrypt = require('bcrypt');
-<<<<<<< HEAD
-const router = require('express').Router();
-const dbQuery = require('../public/scripts/database');
-=======
-// const router = require('express').Router();
-const {
-  getUserWithEmail,
-  getUserWithUsername
-} = require('../public/scripts/database');
+
+
 const cookieSession = require('cookie-session');
->>>>>>> 94b63c952b40ed782f6a87aec94dbbc521f40204
+const dbQuery = require('../public/scripts/database');
+
 
 // router.use(cookieSession({
 //   name: 'session',
@@ -72,7 +66,6 @@ module.exports = function (router) {
    * @param {String} email
    * @param {String} password encrypted
    */
-<<<<<<< HEAD
   const login =  function(email, password) {
     return dbQuery.getUserWithEmail(email)
     .then(user => {
@@ -83,8 +76,6 @@ module.exports = function (router) {
     });
   }
   exports.login = login;
-=======
->>>>>>> 94b63c952b40ed782f6a87aec94dbbc521f40204
 
   router.post("/login", (req, res) => {
     const {

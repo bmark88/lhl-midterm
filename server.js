@@ -35,26 +35,21 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-<<<<<<< HEAD
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const auth = require('./routes/auth');
 const front_page = require('./routes/front_page');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use(auth(db));
-app.use(front_page(db));
+app.use(front_page(router));
 
 // Note: mount other resources here, using the same pattern above
-=======
 app.use(auth(router));
 app.use(comments(router));
 // app.use(cookieSession({
 //   name: 'session',
 //   keys: ['user_id'],
 //   }));
->>>>>>> 94b63c952b40ed782f6a87aec94dbbc521f40204
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -77,6 +72,7 @@ app.get("/register", (req, res) => {
 
 app.get("/categories", (req, res) => {
   let userID = req.session.user_id;
+
 
   res.render("categories");
 });

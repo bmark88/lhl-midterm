@@ -116,5 +116,12 @@ const getUserWithUsername = (username) => {
       return err.stack;
     });
 };
+   const addCommentToDb = (pinID, commenter, content) => {
+      const values = [pinID, commenter, content];
+      pool.query(`
+      INSERT INTO comments(pin_id, user_id, content)
+      VALUES($1, $2, $3)
+      `, values);
+    }
 
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername };
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb };

@@ -107,6 +107,10 @@ app.get('/comments', (req, res) => {
   let userID = req.session.user_id;
   console.log(req.body);
   res.render('pins');
+});
+
+app.get("/modal", (req, res) => {
+  res.render("modal");
 })
 
 app.listen(PORT, () => {

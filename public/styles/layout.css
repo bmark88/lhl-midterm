@@ -6,9 +6,11 @@ body {
   box-sizing: border-box;
 }
 
-/* .pin-container {
+.pin-container {
   width: 90%;
   margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   columns: 4;
   column-gap: 40px;
 }
@@ -18,7 +20,7 @@ body {
   margin: 0 0 20px;
   padding: 10px;
   background: #fff;
-  overflow: hiden;
+  overflow: hidden;
   border-radius: 7%;
   justify-items: center;
 }
@@ -44,9 +46,9 @@ body {
   margin: 0;
   padding: 0 0 10px;
   font-size: 10px;
-} */
+}
 
-/* categories */
+/* categories
 #categories-container {
   width: 100vw;
   min-height: min-content;
@@ -85,7 +87,9 @@ body {
   max-width: 100%;
 }
 
+
 /* pins */
+/*
 #pins-container {
   width: 100vw;
   min-height: min-content;
@@ -150,4 +154,4 @@ body {
 .pin-description.show,
 .pin-date.show {
   opacity: 1;
-}
+} */

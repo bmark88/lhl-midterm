@@ -26,6 +26,7 @@ $(document).ready(() => {
   });
 
   // FOR PINS
+
   $.ajax({
     type: 'GET',
     url: '/pins/display'

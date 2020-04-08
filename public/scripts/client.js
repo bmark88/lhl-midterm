@@ -9,7 +9,8 @@ $(() => {
     e.preventDefault();
     renderPins();
   });
-  
+
+  updateNightMode();
 });
 
 // scrolls to the top of the page
@@ -21,6 +22,22 @@ const scrollToTop = () => {
   });
 };
 
+
+//change nightmode preference
+const updateNightMode = () => {
+  $(".night-mode").on('click', (e) => {
+    e.preventDefault();
+    // console.log($("input[type='checkbox']").val());
+    $.ajax({
+      url: '/nightmode',
+      method: 'POST',
+    })
+    .done(res => {
+      console.log("Night Mode Changed!")
+      res.render('settings');
+    })
+  })
+}
 // adds a new pin
 const addNewPin = () => {
   let pin = {};
@@ -146,3 +163,4 @@ function renderPins() {
     });
   });
 }
+

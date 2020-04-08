@@ -68,5 +68,12 @@ module.exports = function (router) {
     .catch(e => res.send(e));
   })
 
+  router.post('/nightmode', (req, res) => {
+    dbQuery.changeNightMode(req.session.user_id)
+    .then(data => {
+      res.json(data);
+    });
+  })
+
   return router;
 }

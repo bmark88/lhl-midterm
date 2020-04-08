@@ -60,7 +60,7 @@ app.use(comments(router));
 app.get("/", (req, res) => {
   let userID = req.session.user_id;
 
-  return res.render("categories");
+  return res.render("index");
 });
 
 app.get("/login", (req, res) => {
@@ -84,17 +84,13 @@ app.get("/categories", (req, res) => {
 //   res.render("categories");
 // })
 
-app.get("/contact", (req, res) => {
-  return res.render("contact");
-});
-
 app.get("/pins", (req, res) => {
   let userID = req.session.user_id;
   let templateVars = [userID];
   if (userID) {
     return res.render('pins', templateVars);
   }
-  return res.render('index');
+  return res.redirect('/');
 });
 
 app.get("/settings", (req, res) => {
@@ -103,7 +99,7 @@ app.get("/settings", (req, res) => {
   if (userID) {
     return res.render('settings', templateVars);
   }
-  return res.render('index');
+  return res.redirect('/');
 });
 
 app.get("/likes", (req, res) => {
@@ -112,7 +108,7 @@ app.get("/likes", (req, res) => {
   if (userID) {
     return res.render('likes', templateVars);
   }
-  return res.render('index');
+  return res.redirect('/');
 });
 
 app.get('/comments', (req, res) => {

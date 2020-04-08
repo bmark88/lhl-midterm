@@ -5,7 +5,7 @@ $(() => {
   addNewCategory();
   addComment();
 
-  $('#add-pin-button').on('submit', (e) => {
+  $('#add-pin-button').on('click', (e) => {
     e.preventDefault();
     renderPins();
   });
@@ -14,7 +14,7 @@ $(() => {
 
 // scrolls to the top of the page
 const scrollToTop = () => {
-  $('.scroll-top').on('submit', (e) => {
+  $('.scroll-top').on('click', (e) => {
     e.preventDefault();
     $('html, body').animate({scrollTop : 0}, 800);
     return;
@@ -24,18 +24,13 @@ const scrollToTop = () => {
 // adds a new pin
 const addNewPin = () => {
   let pin = {};
-  $('#add-pin-button').on('submit', (e) => {
+  $('#add-pin-button').on('click', (e) => {
     e.preventDefault();
 
     pin.name = $('#new-pin-name').val();
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0,25)
-
-    // console.log('this is the pin object ====>', pin);
-
-    // const { name, description, image, created_at } = pin
-    // console.log(name, description, image, created_at);
 
     $.ajax({
       url: '/pins',
@@ -48,34 +43,17 @@ const addNewPin = () => {
         console.log('Succesfully added pin to DB!');
         renderPins();
       });
-
-    // $('.pin-container').html(`<div class="box">
-    // <img src='https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif'>
-    // <img src='${pin.image}'>
-    // <h2>${pin.name}</h2>
-    // <p>${pin.description}</p>
-    // <p id="timestamp">Created at: ${pin.created_at}</p>
-    // </div>`)
   })
 };
 
 // adds a new post
 const addNewCategory = () => {
-  // need to add category id and user id
-
-// title
-// description
-// thumbnail_url
-// category_id - NOT COMPLETE, NEED TO UPDATE DATABASE
-// user_id - NOT COMPLETE, NEED TO UPDATE DATABASE
-// created_at
   let category = {};
   $('#add-category-button').on('submit', (e) => {
     // e.preventDefault();
 
     category.name = $('#new-category-name').val();
     category.description = $('#new-category-description').val();
-    // console.log('new cat image .val ====> ', $('#new-category-description').val())
     category.image = $('#new-category-image').val();
     category.created_at = new Date(Date.now()).toString().slice(0,25)
 
@@ -128,7 +106,6 @@ const addComment = () => {
         <span>$(commenter)</span>
         <div>
         `;
-        // return $markup;
     $('section.comments-list').append(markup)
     })
   }
@@ -142,8 +119,6 @@ function renderPins() {
   }).done(data => {
     $('#pins-container').empty();
     data.forEach(pin => {
-      // console.log('INDIVIDUA PIN DATA: ',pin);
-      // $('#pins-container').append('<p>TESTo</p>'); --> not relevant code
       $('#pins-container')
         .prepend(`
         <div class="pin-container">
@@ -151,7 +126,7 @@ function renderPins() {
           <img src="${pin.thumbnail_url}">
             <h2>${pin.title}</h2>
              <p>${pin.description}</p>
-             <p id="timestamp">Created at: ${pin.created_at}</p>
+             <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
            <form id="new-comment-form">
             <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
             <button type="submit">Add Comment</button>

@@ -4,13 +4,13 @@ body main {
 
 body .about {
   padding: 2em;
-  border: solid;
+  /* border: solid; */
   float: left;
 }
 
 body .contact {
   padding: 2em;
-  border: solid;
+  /* border: solid; */
   float: right;
 } 
 

@@ -9,7 +9,7 @@
   opacity: 1;
   display: grid;
   align-items: center;
-  z-index: 1;
+  z-index: 5001;
 }
 
 .nav-container {
@@ -22,6 +22,7 @@
   transition: all 0.5s;
   display: grid;
   align-items: center;
+  z-index: 5001;
 }
 
 /* li spacing */

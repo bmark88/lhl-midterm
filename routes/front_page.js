@@ -34,7 +34,7 @@ module.exports = function(router) {
         return res.redirect('/pins');
       })
       .catch(e => console.error('ERROR: ', e.stack));
-    })
+    });
 
   router.post('/categories', (req, res) => {
     console.log('FORM DATA =====>', req.body);
@@ -47,8 +47,15 @@ module.exports = function(router) {
         return res.redirect('/categories');
       })
       .catch(e => console.error('ERROR: ', e.stack));
-  })
+  });
 
+  router.post('/pins/delete', (req, res) => {
+    dbQuery.deletePinFromDB(req.body)
+      .then(() => {
+        return res.redirect('/pins');
+      })
+      .catch(e => console.error('ERROR: ', e.stack));
+  });
 
   return router;
 };

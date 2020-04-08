@@ -11,13 +11,13 @@
   <!-- CSS STYLES -->
   <!-- <link rel="stylesheet" href="/styles/navbar.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-  <!-- <link rel="stylesheet" href="/styles/modal.css" type="text/css" /> -->
+  <link rel="stylesheet" href="/styles/modal.css" type="text/css" />
   <!-- NIGHTMODE -->
   <!-- <link rel="stylesheet" href="/styles/nightmode.css" type="text/css" /> -->
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js" defer></script>
   <script type="text/javascript" src="/scripts/client.js" defer></script> 
-  <!-- <script type="text/javascript" src="/scripts/modal.js" defer></script> -->
+  <script type="text/javascript" src="/scripts/modal.js" defer></script>
 </head>
 
 <body>
@@ -32,13 +32,76 @@
       <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
         quaeritis.</p>
         <p id="timestamp">Created at: Sat Apr 04 2020 23:02:26 </p>
+        <!-- comment form-->
+        <form id="new-comment-form">
+          <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
+          <button type="submit">Add Comment</button>
+        </form>
+        <!-- likes, ratings, edit/delete comment -->
         <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
         <input type="checkbox">Like</input>
         <span class="comment-options">
         <button class="edit-comment">Edit</button>
         <button class="delete-comment">Delete</button>
       </span>
+      <!-- modal -->
+      <div id="simpleModal" class="modal">
+        <div class="modal-content">
+          <span class="close-button">&times;</span>
+      <div class="box">
+        <img src="https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif">
+        <h2>Title goes here</h2>
+        <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corporacerebro. De carne lumbering animata corpora
+          quaeritis.</p>
+          <p id="timestamp">Created at: Sat Apr 04 2020 23:02:26 </p>
+          <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
+          <input type="checkbox">Like</input>
+          <span class="comment-options">
+          <button class="edit-comment">Edit</button>
+          <button class="delete-comment">Delete</button>
+        </span>
+          <p class="user-comment">Sample user commented:</p>
+          <p class="comment">cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            q </p>
+            <p class="user-comment">Sample user commented:</p>
+          <p class="comment">cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            q </p>
+            <p class="user-comment">Sample user commented:</p>
+          <p class="comment">cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            q </p>
+      </div>
+</div>
+</div>
+
+
     </div>
+
+
+    
     <div class="box">
       <img src="https://i.picsum.photos/id/237/200/200.jpg">
       <h2>Title goes here</h2>

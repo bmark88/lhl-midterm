@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
   <!-- Bootstrap CSS -->
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/styles/login.css">
   <title>Log In</title>
 </head>
 <body>
   <header>
     <%- include('partials/navbar') %>
   </header>
+  
   <div class="card text-center">
     <div class="card-header">
       <h3>Welcome to Wall App</h3>
       Let's Get Started!
     </div>
+    <main>
     <div>
       <p>
         <form method="POST" action="/login"> 
@@ -23,12 +27,32 @@
         </p>
     </div>
     <div>
-      New to Wall App?
+      <h4>New to Wall App?</h4>
     </div>
     <div>
-      <form method="GET" action="/register"><button class="btn btn-primary" type="submit">Register</button></form>
+      <form method="GET" action="/register"><button class="btn btn-primary" type="submit">Register Here</button></form>
     </div>
   </div>
+</main>
+<div class="additional-content">
+<section class="about">
+  <h2>About Resource Wall</h2>
+
+  <h5>Resource wall was created with the idea in mind, that learning should be fun and attractive!</h5>
+  <ul>
+    <li>Organize your learning by category</li>
+    <li>Find the pin that suits your learning style</li>
+    <li>Enjoy the content</li>
+    <li>Make sure to contribute your own pins so others can learn from you!</li>
+  </ul>
+</section>
+<footer class="contact">
+  <h2>Contact us!</h2>
+  <p>Phone: 1-800-123-4567</p>
+  <p>Email: resourcewall@learning.edu </p>
+  <p>Address: 123 Fake Street, Canada</p>
+</footer>
+</div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

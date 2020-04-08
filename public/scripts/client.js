@@ -1,4 +1,5 @@
 $(() => {
+  renderPins();
   scrollToTop();
   addNewPin();
   addNewCategory();
@@ -135,50 +136,89 @@ const addComment = () => {
 
 
 // RENDER HELPERS
+// function renderPins() {
+//   console.log('Calling pins fuction...')
+//   $.ajax({
+//     type: 'GET',
+//     url: '/pins/display'
+//   }).done(data => {
+//     $('.pin-container').detach();
+//     data.forEach(pin => {
+//       console.log('Rendering all pins...')
+//       const newDiv = $('<div></div>')
+//         .addClass('pin-container');
+
+//       const newThumbnail = $('<img>')
+//         .attr('src', pin.thumbnail_url)
+//         .addClass('pin-thumbnail');
+
+//       const newTitle = $(`<h2>${pin.title}</h2>`)
+//         .addClass('pin-title');
+
+//       const newDescription = $(`<p>${pin.description}</p>`)
+//         .addClass('pin-description');
+
+//       const newTimestamp = $(`<p>Created at ${pin.created_at}</p>`)
+//         .addClass('pin-date');
+
+//       newDiv
+//         .append(newThumbnail)
+//         .append(newTitle)
+//         .append(newDescription)
+//         .append(newTimestamp)
+//         .mouseenter(e => {
+//           $(e.target)
+//             .children()
+//             .addClass('show');
+//         })
+//         .mouseleave(e => {
+//           $(e.target)
+//             .children()
+//             .removeClass('show');
+//         });
+//       $('#pins-container')
+//         .prepend(newDiv);
+//     });
+//   });
+// }
+
+
+
 function renderPins() {
   console.log('Calling pins fuction...')
   $.ajax({
     type: 'GET',
     url: '/pins/display'
   }).done(data => {
-    $('.pin-container').detach();
+    $('#pins-container').empty();
     data.forEach(pin => {
-      console.log('Rendering all pins...')
-      const newDiv = $('<div></div>')
-        .addClass('pin-container');
-
-      const newThumbnail = $('<img>')
-        .attr('src', pin.thumbnail_url)
-        .addClass('pin-thumbnail');
-
-      const newTitle = $(`<h2>${pin.title}</h2>`)
-        .addClass('pin-title');
-
-      const newDescription = $(`<p>${pin.description}</p>`)
-        .addClass('pin-description');
-
-      const newTimestamp = $(`<p>Created at ${pin.created_at}</p>`)
-        .addClass('pin-date');
-
-      newDiv
-        .append(newThumbnail)
-        .append(newTitle)
-        .append(newDescription)
-        .append(newTimestamp)
-        .mouseenter(e => {
-          $(e.target)
-            .children()
-            .addClass('show');
-        })
-        .mouseleave(e => {
-          $(e.target)
-            .children()
-            .removeClass('show');
-        });
+      console.log('INDIVIDUA PIN DATA: ',pin);
+      $('#pins-container').append('<p>TESTo</p>');
       $('#pins-container')
-        .prepend(newDiv);
+        .prepend(`
+        <div class="pin-container">
+         <div class="box">
+          <img src="${pin.thumbnail_url}">
+            <h2>${pin.title}</h2>
+             <p>${pin.description}</p>
+             <p id="timestamp">Created at: ${pin.created_at}</p>
+           <form id="new-comment-form">
+            <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
+            <button type="submit">Add Comment</button>
+           </form>
+         <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
+         <form action='/pins' method='POST'>
+          <input class="like-checkbox" type="checkbox">Like</input>
+         </form>
+        <span class="comment-options">
+        <button class="edit-comment">Edit</button>
+        <button class="delete-comment">Delete</button>
+      </span>
+        `);
     });
   });
 }
 
-
+function renderModal() {
+  //write later
+}

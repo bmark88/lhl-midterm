@@ -3,6 +3,11 @@ $(() => {
   addNewPin();
   addNewCategory();
   addComment();
+
+  $('#add-pin-button').on('click', (e) => {
+    e.preventDefault();
+    renderPins();
+  });
 });
 
 // scrolls to the top of the page
@@ -19,7 +24,7 @@ const addNewPin = () => {
   let pin = {};
   $('#add-pin-button').on('click', (e) => {
     e.preventDefault();
-    
+
     pin.name = $('#new-pin-name').val();
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
@@ -29,24 +34,26 @@ const addNewPin = () => {
 
     // const { name, description, image, created_at } = pin
     // console.log(name, description, image, created_at);
-    
+
     $.ajax({
       url: '/pins',
         method: 'POST',
         dataType: 'json',
-        data: pin,i
+        data: pin
       })
-      .then(res => {
-        $('pin-container').prepend()
+      .done(res => {
+        // $('pin-container').prepend()
+        console.log('Succesfully added pin to DB!');
+        renderPins();
       });
 
-    $('.pin-container').html(`<div class="box">
-    <img src='https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif'>
-    <img src='${pin.image}'>
-    <h2>${pin.name}</h2>
-    <p>${pin.description}</p>
-    <p id="timestamp">Created at: ${pin.created_at}</p>
-    </div>`)
+    // $('.pin-container').html(`<div class="box">
+    // <img src='https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif'>
+    // <img src='${pin.image}'>
+    // <h2>${pin.name}</h2>
+    // <p>${pin.description}</p>
+    // <p id="timestamp">Created at: ${pin.created_at}</p>
+    // </div>`)
   })
 };
 
@@ -123,3 +130,55 @@ const addComment = () => {
     $('section.comments-list').append(markup)
     })
   }
+
+
+
+
+// RENDER HELPERS
+function renderPins() {
+  console.log('Calling pins fuction...')
+  $.ajax({
+    type: 'GET',
+    url: '/pins/display'
+  }).done(data => {
+    $('.pin-container').detach();
+    data.forEach(pin => {
+      console.log('Rendering all pins...')
+      const newDiv = $('<div></div>')
+        .addClass('pin-container');
+
+      const newThumbnail = $('<img>')
+        .attr('src', pin.thumbnail_url)
+        .addClass('pin-thumbnail');
+
+      const newTitle = $(`<h2>${pin.title}</h2>`)
+        .addClass('pin-title');
+
+      const newDescription = $(`<p>${pin.description}</p>`)
+        .addClass('pin-description');
+
+      const newTimestamp = $(`<p>Created at ${pin.created_at}</p>`)
+        .addClass('pin-date');
+
+      newDiv
+        .append(newThumbnail)
+        .append(newTitle)
+        .append(newDescription)
+        .append(newTimestamp)
+        .mouseenter(e => {
+          $(e.target)
+            .children()
+            .addClass('show');
+        })
+        .mouseleave(e => {
+          $(e.target)
+            .children()
+            .removeClass('show');
+        });
+      $('#pins-container')
+        .prepend(newDiv);
+    });
+  });
+}
+
+

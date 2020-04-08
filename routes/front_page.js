@@ -11,6 +11,7 @@ module.exports = function(router) {
     dbQuery.getCategories() // can take an int for limit
       .then(data => {
         res.json(data);
+        res.redirect('/categories'); //
       });
   });
 
@@ -29,6 +30,7 @@ module.exports = function(router) {
     console.log('THIS IS THE SESSION COOKIE USER ID =====>',userID)
     dbQuery.addPinToDb(req.body, userID)
       .then(() => {
+        console.log('Redirecting to /pins...')
         return res.redirect('/pins');
       })
       .catch(e => console.error('ERROR: ', e.stack));
@@ -36,7 +38,7 @@ module.exports = function(router) {
 
   router.post('/categories', (req, res) => {
     console.log('FORM DATA =====>', req.body);
-    
+
     // console.log('THIS IS THE SESSION COOKIE USER ID =====>',req.session.user_id);
     // const userID = req.session.user_id;
     // console.log('THIS IS THE SESSION COOKIE USER ID =====>',userID)

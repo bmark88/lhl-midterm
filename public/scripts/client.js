@@ -3,6 +3,7 @@ $(() => {
   addNewPin();
   addNewCategory();
   addComment();
+  alterUsername();
 });
 
 // scrolls to the top of the page
@@ -19,7 +20,7 @@ const addNewPin = () => {
   let pin = {};
   $('#add-pin-button').on('click', (e) => {
     e.preventDefault();
-    
+
     pin.name = $('#new-pin-name').val();
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
@@ -29,7 +30,7 @@ const addNewPin = () => {
 
     // const { name, description, image, created_at } = pin
     // console.log(name, description, image, created_at);
-    
+
     $.ajax({
       url: '/pins',
         method: 'POST',
@@ -123,3 +124,16 @@ const addComment = () => {
     $('section.comments-list').append(markup)
     })
   }
+
+const alterUsername = () => {
+  $('form.update-username').on('submit', function(evt) {
+    evt.preventDefault();
+    $.ajax({
+      url: '/username',
+      method: 'POST',
+      data: {
+        content
+      }
+    })
+  })
+}

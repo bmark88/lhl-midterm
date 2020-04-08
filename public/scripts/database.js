@@ -165,7 +165,7 @@ const getUserWithUsername = (username) => {
     INSERT INTO pins (title, description, thumbnail_url, user_id, created_at)
     VALUES ($1, $2, $3, $4, $5);
     `;
-  
+
     return pool
       .query(queryString, values)
       .then(res => {
@@ -192,4 +192,38 @@ const getUserWithUsername = (username) => {
         .catch(e => console.error('ERROR WITH CATEGORY DB ====>', e.stack));
       }
 
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb };
+//SETTINGS
+
+const changeUsername = (userID, newUsername) => {
+  //query to check if the username belongs to another user
+  //returns boolean
+  //from routes/auth
+  const isNewUsername = (input) => {
+    return getUserWithUsername(input)
+    .then(user => {
+      if (user.id) {
+        //this email is already in the db
+        console.log("isNewUsername = false");
+        return false;
+      }
+      console.log("isNewUsername = true")
+      return true;
+    })
+  }
+  //find out if the username is new
+  isNewUsername(newUsername)
+  .then(res => {
+    if (!res) {
+      //the username is taken
+      return res.send("username already taken");
+    }
+    return pool.query(`
+      UPDATE users
+      SET username = $1
+      WHERE id = $2;
+      `, [newUsername, userID]);
+  }).catch(e =>  e.stack)
+}
+
+
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb, changeUsername };

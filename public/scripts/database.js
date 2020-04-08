@@ -191,5 +191,23 @@ const getUserWithUsername = (username) => {
         })
         .catch(e => console.error('ERROR WITH CATEGORY DB ====>', e.stack));
       }
+      const deletePinFromDB = (pinObject, ownerOfPin) => {
+        // const values = [pinObject.name, pinObject.description, pinObject.image, ownerOfPin, pinObject.created_at];
+        console.log('deleted pin object ======>', pinObject);
+        const queryString = `
+        DELETE FROM pins
+        WHERE id = $1;
+        `;
 
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb };
+        const queryParams = [pinObject.pin_id];
+      
+        return pool
+          .query(queryString, queryParams)
+          .then(res => {
+            console.log("Succesful DB pin deletion",res.rows)
+            return res.rows;
+          })
+          .catch(e => console.error('query error ====>', e.stack));
+        }
+    
+module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb, deletePinFromDB };

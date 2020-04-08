@@ -31,7 +31,7 @@ const addNewPin = () => {
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0,25)
 
-    console.log('this is the pin object ====>', pin);
+    // console.log('this is the pin object ====>', pin);
 
     // const { name, description, image, created_at } = pin
     // console.log(name, description, image, created_at);
@@ -212,12 +212,19 @@ function renderPins() {
          </form>
         <span class="comment-options">
         <button class="edit-comment">Edit</button>
+        <form action="/pins/delete" method="POST">
+        <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
         <button class="delete-comment">Delete</button>
+        </form>
       </span>
         `);
     });
   });
 }
+
+const deletePin = () => {
+
+};
 
 function renderModal() {
   //write later

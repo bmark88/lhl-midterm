@@ -8,7 +8,7 @@ $(() => {
   window.$(this).on('click', (e) => {
     outsideClick(e);
   });
-  // displayModal();
+  displayModal();
   ratingScore();
   checkIfLiked();
 });

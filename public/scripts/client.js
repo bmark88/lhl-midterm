@@ -32,10 +32,10 @@ const updateNightMode = () => {
       url: '/nightmode',
       method: 'POST',
     })
-    .done(res => {
-      console.log("Night Mode Changed!")
-      res.render('settings');
-    })
+    // .done(res => {
+    //   console.log("Night Mode Changed!")
+    //   res.render('settings');
+    // })
   })
 }
 // adds a new pin

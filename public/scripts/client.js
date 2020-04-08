@@ -5,19 +5,16 @@ $(() => {
   addNewCategory();
   addComment();
 
-  $('#add-pin-button').on('click', (e) => {
+  $('#add-pin-button').on('submit', (e) => {
     e.preventDefault();
     renderPins();
   });
-  alterUsername();
-  alterEmail();
-  alterAvatar();
-  alterPassword();
+  
 });
 
 // scrolls to the top of the page
 const scrollToTop = () => {
-  $('.scroll-top').on('click', (e) => {
+  $('.scroll-top').on('submit', (e) => {
     e.preventDefault();
     $('html, body').animate({scrollTop : 0}, 800);
     return;
@@ -27,7 +24,7 @@ const scrollToTop = () => {
 // adds a new pin
 const addNewPin = () => {
   let pin = {};
-  $('#add-pin-button').on('click', (e) => {
+  $('#add-pin-button').on('submit', (e) => {
     e.preventDefault();
 
     pin.name = $('#new-pin-name').val();
@@ -73,7 +70,7 @@ const addNewCategory = () => {
 // user_id - NOT COMPLETE, NEED TO UPDATE DATABASE
 // created_at
   let category = {};
-  $('#add-category-button').on('click', (e) => {
+  $('#add-category-button').on('submit', (e) => {
     // e.preventDefault();
 
     category.name = $('#new-category-name').val();
@@ -137,57 +134,6 @@ const addComment = () => {
   }
 
 
-
-
-// RENDER HELPERS
-// function renderPins() {
-//   console.log('Calling pins fuction...')
-//   $.ajax({
-//     type: 'GET',
-//     url: '/pins/display'
-//   }).done(data => {
-//     $('.pin-container').detach();
-//     data.forEach(pin => {
-//       console.log('Rendering all pins...')
-//       const newDiv = $('<div></div>')
-//         .addClass('pin-container');
-
-//       const newThumbnail = $('<img>')
-//         .attr('src', pin.thumbnail_url)
-//         .addClass('pin-thumbnail');
-
-//       const newTitle = $(`<h2>${pin.title}</h2>`)
-//         .addClass('pin-title');
-
-//       const newDescription = $(`<p>${pin.description}</p>`)
-//         .addClass('pin-description');
-
-//       const newTimestamp = $(`<p>Created at ${pin.created_at}</p>`)
-//         .addClass('pin-date');
-
-//       newDiv
-//         .append(newThumbnail)
-//         .append(newTitle)
-//         .append(newDescription)
-//         .append(newTimestamp)
-//         .mouseenter(e => {
-//           $(e.target)
-//             .children()
-//             .addClass('show');
-//         })
-//         .mouseleave(e => {
-//           $(e.target)
-//             .children()
-//             .removeClass('show');
-//         });
-//       $('#pins-container')
-//         .prepend(newDiv);
-//     });
-//   });
-// }
-
-
-
 function renderPins() {
   console.log('Calling pins fuction...')
   $.ajax({
@@ -224,73 +170,4 @@ function renderPins() {
         `);
     });
   });
-}
-
-const deletePin = () => {
-
-};
-
-function renderModal() {
-  //write later
-const alterUsername = () => {
-  $('form.update-username').on('submit', function(evt) {
-    evt.preventDefault();
-    $.ajax({
-      url: '/username',
-      method: 'POST',
-      data: { content }
-    })
-  })
-}
-const alterEmail = () => {
-  $('form.update-email').on('submit', function(evt) {
-    evt.preventDefault();
-    $.ajax({
-      url: '/email',
-      method: 'POST',
-      data: { content }
-    })
-  })
-}
-
-const alterAvatar = () => {
-  $('form.update-avatar').on('submit', function(evt) {
-    evt.preventDefault();
-    const content = $('.update-avatar textarea').val();
-    $.ajax({
-      url: '/update/avatar',
-      method: 'POST',
-      data: { content }
-    })
-  })
-}
-
-const alterPassword = () => {
-  $('form.update-password').on('submit', function(evt) {
-    evt.preventDefault();
-    const content = $('.update-password textarea').val();
-    $.ajax({
-      url: '/password',
-      method: 'POST',
-      data: { content }
-    })
-  })
-}
-
-const alterNightMode = () => {
-  $('.switch').on('click', function(evt) {
-    console.log("clicked night mode toggle")
-    evt.preventDefault();
-    // const content =
-    // $.ajax({
-    //   url: '/nightmode',
-    //   method: 'POST',
-    //   data: { content }
-    // })
-  })
-};
-
-
-
-
 }

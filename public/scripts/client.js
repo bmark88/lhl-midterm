@@ -4,6 +4,7 @@ $(() => {
   addNewCategory();
   addComment();
   alterUsername();
+  alterEmail();
 });
 
 // scrolls to the top of the page
@@ -131,9 +132,17 @@ const alterUsername = () => {
     $.ajax({
       url: '/username',
       method: 'POST',
-      data: {
-        content
-      }
+      data: { content }
+    })
+  })
+}
+const alterEmail = () => {
+  $('form.update-email').on('submit', function(evt) {
+    evt.preventDefault();
+    $.ajax({
+      url: '/email',
+      method: 'POST',
+      data: { content }
     })
   })
 }

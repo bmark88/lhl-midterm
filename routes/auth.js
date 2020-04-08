@@ -41,7 +41,7 @@ const isNewEmail = (input) => {
       console.log("isNewEmail = false");
       return false;
     }
-    console.log("isNewEmail = true")
+    console.log("isNewEmail = true");
     return true;
   })
 }

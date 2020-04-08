@@ -225,5 +225,45 @@ const changeUsername = (userID, newUsername) => {
   }).catch(e =>  e.stack)
 }
 
-
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb, changeUsername };
+const changeEmail = (userID, email) => {
+  const isNewEmail = (input) => {
+    return getUserWithEmail(input)
+    .then(user => {
+      if (user.id) {
+        //this email is already in the db
+        console.log("isNewEmail = false");
+        return false;
+      }
+      console.log("isNewEmail = true");
+      return true;
+    }).catch(e =>  e.stack)
+  }
+  return isNewEmail(email)
+  .then(isNew => {
+    // console.log("isNew is -----> ", isNew)
+    if (!isNew) {
+      res.send({error: "email taken"});
+      return;
+    }
+    return pool.query(`
+      UPDATE users
+      SET email = $1
+      WHERE id = $2;
+      `, [email, userID]);
+  }).catch(e =>  e.stack);
+}
+module.exports = {
+  getUserWithEmail,
+  getUserLikes,
+  getUserPins,
+  getCategory,
+  getPinComments,
+  getUserWithUsername,
+  addCommentToDb,
+  getCategories,
+  getAllPins,
+  addPinToDb,
+  addCategoryToDb,
+  changeUsername,
+  changeEmail
+};

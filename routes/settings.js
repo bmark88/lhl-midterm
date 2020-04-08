@@ -21,6 +21,16 @@ module.exports = function (router) {
     dbQuery.changeUsername(req.session.user_id, req.body.username);
   })
 
+  router.post('/email', (req, res) => {
+    dbQuery.changeEmail(req.session.user_id, req.body.email)
+    .then(user => {
+      if (user === undefined) {
+        res.send({error: "error"});
+        return;
+      }
+      return res.redirect("/settings");
+    })
+    .catch(e => res.send(e));
+  })
   return router;
-
-};
+}

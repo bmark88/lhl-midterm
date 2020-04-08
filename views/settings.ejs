@@ -43,7 +43,17 @@
       <div>
       <label>
         <span>
-          <form class='update-password' method="POST" action="/settings">
+          <form class='update-email' method="POST" action="/email">
+            <input type="email" placeholder="new email" name="email">
+            <button type="submit">Update</button>
+          </form>
+        </span>
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>
+          <form class='update-password' method="POST" action="/password">
             <input type="password" placeholder="new password" name="password">
             <button type="submit">Update</button>
           </form>

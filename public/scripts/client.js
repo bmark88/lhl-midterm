@@ -5,10 +5,10 @@ $(() => {
   addNewCategory();
   addComment();
 
-  $('#add-pin-button').on('click', (e) => {
-    e.preventDefault();
-    renderPins();
-  });
+  // $('#add-pin-button').on('click', (e) => {
+  //   e.preventDefault();
+  //   // renderPins();
+  // });
 
   updateNightMode();
 });
@@ -48,18 +48,18 @@ const addNewPin = () => {
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0,25)
-
+    renderPins();
     $.ajax({
       url: '/pins',
         method: 'POST',
         dataType: 'json',
         data: pin
       })
-      .done(res => {
-        // $('pin-container').prepend()
-        console.log('Succesfully added pin to DB!');
-        renderPins();
-      });
+      // .done(res => {
+      //   // $('pin-container').prepend()
+      //   console.log('Succesfully added pin to DB!');
+      //   renderPins();
+      // });
   })
 };
 

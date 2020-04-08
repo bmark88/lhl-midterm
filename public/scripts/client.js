@@ -192,8 +192,8 @@ function renderPins() {
   }).done(data => {
     $('#pins-container').empty();
     data.forEach(pin => {
-      console.log('INDIVIDUA PIN DATA: ',pin);
-      $('#pins-container').append('<p>TESTo</p>');
+      // console.log('INDIVIDUA PIN DATA: ',pin);
+      // $('#pins-container').append('<p>TESTo</p>'); --> not relevant code
       $('#pins-container')
         .prepend(`
         <div class="pin-container">

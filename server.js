@@ -23,6 +23,7 @@ const db = new Pool(dbParams);
 db.connect();
 
 // Other variables
+const settings = require('./routes/settings');
 const comments = require('./routes/comments');
 const auth = require('./routes/auth');
 
@@ -44,6 +45,7 @@ const front_page = require('./routes/front_page');
 app.use(front_page(router));
 
 // Note: mount other resources here, using the same pattern above
+app.use(settings(router));
 app.use(auth(router));
 app.use(comments(router));
 // app.use(cookieSession({
@@ -51,7 +53,7 @@ app.use(comments(router));
 //   keys: ['user_id'],
 //   }));
 
-  
+
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
@@ -91,7 +93,7 @@ app.get("/pins", (req, res) => {
   let templateVars = [userID];
   if (userID) {
     return res.render('pins', templateVars);
-  } 
+  }
   return res.render('index');
 });
 
@@ -100,8 +102,8 @@ app.get("/settings", (req, res) => {
   let templateVars = [userID];
   if (userID) {
     return res.render('settings', templateVars);
-  } 
-  return res.render('index');  
+  }
+  return res.render('index');
 });
 
 app.get("/likes", (req, res) => {
@@ -109,7 +111,7 @@ app.get("/likes", (req, res) => {
   let templateVars = [userID];
   if (userID) {
     return res.render('likes', templateVars);
-  } 
+  }
   return res.render('index');
 });
 

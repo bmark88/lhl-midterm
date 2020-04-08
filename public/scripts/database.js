@@ -165,7 +165,7 @@ const getUserWithUsername = (username) => {
     INSERT INTO pins (title, description, thumbnail_url, user_id, created_at)
     VALUES ($1, $2, $3, $4, $5);
     `;
-  
+
     return pool
       .query(queryString, values)
       .then(res => {
@@ -211,3 +211,101 @@ const getUserWithUsername = (username) => {
         }
     
 module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb, deletePinFromDB };
+
+//SETTINGS
+
+const changeUsername = (userID, newUsername) => {
+  //query to check if the username belongs to another user
+  //returns boolean
+  //from routes/auth
+  const isNewUsername = (input) => {
+    return getUserWithUsername(input)
+    .then(user => {
+      if (user.id) {
+        //this email is already in the db
+        console.log("isNewUsername = false");
+        return false;
+      }
+      console.log("isNewUsername = true")
+      return true;
+    })
+  }
+  //find out if the username is new
+  return isNewUsername(newUsername)
+  .then(res => {
+    if (!res) {
+      //the username is taken
+      return res.send("username already taken");
+    }
+    return pool.query(`
+      UPDATE users
+      SET username = $1
+      WHERE id = $2;
+      `, [newUsername, userID]);
+  }).catch(e =>  e.stack)
+}
+
+const changeEmail = (userID, email) => {
+  const isNewEmail = (input) => {
+    return getUserWithEmail(input)
+    .then(user => {
+      if (user.id) {
+        //this email is already in the db
+        console.log("isNewEmail = false");
+        return false;
+      }
+      console.log("isNewEmail = true");
+      return true;
+    }).catch(e =>  e.stack)
+  }
+  return isNewEmail(email)
+  .then(isNew => {
+    // console.log("isNew is -----> ", isNew)
+    if (!isNew) {
+      res.send({error: "email taken"});
+      return;
+    }
+    return pool.query(`
+      UPDATE users
+      SET email = $1
+      WHERE id = $2;
+      `, [email, userID]);
+  }).catch(e =>  e.stack);
+}
+
+const changeAvatar = (userID, avatar) => {
+  console.log('userid ------->', userID, 'avatar --------> ', avatar)
+  return pool.query(`
+  UPDATE users
+  SET avatar_url = $1
+  WHERE id = $2;
+  `, [avatar, userID]);
+}
+
+const changePassword = (userID, password) => {
+  console.log('userid ------->', userID, 'password --------> ', password)
+  return pool.query(`
+  UPDATE users
+  SET password = $1
+  WHERE id = $2;
+  `, [password, userID]);
+}
+
+
+module.exports = {
+  getUserWithEmail,
+  getUserLikes,
+  getUserPins,
+  getCategory,
+  getPinComments,
+  getUserWithUsername,
+  addCommentToDb,
+  getCategories,
+  getAllPins,
+  addPinToDb,
+  addCategoryToDb,
+  changeUsername,
+  changeEmail,
+  changeAvatar,
+  changePassword
+};

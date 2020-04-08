@@ -9,6 +9,10 @@ $(() => {
     e.preventDefault();
     renderPins();
   });
+  alterUsername();
+  alterEmail();
+  alterAvatar();
+  alterPassword();
 });
 
 // scrolls to the top of the page
@@ -228,4 +232,65 @@ const deletePin = () => {
 
 function renderModal() {
   //write later
+const alterUsername = () => {
+  $('form.update-username').on('submit', function(evt) {
+    evt.preventDefault();
+    $.ajax({
+      url: '/username',
+      method: 'POST',
+      data: { content }
+    })
+  })
+}
+const alterEmail = () => {
+  $('form.update-email').on('submit', function(evt) {
+    evt.preventDefault();
+    $.ajax({
+      url: '/email',
+      method: 'POST',
+      data: { content }
+    })
+  })
+}
+
+const alterAvatar = () => {
+  $('form.update-avatar').on('submit', function(evt) {
+    evt.preventDefault();
+    const content = $('.update-avatar textarea').val();
+    $.ajax({
+      url: '/update/avatar',
+      method: 'POST',
+      data: { content }
+    })
+  })
+}
+
+const alterPassword = () => {
+  $('form.update-password').on('submit', function(evt) {
+    evt.preventDefault();
+    const content = $('.update-password textarea').val();
+    $.ajax({
+      url: '/password',
+      method: 'POST',
+      data: { content }
+    })
+  })
+}
+
+const alterNightMode = () => {
+  $('.switch').on('click', function(evt) {
+    console.log("clicked night mode toggle")
+    evt.preventDefault();
+    // const content =
+    // $.ajax({
+    //   url: '/nightmode',
+    //   method: 'POST',
+    //   data: { content }
+    // })
+  })
+};
+
+
+
+
 }

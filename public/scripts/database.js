@@ -261,6 +261,17 @@ const changeAvatar = (userID, avatar) => {
   WHERE id = $2;
   `, [avatar, userID]);
 }
+
+const changePassword = (userID, password) => {
+  console.log('userid ------->', userID, 'password --------> ', password)
+  return pool.query(`
+  UPDATE users
+  SET password = $1
+  WHERE id = $2;
+  `, [password, userID]);
+}
+
+
 module.exports = {
   getUserWithEmail,
   getUserLikes,
@@ -275,5 +286,6 @@ module.exports = {
   addCategoryToDb,
   changeUsername,
   changeEmail,
-  changeAvatar
+  changeAvatar,
+  changePassword
 };

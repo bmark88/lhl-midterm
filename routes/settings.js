@@ -54,5 +54,19 @@ module.exports = function (router) {
     })
     .catch(e => res.send(e));
   })
+
+  router.post('/password', (req, res) => {
+    console.log("req.body ------> ", req.body.password)
+    dbQuery.changePassword(req.session.user_id, req.body.password)
+    .then(user => {
+      if (user === undefined) {
+        res.send({error: "error"});
+        return;
+      }
+      return res.redirect("/settings");
+    })
+    .catch(e => res.send(e));
+  })
+
   return router;
 }

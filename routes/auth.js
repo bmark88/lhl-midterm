@@ -24,8 +24,8 @@ const dbQuery = require('../public/scripts/database');
 const login = function (email, password) {
   return dbQuery.getUserWithEmail(email)
     .then(user => {
-      // if (bcrypt.compareSync(password, user.password)) {
-      if (password === user.password) {
+      if (bcrypt.compareSync(password, user.password)) {
+      // if (password === user.password) {
         return user;
       } else {
         return null;
@@ -82,9 +82,11 @@ module.exports = function (router) {
       email,
       password
     } = req.body;
+
     if (!email || !password) {
       return res.send("ERROR: empty field");
     }
+
     login(email, password)
       .then(user => {
         console.log(user);
@@ -108,6 +110,7 @@ module.exports = function (router) {
       email,
       password
     } = req.body;
+    const hash = bcrypt.hashSync(password, 12);
     // let alreadyExists = false;
     Promise.all([isNewEmail(email), isNewUsername(username)])
     .then(
@@ -119,7 +122,7 @@ module.exports = function (router) {
               INSERT INTO users (username, email, password)
               VALUES ($1, $2, $3)
               `;
-              const queryParams = [username, email, password]
+              const queryParams = [username, email, hash]
               pool.query(queryString, queryParams);
               return res.render('login');
         } else {

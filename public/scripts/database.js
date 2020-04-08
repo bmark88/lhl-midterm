@@ -211,7 +211,7 @@ const changeUsername = (userID, newUsername) => {
     })
   }
   //find out if the username is new
-  isNewUsername(newUsername)
+  return isNewUsername(newUsername)
   .then(res => {
     if (!res) {
       //the username is taken
@@ -252,6 +252,15 @@ const changeEmail = (userID, email) => {
       `, [email, userID]);
   }).catch(e =>  e.stack);
 }
+
+const changeAvatar = (userID, avatar) => {
+  console.log('userid ------->', userID, 'avatar --------> ', avatar)
+  return pool.query(`
+  UPDATE users
+  SET avatar_url = $1
+  WHERE id = $2;
+  `, [avatar, userID]);
+}
 module.exports = {
   getUserWithEmail,
   getUserLikes,
@@ -265,5 +274,6 @@ module.exports = {
   addPinToDb,
   addCategoryToDb,
   changeUsername,
-  changeEmail
+  changeEmail,
+  changeAvatar
 };

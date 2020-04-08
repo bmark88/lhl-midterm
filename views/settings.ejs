@@ -24,8 +24,9 @@
       <label>
         <span>
           Change Avatar:
-          <form class='update-avatar' enctype="multipart/form-data" action="/upload/image" method="post">
-            <input id="image-file" type="file"/>
+          <form class='update-avatar' action="/upload/image" method="post">
+            <input id="image-url" placeholder='new avatar url' type="text" name="avatar" required/>
+            <button type="submit">Update</button>
           </form>
         </span>
       </label>
@@ -34,7 +35,7 @@
       <label>
         <span>
           <form class='update-username' method="POST" action="/username">
-            <input type="text" placeholder="new username" name="username">
+            <input type="text" placeholder="new username" name="username" required>
             <button type="submit">Update</button>
           </form>
         </span>
@@ -44,7 +45,7 @@
       <label>
         <span>
           <form class='update-email' method="POST" action="/email">
-            <input type="email" placeholder="new email" name="email">
+            <input type="email" placeholder="new email" name="email" required>
             <button type="submit">Update</button>
           </form>
         </span>
@@ -54,7 +55,7 @@
       <label>
         <span>
           <form class='update-password' method="POST" action="/password">
-            <input type="password" placeholder="new password" name="password">
+            <input type="password" placeholder="new password" name="password" required>
             <button type="submit">Update</button>
           </form>
         </span>

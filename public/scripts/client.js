@@ -5,6 +5,7 @@ $(() => {
   addComment();
   alterUsername();
   alterEmail();
+  alterAvatar();
 });
 
 // scrolls to the top of the page
@@ -146,3 +147,16 @@ const alterEmail = () => {
     })
   })
 }
+
+const alterAvatar = () => {
+  $('form.update-avatar').on('submit', function(evt) {
+    evt.preventDefault();
+    const content = $('.update-avatar textarea').val();
+    $.ajax({
+      url: '/update/avatar',
+      method: 'POST',
+      data: { content }
+    })
+  })
+}
+

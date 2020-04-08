@@ -307,5 +307,6 @@ module.exports = {
   changeUsername,
   changeEmail,
   changeAvatar,
-  changePassword
+  changePassword,
+  deletePinFromDB
 };

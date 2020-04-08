@@ -1,3 +1,28 @@
 body main {
   padding: 1em;
 }
+
+body .about {
+  padding: 2em;
+  border: solid;
+  float: left;
+}
+
+body .contact {
+  padding: 2em;
+  border: solid;
+  float: right;
+} 
+
+.additional-content {
+  display: flex;
+  height: 47.8vh;
+}
+
+.additional-content section {
+  flex: 1;
+}
+
+.additional-content footer {
+  flex: 1;
+}

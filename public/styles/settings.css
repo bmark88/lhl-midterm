@@ -4,4 +4,10 @@ body .form-group {
 
 body main {
   margin: 1em;
+  height: 40vh;
+}
+
+footer {
+  padding: 2em;
+  text-align: center;
 }

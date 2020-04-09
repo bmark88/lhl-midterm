@@ -100,7 +100,7 @@ function outsideClick() {
     //   const pin_id = $(e.target).parent().children('.comment-options').children('form')[0][0].value
     // } else {
 
-    console.log(e.target);
+    // console.log(e.target);
 
     if ($('#simpleModal')[0] === $(e.target)[0]) {
       $('#simpleModal').css('display', 'none');
@@ -110,7 +110,7 @@ function outsideClick() {
 }
 
 const displayModal = () => {
-  console.log('hello from displayModal()')
+  // console.log('hello from displayModal()')
 
   $(this).on('click', function (e) {
     $(e.target).find('#simpleModal').css('display', 'block')
@@ -143,7 +143,7 @@ const checkIfLiked = () => {
         VALUES (500, 600);
       `;
       
-      console.log({pinIsLiked})
+      // console.log({pinIsLiked})
       $.ajax({
         url: '/pins',
         type: 'GET',
@@ -153,7 +153,7 @@ const checkIfLiked = () => {
       .then(res => {
         // $('.pin-container').html('<h1>HELLO WORLD</h1>')
         // $('.pin-container').html(res)
-        console.log(res);
+        // console.log(res);
       })
       .catch(e => console.error('ERROR ====>', e.stack));
     }

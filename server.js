@@ -113,8 +113,9 @@ app.get("/likes", (req, res) => {
 
 app.get('/comments', (req, res) => {
   let userID = req.session.user_id;
-  console.log(req.body);
+  // console.log(req.body);
   return res.render('pins');
+  // res.json('/comments')
 });
 
 app.get("/modal", (req, res) => {

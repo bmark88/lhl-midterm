@@ -27,6 +27,7 @@ body {
 
 .pin-container .box:hover {
   /* box-shadow: 5px 5px 4px black; */
+  box-shadow: 1px 1px 4px black;
 }
 
 .pin-container .box img {

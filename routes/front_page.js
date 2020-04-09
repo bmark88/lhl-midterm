@@ -57,5 +57,13 @@ module.exports = function(router) {
       .catch(e => console.error('ERROR: ', e.stack));
   });
 
+  router.post('/like', (req, res) => {
+    console.log('THIS IS THE PIN ID ====>', req.body.pin_id);
+    dbQuery.addLikeToDb(req.session.user_id, req.body.pin_id)
+      .then(() => {
+        return res.redirect('/pins');
+      })
+  })
+
   return router;
 };

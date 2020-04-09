@@ -307,6 +307,23 @@ const changeNightMode = (userid) => {
   .catch(e => e.stack);
 }
 
+//get the users current night-mode preference and set to opposite
+const addLikeToDb = (userid, pin_id) => {
+  console.log('addLike is being called')
+  console.log('userID ====>', userid)
+  return pool.query(`
+  INSERT INTO likes (user_id, pin_id)
+  VALUES ($1, $2);`, [userid, pin_id])
+  .then(res => {
+    // console.log('res rows for addlike', res);
+    return pool.query(`
+    UPDATE users
+    SET dark_mode = $1
+    WHERE id = $2;`, [newPref, userid]);
+  })
+  .catch(e => e.stack);
+}
+
 module.exports = {
   getUserWithEmail,
   getUserLikes,
@@ -324,5 +341,6 @@ module.exports = {
   changeAvatar,
   changePassword,
   deletePinFromDB,
-  changeNightMode
+  changeNightMode,
+  addLikeToDb
 };

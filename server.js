@@ -137,23 +137,6 @@ app.get("/likes", (req, res) => {
 });
 
 app.get('/comments', (req, res) => {
-<<<<<<< HEAD
-  let userID = req.session.user_id;
-  // console.log(req.body);
-  return res.render('pins');
-  // res.json('/comments')
-});
-
-app.get("/modal", (req, res) => {
-  return res.render("modal");
-});
-
-// app.get('pins/:pin_id/comments', (req, res) => {
-//   console.log('inside server.js')
-//   console.log(req.body);
-
-// });
-=======
   if (req.session.user_id) {
     return renderWithHeader(req, res, 'pins');
   }
@@ -163,7 +146,6 @@ app.get("/modal", (req, res) => {
 // app.get("/modal", (req, res) => {
 //   return res.render("modal");
 // })
->>>>>>> origin/navbar-login
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);

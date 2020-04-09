@@ -7,15 +7,6 @@ module.exports = function(router) {
     return res.json({ message: "Hey Adrian" });
   });
 
-<<<<<<< HEAD
-  router.get('/unregistered', (req, res) => {
-    dbQuery.getCategories() // can take an int for limit
-      .then(data => {
-        return res.json(data);
-        // return res.redirect('/categories'); //
-      });
-  });
-=======
   // router.get('/unregistered', (req, res) => {
   //   dbQuery.getCategories() // can take an int for limit
   //     .then(data => {
@@ -23,18 +14,13 @@ module.exports = function(router) {
   //       res.redirect('/categories'); //
   //     });
   // });
->>>>>>> origin/navbar-login
 
   router.get('/pins/display', (req, res) => {
     dbQuery.getAllPins()
       .then(data => {
         return res.json(data);
-<<<<<<< HEAD
-      });
-=======
       })
       .catch(e => e.stack);
->>>>>>> origin/navbar-login
   });
 
   router.post('/pins', (req, res) => {

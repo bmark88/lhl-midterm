@@ -7,25 +7,32 @@ body {
 }
 
 #pins-container {
+  padding: 2em;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-items: center;
 }
 
 .pin-container .box {
+  /* border: solid; */
   width: 90%;
   margin: 0 0 20px;
   padding: 10px;
   box-shadow: 0 0 4px black;
   /* overflow: hidden; */
-  border-radius: 7%;
+  /* border-radius: 7%; */
   justify-items: center;
   text-align: center;
 }
 
+.pin-container .box:hover {
+  /* box-shadow: 5px 5px 4px black; */
+}
+
 .pin-container .box img {
   max-width: 100%;
-  border-radius: 7%;
+  max-height: 150px;
+  /* border-radius: 7%; */
 }
 
 .pin-container .box h2 {
@@ -55,6 +62,12 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
+}
+
+.comment-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .category-container {

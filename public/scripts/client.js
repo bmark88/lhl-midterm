@@ -6,6 +6,7 @@ $(() => {
   addComment();
   addLike();
   updateNightMode();
+  renderComments();
 });
 
 // scrolls to the top of the page
@@ -91,18 +92,20 @@ const addComment = () => {
   // $('#new-comment-form').on('submit', function(evt) {
     // console.log('hello from addComment()')
 
-    $(this).on('click', (e) => {
+    $(this).on('submit', (e) => {
       // e.preventDefault()
       // console.log($(e.target));
-
-      if ($(e.target)[0] === $('.new-comment')[0]) {
+// debugger
+//e.target.action ---> in ajax request
+      if ($(e.target)[0] === $('#new-comment-form')[0]) {
         e.preventDefault()
         // console.log('addComment e.target ==>', $(e.target));
       const content = $('#new-comment-form textarea').val();
       const pin_id = $(e.target).parents('.pin-container').children('.pin_id').val();
 
       $.ajax({
-        url: '/comments',
+        // url: `/pins/${pin_id}comments`,
+        url: e.target.action,
         method: 'POST',
         dataType: 'json',
         data: {
@@ -123,7 +126,7 @@ const addComment = () => {
         const markup = `
         <div class='comment'>
         <span>${escape(content)}</span>
-        <span>$(commenter)</span>
+        <!-- <span>$(commenter)</span> -->
         <div>
         `;
     $('section.comments-list').append(markup)
@@ -187,7 +190,7 @@ function renderPins() {
             <h2>${pin.title}</h2>
              <p>${pin.description}</p>
              <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
-            <form action="/comments" method="POST" id="new-comment-form">
+            <form action="/pins/${pin.id}/comments" method="POST" id="new-comment-form">
             <textarea placeholder= "Comment here" name="content" id="comment-text"></textarea>
             <button class="new-comment" type="submit">Add Comment</button>
            </form> 
@@ -219,13 +222,13 @@ function renderPins() {
      </form> 
           <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
           <input type="checkbox">Like</input>
-          <span class="comment-options">
+           <span class="comment-options">
           <button class="edit-comment">Edit</button>
           <form action="/pins/delete" method="POST">
           <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
           <button class="delete-comment">Delete</button>
           </form>
-        </span>
+        </span> 
         <section class="comments-list">
         </section>
           <!-- <p class="user-comment">Sample user commented:</p>

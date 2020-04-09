@@ -120,7 +120,13 @@ app.get('/comments', (req, res) => {
 
 app.get("/modal", (req, res) => {
   return res.render("modal");
-})
+});
+
+// app.get('pins/:pin_id/comments', (req, res) => {
+//   console.log('inside server.js')
+//   console.log(req.body);
+
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

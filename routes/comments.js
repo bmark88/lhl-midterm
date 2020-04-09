@@ -21,7 +21,18 @@ module.exports = function (router) {
     // res.send("hello");
     addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);
     return res.redirect('/pins')
+  });
+
+  router.post('/pins/:pin_id/comments', (req, res) => {
+    addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);
+    // return res.redirect('pins');
+    return res.render('pins')
   })
+
+  // router.get('/pins/:pin_id/comments', (req, res) => {
+  //   addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);
+  //   return res.redirect('pins');
+  // })
   return router;
 
 };

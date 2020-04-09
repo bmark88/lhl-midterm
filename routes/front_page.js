@@ -64,7 +64,15 @@ module.exports = function(router) {
       .then(() => {
         return res.redirect('/pins');
       })
-  })
+  });
+
+  router.get('/likes', (req, res) => {
+    dbQuery.getUserLikes(req.session.user_id)
+    .then(result => {
+      console.log('this is result for likes', result)
+      return result;
+    })
+  });
 
   return router;
 };

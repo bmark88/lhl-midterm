@@ -1,8 +1,8 @@
-body {
+/* body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 17px;
   line-height: 1.6;
-}
+} */
 
 .button {
   background-color: blue;
@@ -11,12 +11,20 @@ body {
   border: 0;
 }
 
+.btn {
+  border-radius: 5%;
+}
+
 .button:hover {
   background-color: #333;
 }
 
-.modal {
+#simpleModal {
   display: none;
+}
+
+.modal {
+  /* display: none; */
   position: fixed;
   z-index: 5000;
   left: 0;
@@ -28,6 +36,8 @@ body {
 }
 
 .modal-content {
+  display: flex;
+  justify-content: center;
   border-radius: 1%;
   position: relative;
   background-color: white;
@@ -41,12 +51,12 @@ body {
   vertical-align: center;
 }
 
-.box img {
+/* .box img {
   width: 75%;
   position: relative;
   margin: auto;
   left: 12%;
-}
+} */
 
 /* .close-button {
   color: #ccc;
@@ -59,6 +69,11 @@ body {
   text-decoration: none;
   cursor: pointer;
 } */
+
+#new-comment-form {
+  display: flex;
+  flex-direction: column;
+}
 
 .box span.close-button {
   color: white;
@@ -87,9 +102,9 @@ body {
   padding: 2em;
 }
 
-.comment-options {
+/* .comment-options {
   float: right;
-}
+} */
 
 .edit-comment {
   padding: 5px 15px;

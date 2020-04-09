@@ -160,8 +160,6 @@ function renderPins() {
 
       <div id="simpleModal" class="modal">
     <div class="modal-content">
-      <span class="close-button">&times;</span>
-      <!-- <p>Modal Text</p> -->
       <div class="box">
       <img src="${pin.thumbnail_url}">
       <h2>${pin.title}</h2>

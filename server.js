@@ -27,6 +27,40 @@ const settings = require('./routes/settings');
 const comments = require('./routes/comments');
 const auth = require('./routes/auth');
 
+//////////////////////////////////////
+// HELPER FUNCTION
+/////////////////////////////////////
+//when page is rendered, header will change if logged in or out
+const renderWithHeader = (req, res, route) => {
+  // console.log("req.session.user_id ====> ", req.session.user_id)
+  console.log(`@@@@@@@ renderWithHeader: ${route}`)
+  let userID = req.session && req.session.user_id;
+  console.log("userid -------> ", userID)
+  if (userID) {
+    return db.query(`
+    SELECT *
+    FROM users
+    WHERE id = $1;`, [userID])
+    .then(result => {
+      if (result.rows.length === 0) {
+        const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+        return res.render(route, templateVars);
+      }
+      const {username, avatar_url} = result.rows[0];
+      console.log("username ----> ", username, "avatar -------> ", avatar_url)
+      const templateVars = { isLoggedIn: true, username, avatar_url }
+      return res.render(route, templateVars);
+      })
+      .catch(e => {
+        console.log(e)
+        return e.stack
+      });
+  }
+  else {
+    const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+    return res.render(route, templateVars);
+  }
+}
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -58,60 +92,52 @@ app.use(comments(router));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  let userID = req.session.user_id;
-
-  return res.render("index");
+  return renderWithHeader(req, res, 'index');
 });
 
 app.get("/login", (req, res) => {
-  let userID = req.session.user_id;
-
-  return res.render("login");
+  return renderWithHeader(req, res, 'login');
 });
 
 app.get("/register", (req, res) => {
-  return res.render("register");
+  return renderWithHeader(req, res, 'register');
 });
 
 app.get("/categories", (req, res) => {
-  let userID = req.session.user_id;
-  return res.render("categories");
+  return renderWithHeader(req, res, 'categories');
 });
 
-// app.post("/categories", (req, res) => {
-//   console.log(req.body);
-
-//   res.render("categories");
-// })
-
 app.get("/pins", (req, res) => {
-  let userID = req.session.user_id;
-  let templateVars = [userID];
-  if (userID) {
-    return res.render('pins', templateVars);
+  if (req.session.user_id) {
+    return renderWithHeader(req, res, 'pins');
+  } else {
+    return res.redirect('/');
   }
-  return res.redirect('/');
 });
 
 app.get("/settings", (req, res) => {
-  let userID = req.session.user_id;
-  let templateVars = [userID];
-  if (userID) {
-    return res.render('settings', templateVars);
+
+  if (req.session.user_id) {
+    console.log("rendering settings......")
+    return renderWithHeader(req, res, 'settings');
   }
   return res.redirect('/');
 });
 
+app.post('/logout', (req, res) => {
+  req.session = null;
+  return res.redirect('/login');
+})
+
 app.get("/likes", (req, res) => {
-  let userID = req.session.user_id;
-  let templateVars = [userID];
-  if (userID) {
-    return res.render('likes', templateVars);
+  if (req.session.user_id) {
+    return renderWithHeader(req, res, 'likes');
   }
   return res.redirect('/');
 });
 
 app.get('/comments', (req, res) => {
+<<<<<<< HEAD
   let userID = req.session.user_id;
   // console.log(req.body);
   return res.render('pins');
@@ -127,7 +153,18 @@ app.get("/modal", (req, res) => {
 //   console.log(req.body);
 
 // });
+=======
+  if (req.session.user_id) {
+    return renderWithHeader(req, res, 'pins');
+  }
+  return res.redirect('/');
+});
+
+// app.get("/modal", (req, res) => {
+//   return res.render("modal");
+// })
+>>>>>>> origin/navbar-login
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`app listening on port ${PORT}`);
 });

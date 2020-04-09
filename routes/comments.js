@@ -26,6 +26,7 @@ module.exports = function (router) {
   router.post('/pins/:pin_id/comments', (req, res) => {
     addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);
     // return res.redirect('pins');
+    console.log(req.body.pin_id);
     return res.render('pins')
   })
 

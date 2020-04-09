@@ -201,6 +201,8 @@ const getUserWithUsername = (username) => {
 
         const queryParams = [pinObject.pin_id];
 
+        console.log('queryParams for deletePinFromDB()', queryParams)
+        console.log('pinObject for deletePinFromDB()', pinObject)
         return pool
           .query(queryString, queryParams)
           .then(res => {

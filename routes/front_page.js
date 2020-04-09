@@ -52,7 +52,8 @@ module.exports = function(router) {
   router.post('/pins/delete', (req, res) => {
     dbQuery.deletePinFromDB(req.body)
       .then(() => {
-        return res.redirect('/pins');
+        
+        return res.render('pins');
       })
       .catch(e => console.error('ERROR: ', e.stack));
   });

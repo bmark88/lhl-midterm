@@ -42,9 +42,12 @@ const renderWithHeader = (req, res, route) => {
 }
 //check passwords and return user if match, otherwise null
 const login = function (email, password) {
+  console.log("logging in ....")
   return dbQuery.getUserWithEmail(email)
     .then(user => {
+      console.log("query returned -----> ", user)
       if (bcrypt.compareSync(password, user.password)) {
+      console.log('passwords matched ...')
       // if (password === user.password) {
         return user;
       } else {
@@ -88,9 +91,9 @@ module.exports = function (router) {
       password
     } = req.body;
 
-    if (!email || !password) {
-      return res.send("ERROR: empty field");
-    }
+    // if (!email || !password) {
+    //   return res.send("ERROR: empty field");
+    // }
 
     login(email, password)
       .then(user => {

@@ -38,12 +38,12 @@ const renderWithHeader = (req, res, route) => {
       const {username, avatar_url} = res.rows[0];
       console.log("username ----> ", username, "avatar -------> ", avatar_url)
       const templateVars = { isLoggedIn: true, username, avatar_url }
-      return res.render(`${route}`, templateVars);
+      return res.render(route, templateVars);
       })
       .catch(e => e.stack);
   } else {
     const templateVars = { isLoggedIn:false }
-    return res.render(`${route}`, templateVars);
+    return res.render(route, templateVars);
   }
 }
 

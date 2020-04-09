@@ -66,12 +66,20 @@ module.exports = function(router) {
       })
   });
 
-  router.get('/likes', (req, res) => {
+  // router.get('/likes', (req, res) => {
+  //   dbQuery.getUserLikes(req.session.user_id)
+  //   .then(result => {
+  //     console.log('this is result for likes', result)
+  //     return result;
+  //   })
+  // });
+
+  router.get('/likes/display', (req, res) => {
     dbQuery.getUserLikes(req.session.user_id)
-    .then(result => {
-      console.log('this is result for likes', result)
-      return result;
-    })
+      .then(data => {
+        console.log(data);
+        return res.json(data);
+      });
   });
 
   return router;

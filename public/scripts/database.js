@@ -45,7 +45,8 @@ const getUserLikes = function(id) {
   return pool.query(`
   SELECT *
   FROM likes
-  WHERE user_id = $1;
+  JOIN pins ON (pins.id = likes.pin_id)
+  WHERE likes.user_id = $1;
   `, values)
     .then(res => res.rows);
 };

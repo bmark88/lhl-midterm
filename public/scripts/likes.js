@@ -1,15 +1,16 @@
 $(() => {
-
+  renderLikes();
 });
 
 function renderLikes() {
   $.ajax({
       type: 'GET',
-      url: '/pins/display'
+      url: '/likes/display'
     })
     .done(data => {
       $('#pins-container').empty();
       data.forEach(pin => {
+        console.log('a pin exists')
         $('#pins-container')
           .prepend(`
         <div class="pin-container">
@@ -38,6 +39,7 @@ function renderLikes() {
             <form action='/like' method='POST'>
               <input class="like-checkbox" type="checkbox">Like</input>
             </form>
+            <!--
           <div class="comment-options">
           <button class="edit-comment">Edit</button>
           <form action="/pins/delete" method="POST">
@@ -45,6 +47,7 @@ function renderLikes() {
             <button class="delete-comment">Delete</button>
           </form>
           </div>
+          -->
           <!-- Modal starts here -->
           <div id="simpleModal" class="modal">
             <div class="modal-content">
@@ -65,6 +68,7 @@ function renderLikes() {
                   <span class="rating-5">⭐</span>
                 </p>
                 <input type="checkbox">Like</input>
+                <!--
                 <span class="comment-options">
                   <button class="edit-comment">Edit</button>
                   <form action="/pins/delete" method="POST">
@@ -72,6 +76,7 @@ function renderLikes() {
                     <button class="delete-comment">Delete</button>
                   </form>
                 </span> 
+                -->
 
                 <section class="comments-list">
                 </section>

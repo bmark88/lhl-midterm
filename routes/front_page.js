@@ -23,21 +23,21 @@ module.exports = function(router) {
   });
 
   router.post('/pins', (req, res) => {
-    console.log('FORM DATA =====>', req.body);
+    // console.log('FORM DATA =====>', req.body);
     // console.log('THIS IS THE SESSION COOKIE USER ID =====>',req.session.user_id);
     const userID = req.session.user_id;
 
-    console.log('THIS IS THE SESSION COOKIE USER ID =====>',userID)
+    // console.log('THIS IS THE SESSION COOKIE USER ID =====>',userID)
     dbQuery.addPinToDb(req.body, userID)
       .then(() => {
-        console.log('Redirecting to /pins...')
+        // console.log('Redirecting to /pins...')
         return res.redirect('/pins');
       })
       .catch(e => console.error('ERROR: ', e.stack));
     });
 
   router.post('/categories', (req, res) => {
-    console.log('FORM DATA =====>', req.body);
+    // console.log('FORM DATA =====>', req.body);
 
     // console.log('THIS IS THE SESSION COOKIE USER ID =====>',req.session.user_id);
     // const userID = req.session.user_id;
@@ -52,13 +52,14 @@ module.exports = function(router) {
   router.post('/pins/delete', (req, res) => {
     dbQuery.deletePinFromDB(req.body)
       .then(() => {
-        return res.redirect('/pins');
+        
+        return res.render('pins');
       })
       .catch(e => console.error('ERROR: ', e.stack));
   });
 
   router.post('/like', (req, res) => {
-    console.log('THIS IS THE PIN ID ====>', req.body.pin_id);
+    // console.log('THIS IS THE PIN ID ====>', req.body.pin_id);
     dbQuery.addLikeToDb(req.session.user_id, req.body.pin_id)
       .then(() => {
         return res.redirect('/pins');

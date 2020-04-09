@@ -113,13 +113,20 @@ app.get("/likes", (req, res) => {
 
 app.get('/comments', (req, res) => {
   let userID = req.session.user_id;
-  console.log(req.body);
+  // console.log(req.body);
   return res.render('pins');
+  // res.json('/comments')
 });
 
 app.get("/modal", (req, res) => {
   return res.render("modal");
-})
+});
+
+// app.get('pins/:pin_id/comments', (req, res) => {
+//   console.log('inside server.js')
+//   console.log(req.body);
+
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

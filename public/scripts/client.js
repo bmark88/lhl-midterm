@@ -12,7 +12,9 @@ $(() => {
 const scrollToTop = () => {
   $('.scroll-top').on('click', (e) => {
     e.preventDefault();
-    $('html, body').animate({scrollTop : 0}, 800);
+    $('html, body').animate({
+      scrollTop: 0
+    }, 800);
     return;
   });
 };
@@ -20,18 +22,13 @@ const scrollToTop = () => {
 //change nightmode preference
 const updateNightMode = () => {
   $(".night-mode").on('click', (e) => {
-    // e.preventDefault();
-    // console.log($("input[type='checkbox']").val());
     $.ajax({
       url: '/nightmode',
       method: 'POST',
     })
-    // .done(res => {
-    //   console.log("Night Mode Changed!")
-    //   res.render('settings');
-    // })
   })
-}
+};
+
 // adds a new pin
 const addNewPin = () => {
   let pin = {};
@@ -41,38 +38,32 @@ const addNewPin = () => {
     pin.name = $('#new-pin-name').val();
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
-    pin.created_at = new Date(Date.now()).toString().slice(0,25)
+    pin.created_at = new Date(Date.now()).toString().slice(0, 25);
 
     $.ajax({
       url: '/pins',
-        method: 'POST',
-        dataType: 'json',
-        data: pin
-      })
-      renderPins();
-      // console.log('pin created!!')
-      // .done(res => {
-      //   // $('pin-container').prepend()
-      //   console.log('Succesfully added pin to DB!');
-      //   renderPins();
-      // });
-  })
+      method: 'POST',
+      dataType: 'json',
+      data: pin
+    });
+    $('#new-pin-name').val('');
+    $('#new-pin-description').val('');
+    $('#new-pin-image').val('');
+    renderPins();
+  });
 };
 
 // adds a new post
 const addNewCategory = () => {
   let category = {};
-  $('#add-category-button').on('submit', (e) => {
-    // e.preventDefault();
+  $('#add-category-button').on('submit', () => {
 
     category.name = $('#new-category-name').val();
     category.description = $('#new-category-description').val();
     category.image = $('#new-category-image').val();
-    category.created_at = new Date(Date.now()).toString().slice(0,25)
+    category.created_at = new Date(Date.now()).toString().slice(0, 25)
 
-    console.log(category);
-
-      $('.pin-container').html(`<div class="box">
+    $('.pin-container').html(`<div class="box">
       <img src='https://images.hgmsites.net/hug/2018-mclaren-720s_100652805_h.jpg'>
       <img src= './public/images/default_category_thumbnail_url.jpg'>
       <h2>${category.name}</h2>
@@ -115,113 +106,112 @@ const addComment = () => {
       };
       //framework for each comment in comments
       const markup = `
-      <div class='comment'>
-      <span>${escape(content)}</span>
-      <!-- <span>$(commenter)</span> -->
-      <div>
-      `;
-  $('section.comments-list').append(markup)
-  }
-  })
-}
+        <div class='comment'>
+          <span>${escape(content)}</span>
+          <!-- <span>$(commenter)</span> -->
+        <div>
+        `;
+      $('section.comments-list').append(markup);
+
+      $(e.target).children('.new-comment-form textarea').val('');
+    }
+  });
+};
+
 function renderPins() {
-  console.log('Calling pins fuction...')
   $.ajax({
-    type: 'GET',
-    url: '/pins/display'
-  }).done(data => {
-    $('#pins-container').empty();
-    data.forEach(pin => {
-      $('#pins-container')
-        .prepend(`
+      type: 'GET',
+      url: '/pins/display'
+    })
+    .done(data => {
+      $('#pins-container').empty();
+      data.forEach(pin => {
+        $('#pins-container')
+          .prepend(`
         <div class="pin-container">
-         <div class="box">
-          <img src="${pin.thumbnail_url}" alt="${[pin.title]}">
+        <!-- <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}"> -->
+          <div class="box">
+            <img src="${pin.thumbnail_url}">
             <h2>${pin.title}</h2>
              <p>${pin.description}</p>
              <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
-           <form id="new-comment-form">
-            <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
-            <button type="submit">Add Comment</button>
-           </form>
-         <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
-         <form action='/like' method='POST'>
-          <input class="like-checkbox" type="checkbox">Like</input>
-         </form>
-        <div class="comment-options">
-        <button class="edit-comment">Edit</button>
-        <form action="/pins/delete" method="POST">
-        <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
-        <button class="delete-comment">Delete</button>
-        </form>
-      </div>
-
-
-
-
-      <div id="simpleModal" class="modal">
-    <div class="modal-content">
-      <div class="box">
-      <img src="${pin.thumbnail_url}">
-      <h2>${pin.title}</h2>
-      <p>${pin.description}</p>
-      <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
-          <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
-          <input type="checkbox">Like</input>
-          <span class="comment-options">
+            <form
+              action="/pins/${pin.id}/comments"
+              method="POST"
+              class="new-comment-form"
+              data-pin_id="${pin.id}"
+              >
+                <textarea placeholder= "Comment here" name="content" id="comment-text"></textarea>
+              <button class="new-comment" type="submit">Add Comment</button>
+            </form>
+            <p>Rating:
+              <span class="rating-1">⭐</span>
+              <span class="rating-2">⭐</span>
+              <span class="rating-3">⭐</span>
+              <span class="rating-4">⭐</span>
+              <span class="rating-5">⭐</span>
+            </p>
+            <form action='/like' method='POST'>
+              <input class="like-checkbox" type="checkbox">Like</input>
+            </form>
+          <div class="comment-options">
           <button class="edit-comment">Edit</button>
           <form action="/pins/delete" method="POST">
-          <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
-          <button class="delete-comment">Delete</button>
+            <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
+            <button class="delete-comment">Delete</button>
           </form>
-        </span>
-          <p class="user-comment">Sample user commented:</p>
-          <p class="comment">cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            q </p>
-            <p class="user-comment">Sample user commented:</p>
-          <p class="comment">cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            q </p>
-            <p class="user-comment">Sample user commented:</p>
-          <p class="comment">cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-            q </p>
-      </div>
+          </div>
+          <!-- Modal starts here -->
+          <div id="simpleModal" class="modal">
+            <div class="modal-content">
+              <div class="box">
+                <img src="${pin.thumbnail_url}">
+                <h2>${pin.title}</h2>
+                <p>${pin.description}</p>
+                <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
+                <form id="new-comment-form">
+                  <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
+                  <button type="submit">Add Comment</button>
+                </form>
+                <p>Rating:
+                  <span class="rating-1">⭐</span>
+                  <span class="rating-2">⭐</span>
+                  <span class="rating-3">⭐</span>
+                  <span class="rating-4">⭐</span>
+                  <span class="rating-5">⭐</span>
+                </p>
+                <input type="checkbox">Like</input>
+                <span class="comment-options">
+                  <button class="edit-comment">Edit</button>
+                  <form action="/pins/delete" method="POST">
+                    <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
+                    <button class="delete-comment">Delete</button>
+                  </form>
+                </span>
 
-    </div>
-  </div>
+                <section class="comments-list">
+                </section>
+              </div>
+            </div>
+          </div>
         `);
+      });
     });
-  });
-}
+};
 
 //change nightmode preference
 const addLike = () => {
   $(this).on('click', (e) => {
-    if($(e.target)[0] === $('.like-checkbox')[0]) {
+    if ($(e.target)[0] === $('.like-checkbox')[0]) {
       const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
 
       $.ajax({
-      url: '/like',
-      method: 'POST',
-      data: { pin_id: pin_id }
-    })
-    .catch(e => e.stack);
-  }
-});
-
+        url: '/like',
+        method: 'POST',
+        data: {
+          pin_id: pin_id
+        }
+      });
+    }
+  });
 }
-

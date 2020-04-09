@@ -169,7 +169,7 @@ const getUserWithUsername = (username) => {
     return pool
       .query(queryString, values)
       .then(res => {
-        console.log("Succesful DB insert",res.rows)
+        // console.log("Succesful DB insert",res.rows)
         return res.rows;
       })
       .catch(e => console.error('query error ====>', e.stack));
@@ -193,7 +193,7 @@ const getUserWithUsername = (username) => {
       }
       const deletePinFromDB = (pinObject, ownerOfPin) => {
         // const values = [pinObject.name, pinObject.description, pinObject.image, ownerOfPin, pinObject.created_at];
-        console.log('deleted pin object ======>', pinObject);
+        // console.log('deleted pin object ======>', pinObject);
         const queryString = `
         DELETE FROM pins
         WHERE id = $1;
@@ -201,6 +201,8 @@ const getUserWithUsername = (username) => {
 
         const queryParams = [pinObject.pin_id];
 
+        console.log('queryParams for deletePinFromDB()', queryParams)
+        console.log('pinObject for deletePinFromDB()', pinObject)
         return pool
           .query(queryString, queryParams)
           .then(res => {

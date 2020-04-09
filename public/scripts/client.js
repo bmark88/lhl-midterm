@@ -100,8 +100,6 @@ const addComment = () => {
         }
       });
 
-      $(e.target).children('.new-comment-form textarea').val('');
-
       //append comments to comment-list
       //safeguard agains XSS, escape userEnteredText
       const escape = function (str) {
@@ -118,8 +116,8 @@ const addComment = () => {
         `;
       $('section.comments-list').append(markup);
 
+      $(e.target).children('.new-comment-form textarea').val('');
     }
-
   });
 };
 

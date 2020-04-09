@@ -32,7 +32,6 @@ const auth = require('./routes/auth');
 /////////////////////////////////////
 //when page is rendered, header will change if logged in or out
 const renderWithHeader = (req, res, route) => {
-  console.log("route =========> ", route)
   console.log("req.session.user_id ====> ", req.session.user_id)
   let userID = req.session.user_id;
   if (userID) {
@@ -44,12 +43,12 @@ const renderWithHeader = (req, res, route) => {
       const {username, avatar_url} = res.rows[0];
       console.log("username ----> ", username, "avatar -------> ", avatar_url)
       const templateVars = { isLoggedIn: true, username, avatar_url }
-      return res.render(route, templateVars);
+      return res.render(`${route}`, templateVars);
       })
       .catch(e => e.stack);
   } else {
     const templateVars = { isLoggedIn:false }
-    return res.render(route, templateVars);
+    return res.render(`${route}`, templateVars);
   }
 }
 // Load the logger first so all (static) HTTP requests are logged to STDOUT

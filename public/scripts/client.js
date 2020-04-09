@@ -88,41 +88,42 @@ const addNewCategory = () => {
 
 //show comments on a pin
 const addComment = () => {
-  $('#new-comment-form').on('submit', function(evt) {
-    evt.preventDefault();
-
-    console.log($('#new-comment-form textarea').val());
-    // const user_id = 'test'
-    const content = $('#new-comment-form textarea').val();
-    const pin_id = '2'
+  $(this).on('submit', (e) => {
+    if ($(e.target).attr('class') === 'new-comment-form') {
+      // only prevent default if the target is the new-comment-form class
+      // this allows other functions to still be called
+      e.preventDefault()
+    const content = $(e.target).children('.new-comment-form textarea').val();
+    const pin_id = $(e.target).data("pin_id")
     $.ajax({
-        url: '/comments',
-        method: 'POST',
-        dataType: 'json',
-        data: {
-          // user_id,
-          content,
-          pin_id,
-        }
-      })
-      //append comments to comment-list
-        //safeguard agains XSS, escape userEnteredText
-        const escape =  function(str) {
-          let p = document.createElement('p');
-          p.appendChild(document.createTextNode(str));
-          return p.innerHTML;
-        };
-        //framework for each comment in comments
-        const markup = `
-        <div class='comment'>
-        <span>${escape(content)}</span>
-        <span>$(commenter)</span>
-        <div>
-        `;
-    $('section.comments-list').append(markup)
+      // url: `/pins/${pin_id}comments`, ==> this is the same as e.target.action (just for reference)
+      url: e.target.action,
+      method: 'POST',
+      dataType: 'json',
+      data: {
+        // user_id,
+        content,
+        pin_id,
+      }
     })
+      //append comments to comment-list
+      //safeguard agains XSS, escape userEnteredText
+      const escape =  function(str) {
+        let p = document.createElement('p');
+        p.appendChild(document.createTextNode(str));
+        return p.innerHTML;
+      };
+      //framework for each comment in comments
+      const markup = `
+      <div class='comment'>
+      <span>${escape(content)}</span>
+      <!-- <span>$(commenter)</span> -->
+      <div>
+      `;
+  $('section.comments-list').append(markup)
   }
-
+  })
+}
 function renderPins() {
   console.log('Calling pins fuction...')
   $.ajax({

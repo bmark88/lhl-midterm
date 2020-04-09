@@ -324,6 +324,19 @@ const addLikeToDb = (userid, pin_id) => {
   .catch(e => e.stack);
 }
 
+const catChildPins = function (data) {
+  let queryString = `
+  SELECT *
+  FROM categories
+  JOIN pins ON categories.id = pins.category_id
+  WHERE categories.name LIKE '%${data}%';
+  `;
+
+  return pool
+    .query(queryString)
+    .then(res => res.rows);
+};
+
 module.exports = {
   getUserWithEmail,
   getUserLikes,
@@ -342,5 +355,6 @@ module.exports = {
   changePassword,
   deletePinFromDB,
   changeNightMode,
-  addLikeToDb
+  addLikeToDb,
+  catChildPins
 };

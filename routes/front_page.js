@@ -65,5 +65,16 @@ module.exports = function(router) {
       })
   })
 
+  router.get('/testinglol', (req, res) => {
+    const catName = Object.keys(req.query)[0];
+    console.log(catName);
+
+    dbQuery
+      .catChildPins(catName)
+      .then(data => {
+        res.json(data);
+      });
+  });
+
   return router;
 };

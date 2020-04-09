@@ -13,7 +13,7 @@ $(document).ready(() => {
       const newTitle = $(`<span>${category.name}</span>`)
         .addClass('category-title');
 
-      const newThumbnail = $('<img>')
+      const newThumbnail = $(`<img data-name="${category.name}">`)
         .addClass('category-thumbnail')
         .attr('src', category.thumbnail_url);
 

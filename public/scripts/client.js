@@ -154,6 +154,56 @@ function renderPins() {
         <button class="delete-comment">Delete</button>
         </form>
       </span>
+
+
+
+
+      <div id="simpleModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <!-- <p>Modal Text</p> -->
+      <div class="box">
+      <img src="${pin.thumbnail_url}">
+      <h2>${pin.title}</h2>
+      <p>${pin.description}</p>
+      <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
+          <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
+          <input type="checkbox">Like</input>
+          <span class="comment-options">
+          <button class="edit-comment">Edit</button>
+          <form action="/pins/delete" method="POST">
+          <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
+          <button class="delete-comment">Delete</button>
+          </form>
+        </span>
+          <p class="user-comment">Sample user commented:</p>
+          <p class="comment">cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            q </p>
+            <p class="user-comment">Sample user commented:</p>
+          <p class="comment">cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            q </p>
+            <p class="user-comment">Sample user commented:</p>
+          <p class="comment">cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            q </p>
+      </div>
+
+    </div>
+  </div>
         `);
     });
   });
@@ -163,15 +213,14 @@ function renderPins() {
 const addLike = () => {
   $(this).on('click', (e) => {
     if($(e.target)[0] === $('.like-checkbox')[0]) {
-
       const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
 
-      console.log('.like-checkbox was clicked!')
       $.ajax({
       url: '/like',
       method: 'POST',
       data: { pin_id: pin_id }
     })
+    .catch(e => e.stack);
   }
 });
 

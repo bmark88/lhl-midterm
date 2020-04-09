@@ -21,23 +21,31 @@ const dbQuery = require('../public/scripts/database');
 /////////////////////////////////////
 //when page is rendered, header will change if logged in or out
 const renderWithHeader = (req, res, route) => {
-  console.log("req.session.user_id ====> ", req.session.user_id)
-  let userID = req.session.user_id;
+  // console.log("req.session.user_id ====> ", req.session.user_id)
+  let userID = req.session && req.session.user_id;
+  console.log("userid -------> ", userID)
   if (userID) {
-    return pool.query(`
+    return db.query(`
     SELECT *
     FROM users
     WHERE id = $1;`, [userID])
-    .then(res => {
-      const {username, avatar_url} = res.rows[0];
+    .then(result => {
+      if (result.rows.length === 0) {
+        const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+        return res.render(route, templateVars);
+      }
+      const {username, avatar_url} = result.rows[0];
       console.log("username ----> ", username, "avatar -------> ", avatar_url)
       const templateVars = { isLoggedIn: true, username, avatar_url }
-      return res.render(`${route}`, templateVars);
+      return res.render(route, templateVars);
       })
-      .catch(e => e.stack);
+      .catch(e => {
+        console.log(e)
+        return e.stack
+      });
   } else {
-    const templateVars = { isLoggedIn:false }
-    return res.render(`${route}`, templateVars);
+    const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+    return res.render(route, templateVars);
   }
 }
 //check passwords and return user if match, otherwise null
@@ -131,7 +139,7 @@ module.exports = function (router) {
                 return renderWithHeader(req, res, 'login');
               });
         } else {
-          res.send("user or email has been taken")
+          return res.send("user or email has been taken")
         }
       })
   });

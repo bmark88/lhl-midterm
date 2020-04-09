@@ -33,6 +33,7 @@ const auth = require('./routes/auth');
 //when page is rendered, header will change if logged in or out
 const renderWithHeader = (req, res, route) => {
   // console.log("req.session.user_id ====> ", req.session.user_id)
+  console.log(`@@@@@@@ renderWithHeader: ${route}`)
   let userID = req.session && req.session.user_id;
   console.log("userid -------> ", userID)
   if (userID) {
@@ -54,7 +55,8 @@ const renderWithHeader = (req, res, route) => {
         console.log(e)
         return e.stack
       });
-  } else {
+  }
+  else {
     const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
     return res.render(route, templateVars);
   }
@@ -90,39 +92,41 @@ app.use(comments(router));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  renderWithHeader(req, res, 'index');
+  return renderWithHeader(req, res, 'index');
 });
 
 app.get("/login", (req, res) => {
-  renderWithHeader(req, res, 'login');
+  return renderWithHeader(req, res, 'login');
 });
 
 app.get("/register", (req, res) => {
-  renderWithHeader(req, res, 'register');
+  return renderWithHeader(req, res, 'register');
 });
 
 app.get("/categories", (req, res) => {
-  renderWithHeader(req, res, 'categories');
+  return renderWithHeader(req, res, 'categories');
 });
 
 app.get("/pins", (req, res) => {
   if (req.session.user_id) {
-    renderWithHeader(req, res, 'pins');
+    return renderWithHeader(req, res, 'pins');
   } else {
-    res.redirect('/');
+    return res.redirect('/');
   }
 });
 
 app.get("/settings", (req, res) => {
+
   if (req.session.user_id) {
-    renderWithHeader(req, res, 'settings');
+    console.log("rendering settings......")
+    return renderWithHeader(req, res, 'settings');
   }
   return res.redirect('/');
 });
 
 app.post('/logout', (req, res) => {
   req.session = null;
-  res.redirect('/login');
+  return res.redirect('/login');
 })
 
 app.get("/likes", (req, res) => {

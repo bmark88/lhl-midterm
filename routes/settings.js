@@ -21,8 +21,7 @@ module.exports = function (router) {
     dbQuery.changeUsername(req.session.user_id, req.body.username)
     .then(user => {
       if (user === undefined) {
-        res.send({error: "error"});
-        return;
+        return res.send({error: "error"});
       }
       return res.redirect("/settings");
     })
@@ -60,8 +59,7 @@ module.exports = function (router) {
     dbQuery.changePassword(req.session.user_id, hash)
     .then(user => {
       if (user === undefined) {
-        res.send({error: "error"});
-        return;
+        return res.send({error: "error"});
       }
       return res.redirect("/settings");
     })

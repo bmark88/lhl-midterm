@@ -6,23 +6,21 @@ body {
   box-sizing: border-box;
 }
 
-.pin-container {
-  width: 90%;
-  margin: 20px auto;
+#pins-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  columns: 4;
-  column-gap: 40px;
+  justify-items: center;
 }
 
 .pin-container .box {
-  width: 100%;
+  width: 90%;
   margin: 0 0 20px;
   padding: 10px;
-  background: #fff;
-  overflow: hidden;
+  box-shadow: 0 0 4px black;
+  /* overflow: hidden; */
   border-radius: 7%;
   justify-items: center;
+  text-align: center;
 }
 
 .pin-container .box img {
@@ -89,7 +87,7 @@ body {
 
 
 /* pins */
-/* 
+/*
 #pins-container {
   width: 100vw;
   min-height: min-content;
@@ -155,3 +153,4 @@ body {
 .pin-date.show {
   opacity: 1;
 } */
+

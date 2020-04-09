@@ -4,21 +4,21 @@ const dbQuery = require('../public/scripts/database')
 
 module.exports = function(router) {
   router.get('/testing', (req, res) => {
-    res.json({ message: "Hey Adrian" });
+    return res.json({ message: "Hey Adrian" });
   });
 
   router.get('/unregistered', (req, res) => {
     dbQuery.getCategories() // can take an int for limit
       .then(data => {
-        res.json(data);
-        res.redirect('/categories'); //
+        return res.json(data);
+        // return res.redirect('/categories'); //
       });
   });
 
   router.get('/pins/display', (req, res) => {
     dbQuery.getAllPins()
       .then(data => {
-        res.json(data);
+        return res.json(data);
       });
   });
 

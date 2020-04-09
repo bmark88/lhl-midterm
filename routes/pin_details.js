@@ -22,10 +22,30 @@ router.use(cookieSession({
   keys: ['user_id'],
 }));
 
-
-
-
-
+//////////////////////////////////////
+// HELPER FUNCTION
+/////////////////////////////////////
+//when page is rendered, header will change if logged in or out
+const renderWithHeader = (req, res, route) => {
+  console.log("req.session.user_id ====> ", req.session.user_id)
+  let userID = req.session.user_id;
+  if (userID) {
+    return pool.query(`
+    SELECT *
+    FROM users
+    WHERE id = $1;`, [userID])
+    .then(res => {
+      const {username, avatar_url} = res.rows[0];
+      console.log("username ----> ", username, "avatar -------> ", avatar_url)
+      const templateVars = { isLoggedIn: true, username, avatar_url }
+      return res.render(`${route}`, templateVars);
+      })
+      .catch(e => e.stack);
+  } else {
+    const templateVars = { isLoggedIn:false }
+    return res.render(`${route}`, templateVars);
+  }
+}
 
 module.exports = function () {
 
@@ -53,9 +73,6 @@ module.exports = function () {
 
 
         req.session.user_id = user.id;
-        // res.send(user);
-        // console.log('user ======>', user)
-        // console.log('req.session ======>', req.session);
         return res.redirect('pins');
       })
       .catch(e => res.send(e));
@@ -80,15 +97,11 @@ module.exports = function () {
               `;
               const queryParams = [username, email, password]
               pool.query(queryString, queryParams);
-              return res.render('login');
+              return renderWithHeader(req, res, 'login');
         } else {
           res.send("user or email has been taken")
         }
-      }
-    )
-
-
-    
+      })
   });
 
   return router;

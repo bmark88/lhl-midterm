@@ -13,12 +13,7 @@ const { addCommentToDb } = require('../public/scripts/database');
 
 module.exports = function (router) {
 
-  console.log('inside comments.js');
-
   router.post('/comments', (req, res) => {
-    console.log(req.body);
-    console.log(req.session.user_id);
-    res.send("hello");
     addCommentToDb(req.body.pin_ID, req.session.user_id, req.body.content);
   })
   return router;

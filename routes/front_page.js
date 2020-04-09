@@ -52,7 +52,7 @@ module.exports = function(router) {
   router.post('/pins/delete', (req, res) => {
     dbQuery.deletePinFromDB(req.body)
       .then(() => {
-        
+
         return res.render('pins');
       })
       .catch(e => console.error('ERROR: ', e.stack));
@@ -63,8 +63,18 @@ module.exports = function(router) {
     dbQuery.addLikeToDb(req.session.user_id, req.body.pin_id)
       .then(() => {
         return res.redirect('/pins');
-      })
+      }).catch(e => e.stack);
   })
 
+  router.post('/rating', (req, res) => {
+    console.log("value ----> ", req.body.value)
+    console.log("userid ----> ", req.session.user_id)
+    console.log("pinid ----> ", req.body.pin)
+
+    dbQuery.addRatingtoDb(req.body.value, req.session.user_id, req.body.pin)
+    .then(() => {
+      return res.redirect('/pins')
+    }).catch(e => e.stack);
+  })
   return router;
 };

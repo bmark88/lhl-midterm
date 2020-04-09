@@ -6,8 +6,25 @@ $(() => {
   addComment();
   addLike();
   updateNightMode();
+  addRating();
 });
 
+const addRating = () => {
+  $(this).on('click', function(e) {
+    if ($(e.target).attr('type') === 'radio') {
+      const pin_id = $(e.target).parents('form').siblings('form').data('pin_id');
+      console.log('pin_id is: ===> ', pin_id)
+      $.ajax({
+        url: '/rating',
+        method: 'POST',
+        data: {
+          value: e.target.value,
+          pin: pin_id
+        }
+      })
+    }
+  })
+}
 // scrolls to the top of the page
 const scrollToTop = () => {
   $('.scroll-top').on('click', (e) => {
@@ -138,22 +155,47 @@ function renderPins() {
             <h2>${pin.title}</h2>
              <p>${pin.description}</p>
              <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
-            <form 
-              action="/pins/${pin.id}/comments" 
-              method="POST" 
-              class="new-comment-form" 
+            <form
+              action="/pins/${pin.id}/comments"
+              method="POST"
+              class="new-comment-form"
               data-pin_id="${pin.id}"
               >
                 <textarea placeholder= "Comment here" name="content" id="comment-text"></textarea>
               <button class="new-comment" type="submit">Add Comment</button>
-            </form> 
-            <p>Rating: 
-              <span class="rating-1">⭐</span>
-              <span class="rating-2">⭐</span>
-              <span class="rating-3">⭐</span>
-              <span class="rating-4">⭐</span>
-              <span class="rating-5">⭐</span>
-            </p>
+            </form>
+            <form class="rating">
+              <label>
+                <input type="radio" name="stars" value="1" />
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="2" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="3" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="4" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="5" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+            </form>
             <form action='/like' method='POST'>
               <input class="like-checkbox" type="checkbox">Like</input>
             </form>
@@ -175,14 +217,39 @@ function renderPins() {
                 <form id="new-comment-form">
                   <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
                   <button type="submit">Add Comment</button>
-                </form> 
-                <p>Rating: 
-                  <span class="rating-1">⭐</span>
-                  <span class="rating-2">⭐</span>
-                  <span class="rating-3">⭐</span>
-                  <span class="rating-4">⭐</span>
-                  <span class="rating-5">⭐</span>
-                </p>
+                </form>
+                <form class="rating">
+                  <label>
+                    <input type="radio" name="stars" value="1" />
+                    <span class="icon">★</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="stars" value="2" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="stars" value="3" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="stars" value="4" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="stars" value="5" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                  </label>
+                </form>
                 <input type="checkbox">Like</input>
                 <span class="comment-options">
                   <button class="edit-comment">Edit</button>
@@ -190,7 +257,7 @@ function renderPins() {
                     <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
                     <button class="delete-comment">Delete</button>
                   </form>
-                </span> 
+                </span>
 
                 <section class="comments-list">
                 </section>

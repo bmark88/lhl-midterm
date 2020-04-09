@@ -326,6 +326,30 @@ const addLikeToDb = (userid, pin_id) => {
   .catch(e => e.stack);
 }
 
+const addRatingtoDb = (rating, userID, pinID) => {
+  //check if this user has already rated this post
+  return pool.query(`
+  SELECT id
+  FROM ratings
+  WHERE user_id = $1 AND pin_id = $2;`, [userID, pinID])
+  .then(result => {
+    if (result.rowCount) {
+      //if this user already rated this post, updat their rating
+      return pool.query(`
+      UPDATE ratings
+      SET score = $1
+      WHERE user_id = $2 AND pin_id = $3;`, [rating, userID, pinID])
+    }
+    //if user has not rated this post, add new row
+    const queryParams = [pinID, userID, rating];
+    const queryString = `
+    INSERT INTO ratings(pin_id, user_id, score)
+    VALUES ($1, $2, $3);
+    `
+    return pool.query(queryString, queryParams)
+  }).catch(e => e.stack);
+}
+
 module.exports = {
   getUserWithEmail,
   getUserLikes,
@@ -344,5 +368,6 @@ module.exports = {
   changePassword,
   deletePinFromDB,
   changeNightMode,
-  addLikeToDb
+  addLikeToDb,
+  addRatingtoDb
 };

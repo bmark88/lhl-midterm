@@ -4,12 +4,8 @@ $(() => {
   addNewPin();
   addNewCategory();
   addComment();
-
-  $('#add-pin-button').on('click', (e) => {
-    e.preventDefault();
-    renderPins();
-  });
-  
+  addLike();
+  updateNightMode();
 });
 
 // scrolls to the top of the page
@@ -21,6 +17,21 @@ const scrollToTop = () => {
   });
 };
 
+//change nightmode preference
+const updateNightMode = () => {
+  $(".night-mode").on('click', (e) => {
+    // e.preventDefault();
+    // console.log($("input[type='checkbox']").val());
+    $.ajax({
+      url: '/nightmode',
+      method: 'POST',
+    })
+    // .done(res => {
+    //   console.log("Night Mode Changed!")
+    //   res.render('settings');
+    // })
+  })
+}
 // adds a new pin
 const addNewPin = () => {
   let pin = {};
@@ -31,18 +42,20 @@ const addNewPin = () => {
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0,25)
-
+    
     $.ajax({
       url: '/pins',
         method: 'POST',
         dataType: 'json',
         data: pin
       })
-      .done(res => {
-        // $('pin-container').prepend()
-        console.log('Succesfully added pin to DB!');
-        renderPins();
-      });
+      renderPins();
+      // console.log('pin created!!')
+      // .done(res => {
+      //   // $('pin-container').prepend()
+      //   console.log('Succesfully added pin to DB!');
+      //   renderPins();
+      // });
   })
 };
 
@@ -110,7 +123,6 @@ const addComment = () => {
     })
   }
 
-
 function renderPins() {
   console.log('Calling pins fuction...')
   $.ajax({
@@ -132,7 +144,7 @@ function renderPins() {
             <button type="submit">Add Comment</button>
            </form>
          <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
-         <form action='/pins' method='POST'>
+         <form action='/like' method='POST'>
           <input class="like-checkbox" type="checkbox">Like</input>
          </form>
         <span class="comment-options">
@@ -146,3 +158,22 @@ function renderPins() {
     });
   });
 }
+
+//change nightmode preference
+const addLike = () => {
+  $(this).on('click', (e) => {
+    if($(e.target)[0] === $('.like-checkbox')[0]) {
+
+      const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
+
+      console.log('.like-checkbox was clicked!')
+      $.ajax({
+      url: '/like',
+      method: 'POST',
+      data: { pin_id: pin_id }
+    })
+  }
+});
+
+}
+

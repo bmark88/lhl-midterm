@@ -8,7 +8,7 @@ const pool = new Pool({
 });
 
 const dbQuery = require('../public/scripts/database');
-
+const bcrypt = require('bcrypt');
 //do the thing
 
 module.exports = function (router) {
@@ -56,8 +56,8 @@ module.exports = function (router) {
   })
 
   router.post('/password', (req, res) => {
-    console.log("req.body ------> ", req.body.password)
-    dbQuery.changePassword(req.session.user_id, req.body.password)
+    const hash = bcrypt.hashSync(req.body.password, 12)
+    dbQuery.changePassword(req.session.user_id, hash)
     .then(user => {
       if (user === undefined) {
         res.send({error: "error"});
@@ -66,6 +66,13 @@ module.exports = function (router) {
       return res.redirect("/settings");
     })
     .catch(e => res.send(e));
+  })
+
+  router.post('/nightmode', (req, res) => {
+    dbQuery.changeNightMode(req.session.user_id)
+    .then(data => {
+      res.json(data);
+    });
   })
 
   return router;

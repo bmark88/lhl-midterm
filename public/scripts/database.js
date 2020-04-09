@@ -200,7 +200,7 @@ const getUserWithUsername = (username) => {
         `;
 
         const queryParams = [pinObject.pin_id];
-      
+
         return pool
           .query(queryString, queryParams)
           .then(res => {
@@ -209,7 +209,7 @@ const getUserWithUsername = (username) => {
           })
           .catch(e => console.error('query error ====>', e.stack));
         }
-    
+
 module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb, deletePinFromDB };
 
 //SETTINGS
@@ -290,7 +290,39 @@ const changePassword = (userID, password) => {
   WHERE id = $2;
   `, [password, userID]);
 }
+//get the users current night-mode preference and set to opposite
+const changeNightMode = (userid) => {
+  return pool.query(`
+  SELECT dark_mode
+  FROM users
+  WHERE id = $1;`, [userid])
+  .then(res => {
+    // console.log(res.rows[0].dark_mode)
+    newPref = !(res.rows[0].dark_mode);
+    return pool.query(`
+    UPDATE users
+    SET dark_mode = $1
+    WHERE id = $2;`, [newPref, userid]);
+  })
+  .catch(e => e.stack);
+}
 
+//get the users current night-mode preference and set to opposite
+const addLikeToDb = (userid, pin_id) => {
+  console.log('addLike is being called')
+  console.log('userID ====>', userid)
+  return pool.query(`
+  INSERT INTO likes (user_id, pin_id)
+  VALUES ($1, $2);`, [userid, pin_id])
+  .then(res => {
+    // console.log('res rows for addlike', res);
+    return pool.query(`
+    UPDATE users
+    SET dark_mode = $1
+    WHERE id = $2;`, [newPref, userid]);
+  })
+  .catch(e => e.stack);
+}
 
 module.exports = {
   getUserWithEmail,
@@ -308,5 +340,7 @@ module.exports = {
   changeEmail,
   changeAvatar,
   changePassword,
-  deletePinFromDB
+  deletePinFromDB,
+  changeNightMode,
+  addLikeToDb
 };

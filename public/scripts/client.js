@@ -101,18 +101,14 @@ const addNewCategory = () => {
 const addComment = () => {
   $(this).on('submit', (e) => {
     if ($(e.target).attr('class') === 'new-comment-form') {
-      // only prevent default if the target is the new-comment-form class
-      // this allows other functions to still be called
       e.preventDefault()
     const content = $(e.target).children('.new-comment-form textarea').val();
     const pin_id = $(e.target).data("pin_id")
     $.ajax({
-      // url: `/pins/${pin_id}comments`, ==> this is the same as e.target.action (just for reference)
       url: e.target.action,
       method: 'POST',
       dataType: 'json',
       data: {
-        // user_id,
         content,
         pin_id,
       }
@@ -273,11 +269,8 @@ function renderPins() {
 //change nightmode preference
 const addLike = () => {
   $(this).on('click', (e) => {
-    // if ($(e.target)[0] === $('.like-checkbox')[0]) {
       if ($(e.target).attr('class') === 'like-checkbox') {
         const pin_id = $(e.target).parents('.pin-container').children('.pin_id')[0].value;
-      // const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
-      console.log('clicked!')
 
       $.ajax({
         url: '/like',

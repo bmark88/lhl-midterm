@@ -1,21 +1,21 @@
-$(() => {
-  // this is currently linked to the search button, but needs to be switched over to the submit category button --> only done this to show how search function would work (but would instead fetch data from db rather than API)
-  $('#search-button').on('click', function(e) {
-    e.preventDefault();
+// $(() => {
+//   // this is currently linked to the search button, but needs to be switched over to the submit category button --> only done this to show how search function would work (but would instead fetch data from db rather than API)
+//   // $('#search-button').on('click', function(e) {
+//   //   e.preventDefault();
 
-    const searchValue = $(this).siblings().val();
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-    imageAPI(searchValue);
-  });
-});
+//   //   const searchValue = $(this).siblings().val();
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   //   imageAPI(searchValue);
+//   // });
+// });
 
 // randomInt should go into helpers folder
 const randomInt = (max) => {

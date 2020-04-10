@@ -13,14 +13,14 @@ $(() => {
 
 const searchForPins = () => {
   console.log("search for pins....")
-  $('#search-button').on('click', (e) => {
-    e.preventDefault();
-    console.log($('#search-value').val());
-    // $.ajax({
-    //   url: '/pins/search',
-    //   type: 'GET',
-    //   data: 
-    // })
+  $('#search-button').on('submit', (e) => {
+    // e.preventDefault();
+    console.log("search value -----> ", $('#search-value').val());
+    $.ajax({
+      url: '/pins/search',
+      type: 'GET',
+      // data: 
+    })
   })
 }
 

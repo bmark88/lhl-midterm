@@ -128,12 +128,13 @@ module.exports = function(router) {
   //     });
   // });
 
-  // router.get('/pins/display/:search_word', (req, res) => {
-  //   dbQuery.()
-  //   .then(data => {
-  //     return res.json(data);
-  //   })
-  //   .catch(e => e.stack);
-  // })
+  router.get('/pins/display/:search_word', (req, res) => {
+    dbQuery.getSearchedPins(req.body.searchWord)
+    .then(data => {
+      console.log(data);
+      return res.json(data);
+    })
+    .catch(e => e.stack);
+  })
   return router;
 };

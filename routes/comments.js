@@ -13,22 +13,24 @@ const { addCommentToDb } = require('../public/scripts/database');
 
 module.exports = function (router) {
 
+  router.post('/comments', (req, res) => {
+    addCommentToDb(req.body.pin_ID, req.session.user_id, req.body.content);
+  })
   // console.log('inside comments.js');
 
-  router.post('/comments', (req, res) => {
-    // console.log(req.body);
-    // console.log(req.session.user_id);
-    // res.send("hello");
-    addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);
-    return res.redirect('/pins')
-  });
+  // router.post('/comments', (req, res) => {
+  //   // console.log(req.body);
+  //   // console.log(req.session.user_id);
+  //   // res.send("hello");
+  //   addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);
+  //   return res.redirect('/pins')
+  // });
 
-  router.post('/pins/:pin_id/comments', (req, res) => {
-    addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);
-    // return res.redirect('pins');
-    console.log(req.body.pin_id);
-    return res.render('pins')
-  })
+  // router.post('/pins/:pin_id/comments', (req, res) => {
+  //   addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);
+  //   // return res.redirect('pins');
+  //   console.log(req.body.pin_id);
+  //   return res.render('pins')
 
   // router.get('/pins/:pin_id/comments', (req, res) => {
   //   addCommentToDb(req.body.pin_id, req.session.user_id, req.body.content);

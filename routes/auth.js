@@ -16,15 +16,46 @@ const cookieSession = require('cookie-session');
 const dbQuery = require('../public/scripts/database');
 
 
-// router.use(cookieSession({
-//   name: 'session',
-//   keys: ['user_id'],
-// }));
-
+//////////////////////////////////////
+// HELPER FUNCTION
+/////////////////////////////////////
+//when page is rendered, header will change if logged in or out
+const renderWithHeader = (req, res, route) => {
+  // console.log("req.session.user_id ====> ", req.session.user_id)
+  let userID = req.session && req.session.user_id;
+  console.log("userid -------> ", userID)
+  if (userID) {
+    return db.query(`
+    SELECT *
+    FROM users
+    WHERE id = $1;`, [userID])
+    .then(result => {
+      if (result.rows.length === 0) {
+        const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+        return res.render(route, templateVars);
+      }
+      const {username, avatar_url} = result.rows[0];
+      console.log("username ----> ", username, "avatar -------> ", avatar_url)
+      const templateVars = { isLoggedIn: true, username, avatar_url }
+      return res.render(route, templateVars);
+      })
+      .catch(e => {
+        console.log(e)
+        return e.stack
+      });
+  } else {
+    const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+    return res.render(route, templateVars);
+  }
+}
+//check passwords and return user if match, otherwise null
 const login = function (email, password) {
+  console.log("logging in ....")
   return dbQuery.getUserWithEmail(email)
     .then(user => {
+      console.log("query returned -----> ", user)
       if (bcrypt.compareSync(password, user.password)) {
+      console.log('passwords matched ...')
       // if (password === user.password) {
         return user;
       } else {
@@ -32,7 +63,7 @@ const login = function (email, password) {
       }
     });
 }
-
+//boolean
 const isNewEmail = (input) => {
   return dbQuery.getUserWithEmail(input)
   .then(user => {
@@ -45,6 +76,7 @@ const isNewEmail = (input) => {
     return true;
   })
 }
+//boolean
 const isNewUsername = (input) => {
   return dbQuery.getUserWithUsername(input)
   .then(user => {
@@ -57,25 +89,9 @@ const isNewUsername = (input) => {
     return true;
   })
 }
+//////////////////////////////
 
 module.exports = function (router) {
-
-  //log in
-  /**
-   * Check if a user exists with a given username and password
-   * @param {String} email
-   * @param {String} password encrypted
-   */
-  // const login =  function(email, password) {
-  //   return dbQuery.getUserWithEmail(email)
-  //   .then(user => {
-  //     if (bcrypt.compareSync(password, user.password)) {
-  //       return user;
-  //     }
-  //     return null;
-  //   });
-  // }
-  // exports.login = login;
 
   router.post("/login", (req, res) => {
     const {
@@ -83,9 +99,9 @@ module.exports = function (router) {
       password
     } = req.body;
 
-    if (!email || !password) {
-      return res.send("ERROR: empty field");
-    }
+    // if (!email || !password) {
+    //   return res.send("ERROR: empty field");
+    // }
 
     login(email, password)
       .then(user => {
@@ -93,13 +109,8 @@ module.exports = function (router) {
         if (!user) {
           return res.send("Email or password is incorrect!");
         }
-
-
         req.session.user_id = user.id;
-        // res.send(user);
-        // console.log('user ======>', user)
-        // console.log('req.session ======>', req.session);
-        return res.redirect('pins');
+        return res.redirect('/pins');
       })
       .catch(e => res.send(e));
   });
@@ -123,14 +134,14 @@ module.exports = function (router) {
               VALUES ($1, $2, $3)
               `;
               const queryParams = [username, email, hash]
-              pool.query(queryString, queryParams);
-              return res.render('login');
+              pool.query(queryString, queryParams)
+              .then(() => {
+                return renderWithHeader(req, res, 'login');
+              });
         } else {
-          res.send("user or email has been taken")
+          return res.send("user or email has been taken")
         }
-      }
-    )
-
+      })
   });
 
   return router;

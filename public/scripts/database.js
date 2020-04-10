@@ -160,7 +160,10 @@ const getUserWithUsername = (username) => {
     }
 
     const addPinToDb = (pinObject, ownerOfPin) => {
-    const values = [pinObject.name, pinObject.description, pinObject.image, ownerOfPin, pinObject.created_at,
+    const values = [
+    pinObject.name, pinObject.description, pinObject.image,
+    ownerOfPin,
+    pinObject.created_at,
     pinObject.category_id
     ];
     const queryString = `
@@ -175,6 +178,23 @@ const getUserWithUsername = (username) => {
         return res.rows;
       })
       .catch(e => console.error('query error ====>', e.stack));
+    }
+
+    // rewriting insert function
+    function insertCatToDB(categoryObject) {
+      const values = [categoryObject.name, categoryObject.thumbnail_url];
+
+      const queryString = `
+      INSERT INTO categories (name, thumbnail_url)
+      VALUES ($1, $2);
+      `;
+
+      console.log('Querying INSERT...');
+      return pool
+        .query(queryString, values)
+        .then(res => {
+          console.log('@@@ RES', res);
+        });
     }
 
     const addCategoryToDb = (categoryObject) => {
@@ -360,5 +380,6 @@ module.exports = {
   deletePinFromDB,
   changeNightMode,
   addLikeToDb,
-  catChildPins
+  catChildPins,
+  insertCatToDB
 };

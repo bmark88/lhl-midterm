@@ -137,5 +137,14 @@ module.exports = function(router) {
     })
     .catch(e => console.error('error at front_page.js ===>', e.stack));
   })
+
+  router.get('/pins/display/:search_word', (req, res) => {
+    const searchWord = req.body.searchWord;
+    dbQuery.getAllPins(searchWord)
+      .then(data => {
+        return res.json(data);
+      })
+      .catch(e => e.stack);
+  });
   return router;
 };

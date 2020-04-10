@@ -296,4 +296,29 @@ const addLike = () => {
       });
     }
   });
+<<<<<<< HEAD
 };
+=======
+};
+
+// const deletePin = () => {
+//   $(this).on('submit', (e) => {
+//     e.preventDefault();
+
+//     if ($(e.target).attr('class') === 'delete-pin') {
+//       $.ajax({
+//         url: '/pins/delete',
+//         type: 'DELETE'
+//       })
+//       .then(res => {
+//         console.log(res)
+//         return res;
+//       });
+//     }
+//   });
+// };
+
+const renderComments = () => {
+
+};
+>>>>>>> navbar-and-fix-addPin

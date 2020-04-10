@@ -31,7 +31,7 @@ module.exports = function(router) {
       .getCategory(category)
       .then(data => {
         // if empty => not in DB
-        console.log(data);
+
         if (data.length === 0) {
           const newCat = {
             name: category,
@@ -51,7 +51,7 @@ module.exports = function(router) {
                      res.redirect('/pins');
                   });
                 });
-            });
+            }).catch(e => e.stack);
         } else {
           dbQuery
             .getCategory(category)

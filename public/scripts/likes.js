@@ -36,9 +36,9 @@ function renderLikes() {
               <span class="rating-4">⭐</span>
               <span class="rating-5">⭐</span>
             </p>
-            <form action='/like' method='POST'>
+            <!-- <form action='/like' method='POST'>
               <input class="like-checkbox" type="checkbox">Like</input>
-            </form>
+            </form> -->
             <!--
           <div class="comment-options">
           <button class="edit-comment">Edit</button>
@@ -67,7 +67,7 @@ function renderLikes() {
                   <span class="rating-4">⭐</span>
                   <span class="rating-5">⭐</span>
                 </p>
-                <input type="checkbox">Like</input>
+                <!-- <input type="checkbox">Like</input> -->
                 <!--
                 <span class="comment-options">
                   <button class="edit-comment">Edit</button>

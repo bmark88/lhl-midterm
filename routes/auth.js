@@ -25,7 +25,7 @@ const renderWithHeader = (req, res, route) => {
   let userID = req.session && req.session.user_id;
   console.log("userid -------> ", userID)
   if (userID) {
-    return db.query(`
+    return pool.query(`
     SELECT *
     FROM users
     WHERE id = $1;`, [userID])
@@ -54,7 +54,9 @@ const login = function (email, password) {
   return dbQuery.getUserWithEmail(email)
     .then(user => {
       console.log("query returned -----> ", user)
-      if (bcrypt.compareSync(password, user.password)) {
+      if (!user) {
+        return;
+      } else if (bcrypt.compareSync(password, user.password)) {
       console.log('passwords matched ...')
       // if (password === user.password) {
         return user;

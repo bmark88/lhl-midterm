@@ -54,7 +54,7 @@ module.exports = function(router) {
     dbQuery.deletePinFromDB(req.body)
       .then(() => {
 
-        return res.render('pins');
+        return res.redirect('/pins');
       })
       .catch(e => console.error('ERROR: ', e.stack));
   });

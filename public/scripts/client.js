@@ -168,7 +168,8 @@ const addRating = () => {
             `);
           });
         } else {
-
+          $('#pins-container')
+          .prepend(`<h1>Not Pins Found</h1>`);
         }
       });
     }

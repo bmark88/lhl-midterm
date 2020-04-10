@@ -10,14 +10,14 @@ $(document).ready(() => {
       $('#pins-container').empty();
       data.forEach(pin => {
         renderData(pin);
-      })
+      });
     });
   });
 });
 
 function renderData(pin) {
   $('#pins-container')
-        .prepend(`
+    .prepend(`
         <div class="pin-container">
          <div class="box">
           <img src="${pin.thumbnail_url}" alt="${[pin.title]}">

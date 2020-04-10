@@ -39,14 +39,14 @@ function outsideClick() {
       $('#simpleModal').css('display', 'none');
     }
   
-  })
+  });
 }
 
 const displayModal = () => {
   // console.log('hello from displayModal()')
 
-  $(this).on('click', function (e) {
-    $(e.target).find('#simpleModal').css('display', 'block')
+  $(this).on('click', function(e) {
+    $(e.target).find('#simpleModal').css('display', 'block');
   });
 
   // $('.box').on('click', function () {

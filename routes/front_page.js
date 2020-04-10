@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const dbQuery = require('../public/scripts/database')
+const dbQuery = require('../public/scripts/database');
 
 
 module.exports = function(router) {
@@ -65,7 +65,7 @@ module.exports = function(router) {
               });
             });
         }
-      })
+      });
   });
 
   router.post('/categories', (req, res) => {
@@ -90,7 +90,7 @@ module.exports = function(router) {
       .then(() => {
         return res.redirect('/pins');
       })
-    .catch(e => e.stack);
+      .catch(e => e.stack);
   });
 
   router.get('/testinglol', (req, res) => {
@@ -109,13 +109,21 @@ module.exports = function(router) {
         return res.json(data);
       })
       .catch(e => e.stack);
-    })
+  });
 
   router.post('/rating', (req, res) => {
     dbQuery.addRatingtoDb(req.body.value, req.session.user_id, req.body.pin)
-    .then(() => {
-      return res.redirect('/pins')
-    }).catch(e => e.stack);
-  })
+      .then(() => {
+        return res.redirect('/pins');
+      }).catch(e => e.stack);
+  });
+
+  router.get('/pins/:pin_id/comments', (req, res) => {
+    dbQuery.getPinComments(req.body.pin_id)
+      .done(data => {
+        console.log('this is the data ===>', data);
+        return data;
+      });
+  });
   return router;
 };

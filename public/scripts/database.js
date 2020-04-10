@@ -39,7 +39,7 @@ const getUserWithEmail = (email) => {
  * @param {Number} id User id.
  * @return {Promise} Returns table of all the likes a user has.
  */
-const getUserLikes = function (id) {
+const getUserLikes = function(id) {
   const values = [id];
   return pool.query(`
   SELECT *
@@ -56,7 +56,7 @@ const getUserLikes = function (id) {
  * @param {String} email User email.
  * @return {Promise} A promise to user.  This returns the whole table with information regarding 1 user
  */
-const getUserPins = function (id) {
+const getUserPins = function(id) {
   const values = [id];
   return pool.query(`
   SELECT *
@@ -66,7 +66,7 @@ const getUserPins = function (id) {
     .then(res => res.rows);
 };
 
-const getAllPins = function (limit) {
+const getAllPins = function(limit) {
   const values = [limit];
   let queryString = `
   SELECT *
@@ -85,7 +85,7 @@ const getAllPins = function (limit) {
  * @param {String} name Category string query
  * @return {Promise} returns table with all of the categories in the DB
  */
-const getCategory = function (name) {
+const getCategory = function(name) {
   const values = [name];
   return pool.query(`
   SELECT *
@@ -96,14 +96,14 @@ const getCategory = function (name) {
 };
 
 // Get all categories. Takes a parameter to use for taking a limit (for pagination) later
-const getCategories = function (limit) {
+const getCategories = function(limit) {
   let queryString = `
   SELECT *
   FROM categories
   `;
 
   if (limit) {
-    queryString += ` LIMIT ${limit}`
+    queryString += ` LIMIT ${limit}`;
   }
   queryString += ';';
   return pool.query(queryString)
@@ -117,7 +117,7 @@ const getCategories = function (limit) {
  * @param {Number} id Pin id
  * @return {Promise} returns table with all of comments on a pin
  */
-const getPinComments = function (id) {
+const getPinComments = function(id) {
   const values = [id];
   return pool.query(`
   SELECT *
@@ -149,7 +149,7 @@ const addCommentToDb = (pinID, commenter, content) => {
       INSERT INTO comments(pin_id, user_id, content)
       VALUES($1, $2, $3)
       `, values);
-}
+};
 
 const addPinToDb = (pinObject, ownerOfPin) => {
   const values = [pinObject.name, pinObject.description, pinObject.image, 1, ownerOfPin, pinObject.created_at, pinObject.url];
@@ -164,7 +164,7 @@ const addPinToDb = (pinObject, ownerOfPin) => {
       return res.rows;
     })
     .catch(e => e.stack);
-}
+};
 
 const addCategoryToDb = (categoryObject) => {
   const values = [categoryObject.name, categoryObject.thumbnail_url];
@@ -179,7 +179,7 @@ const addCategoryToDb = (categoryObject) => {
       return res.rows;
     })
     .catch(e => e.stack);
-}
+};
 const deletePinFromDB = (pinObject, ownerOfPin) => {
   const queryString = `
         DELETE FROM pins
@@ -193,7 +193,7 @@ const deletePinFromDB = (pinObject, ownerOfPin) => {
       return res.rows;
     })
     .catch(e => e.stack);
-}
+};
 
 //SETTINGS
 
@@ -207,8 +207,8 @@ const changeUsername = (userID, newUsername) => {
           return false;
         }
         return true;
-      })
-  }
+      });
+  };
   //find out if the username is new
   return isNewUsername(newUsername)
     .then(res => {
@@ -221,8 +221,8 @@ const changeUsername = (userID, newUsername) => {
       SET username = $1
       WHERE id = $2;
       `, [newUsername, userID]);
-    }).catch(e => e.stack)
-}
+    }).catch(e => e.stack);
+};
 
 const changeEmail = (userID, email) => {
   const isNewEmail = (input) => {
@@ -233,8 +233,8 @@ const changeEmail = (userID, email) => {
           return false;
         }
         return true;
-      }).catch(e => e.stack)
-  }
+      }).catch(e => e.stack);
+  };
   return isNewEmail(email)
     .then(isNew => {
       if (!isNew) {
@@ -249,7 +249,7 @@ const changeEmail = (userID, email) => {
       WHERE id = $2;
       `, [email, userID]);
     }).catch(e => e.stack);
-}
+};
 
 const changeAvatar = (userID, avatar) => {
   return pool.query(`
@@ -257,7 +257,7 @@ const changeAvatar = (userID, avatar) => {
   SET avatar_url = $1
   WHERE id = $2;
   `, [avatar, userID]);
-}
+};
 
 const changePassword = (userID, password) => {
   return pool.query(`
@@ -265,7 +265,7 @@ const changePassword = (userID, password) => {
   SET password = $1
   WHERE id = $2;
   `, [password, userID]);
-}
+};
 //get the users current night-mode preference and set to opposite
 const changeNightMode = (userid) => {
   return pool.query(`
@@ -280,7 +280,7 @@ const changeNightMode = (userid) => {
     WHERE id = $2;`, [newPref, userid]);
     })
     .catch(e => e.stack);
-}
+};
 
 //get the users current night-mode preference and set to opposite
 const addLikeToDb = (userid, pin_id) => {
@@ -295,19 +295,19 @@ const addLikeToDb = (userid, pin_id) => {
           DELETE FROM likes 
           WHERE user_id = $1
           AND pin_id = $2
-        `, [userid, pin_id])
+        `, [userid, pin_id]);
       }
 
       return pool.query(`
         INSERT INTO likes (user_id, pin_id)
-        VALUES ($1, $2);`, [userid, pin_id])
+        VALUES ($1, $2);`, [userid, pin_id]);
     })
     .then(result => {
       return result;
-    })
+    });
 };
 
-const catChildPins = function (data) {
+const catChildPins = function(data) {
   let queryString = `
   SELECT *
   FROM categories
@@ -331,17 +331,17 @@ const addRatingtoDb = (rating, userID, pinID) => {
         return pool.query(`
       UPDATE ratings
       SET score = $1
-      WHERE user_id = $2 AND pin_id = $3;`, [rating, userID, pinID])
+      WHERE user_id = $2 AND pin_id = $3;`, [rating, userID, pinID]);
       }
       //if user has not rated this post, add new row
       const queryParams = [pinID, userID, rating];
       const queryString = `
     INSERT INTO ratings(pin_id, user_id, score)
     VALUES ($1, $2, $3);
-    `
-      return pool.query(queryString, queryParams)
+    `;
+      return pool.query(queryString, queryParams);
     }).catch(e => e.stack);
-}
+};
 
 module.exports = {
   getUserWithEmail,

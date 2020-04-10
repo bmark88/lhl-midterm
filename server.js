@@ -38,24 +38,23 @@ const renderWithHeader = (req, res, route) => {
     SELECT *
     FROM users
     WHERE id = $1;`, [userID])
-    .then(result => {
-      if (result.rows.length === 0) {
-        const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+      .then(result => {
+        if (result.rows.length === 0) {
+          const templateVars = { isLoggedIn: false, username: null, avatar_url: null };
+          return res.render(route, templateVars);
+        }
+        const {username, avatar_url} = result.rows[0];
+        const templateVars = { isLoggedIn: true, username, avatar_url };
         return res.render(route, templateVars);
-      }
-      const {username, avatar_url} = result.rows[0];
-      const templateVars = { isLoggedIn: true, username, avatar_url }
-      return res.render(route, templateVars);
       })
       .catch(e => {
-        return e.stack
+        return e.stack;
       });
-  }
-  else {
-    const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+  } else {
+    const templateVars = { isLoggedIn: false, username: null, avatar_url: null };
     return res.render(route, templateVars);
   }
-}
+};
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -116,7 +115,7 @@ app.get("/settings", (req, res) => {
 app.post('/logout', (req, res) => {
   req.session = null;
   return res.redirect('/login');
-})
+});
 
 app.get("/likes", (req, res) => {
   if (req.session.user_id) {

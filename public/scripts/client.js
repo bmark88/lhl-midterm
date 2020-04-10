@@ -20,10 +20,10 @@ const addRating = () => {
           value: e.target.value,
           pin: pin_id
         }
-      })
+      });
     }
-  })
-}
+  });
+};
 // scrolls to the top of the page
 const scrollToTop = () => {
   $('.scroll-top').on('click', (e) => {
@@ -41,8 +41,8 @@ const updateNightMode = () => {
     $.ajax({
       url: '/nightmode',
       method: 'POST',
-    })
-  })
+    });
+  });
 };
 
 // adds a new pin
@@ -81,7 +81,7 @@ const addNewCategory = () => {
     category.name = $('#new-category-name').val();
     category.description = $('#new-category-description').val();
     category.image = $('#new-category-image').val();
-    category.created_at = new Date(Date.now()).toString().slice(0, 25)
+    category.created_at = new Date(Date.now()).toString().slice(0, 25);
 
     $('.pin-container').html(`<div class="box">
       <img src='https://images.hgmsites.net/hug/2018-mclaren-720s_100652805_h.jpg'>
@@ -94,8 +94,8 @@ const addNewCategory = () => {
         <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
         <button type="submit">Add Comment</button>
       </form>
-      </div>`)
-  })
+      </div>`);
+  });
 };
 
 //show comments on a pin
@@ -104,17 +104,17 @@ const addComment = () => {
     if ($(e.target).attr('class') === 'new-comment-form') {
       e.preventDefault();
 
-    const content = $(e.target).children('.new-comment-form textarea').val();
-    const pin_id = $(e.target).data("pin_id");
-    $.ajax({
-      url: e.target.action,
-      method: 'POST',
-      dataType: 'json',
-      data: {
-        content,
-        pin_id,
-      }
-    });
+      const content = $(e.target).children('.new-comment-form textarea').val();
+      const pin_id = $(e.target).data("pin_id");
+      $.ajax({
+        url: e.target.action,
+        method: 'POST',
+        dataType: 'json',
+        data: {
+          content,
+          pin_id,
+        }
+      });
       //append comments to comment-list
       //safeguard agains XSS, escape userEnteredText
       const escape =  function(str) {
@@ -129,9 +129,9 @@ const addComment = () => {
         <div>
         `;
 
-        const contentTarget = $(e.target).siblings('#simpleModal').children('.modal-content').children('.box').children('.comments-list').children('p')[0];
+      const contentTarget = $(e.target).siblings('#simpleModal').children('.modal-content').children('.box').children('.comments-list').children('p')[0];
 
-        contentTarget.append(markup)
+      contentTarget.append(markup);
       // $('section.comments-list').append(markup);
 
       $(e.target).children('.new-comment-form textarea').val('');
@@ -141,9 +141,9 @@ const addComment = () => {
 
 function renderPins() {
   $.ajax({
-      type: 'GET',
-      url: '/pins/display'
-    })
+    type: 'GET',
+    url: '/pins/display'
+  })
     .done(data => {
       $('#pins-container').empty();
       data.forEach(pin => {
@@ -270,13 +270,13 @@ function renderPins() {
         `);
       });
     });
-};
+}
 
 //change nightmode preference
 const addLike = () => {
   $(this).on('click', (e) => {
-      if ($(e.target).attr('class') === 'like-checkbox') {
-        const pin_id = $(e.target).parents('.pin-container').children('.pin_id')[0].value;
+    if ($(e.target).attr('class') === 'like-checkbox') {
+      const pin_id = $(e.target).parents('.pin-container').children('.pin_id')[0].value;
 
       $.ajax({
         url: '/like',
@@ -284,7 +284,7 @@ const addLike = () => {
         data: {
           pin_id: pin_id
         }
-      })
+      });
     }
   });
 };

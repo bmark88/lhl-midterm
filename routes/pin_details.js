@@ -31,7 +31,7 @@ const renderWithHeader = (req, res, route) => {
   let userID = req.session && req.session.user_id;
   console.log("userid -------> ", userID)
   if (userID) {
-    return db.query(`
+    return pool.query(`
     SELECT *
     FROM users
     WHERE id = $1;`, [userID])

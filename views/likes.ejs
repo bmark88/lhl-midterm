@@ -26,6 +26,102 @@
     <%- include('partials/navbar') %>
   </header>
   <h1>My Likes</h1>
+<<<<<<< HEAD
+=======
+
+  <div id="pins-container">
+    <div class="pin-container">
+      <div class="box">
+        <img src="https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif">
+        <h2>Title goes here</h2>
+        <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+          quaeritis.</p>
+          <p class="timestamp">Created at: Sat Apr 04 2020 23:02:26 </p>
+          <form id="new-comment-form">
+            <textarea placeholder= "Comment here" name="text" id="comment-text" required></textarea>
+            <button type="submit">Add Comment</button>
+          </form>
+          <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
+          <form action='/pins' method='POST'>
+            <input class="like-checkbox" type="checkbox">Like</input>
+          </form>
+          <span class="comment-options">
+          <button class="edit-comment">Edit</button>
+          <button class="delete-comment">Delete</button>
+        </span>
+  
+  
+  
+  
+  
+        <div id="simpleModal" class="modal">
+          <div class="modal-content">
+            <div class="box">
+              <img src="https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif">
+              <h2>Title goes here</h2>
+              <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+                quaeritis.</p>
+                <p id="timestamp">Created at: Sat Apr 04 2020 23:02:26 </p>
+                <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
+                <input type="checkbox">Like</input>
+                <span class="comment-options">
+                <button class="edit-comment">Edit</button>
+                <button class="delete-comment">Delete</button>
+              </span>
+                <p class="user-comment">Sample user commented:</p>
+                <p class="comment">cerebro. De carne lumbering animata corpora
+                  quaeritis.Zombie ipsum reversa
+                  q </p>
+                  <p class="user-comment">Sample user commented:</p>
+                <p class="comment">cerebro. De carne lumbering animata corpora
+                  quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cena
+                  q </p>
+                  <p class="user-comment">Sample user commented:</p>
+                <p class="comment">cerebro. De carne lumbering animata corpora
+                  quaeritis.Zombie ipsum
+                  q </p>
+            </div>
+            </div>
+            <span class="close-button">Close Pin</span>
+          </div>
+        </div>
+  
+  
+  
+      <div>
+        <section class='comments-list'>
+          <div class='comment'>
+            <p>Love this post!</p>
+            <p>Posted by: user_a</p>
+          </div>
+          <div class='comment'>
+            <p>This post sucks!</p>
+            <p>Posted by: user_b</p>
+          </div>
+        </section>
+      </div>
+  
+      <div class="box">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSfiw1Ypmk7UEa6W08atXsMGz_PJX19GiZIfBQt3dS74Q-FdrmA&usqp=CAU">
+        <h2>Title goes here</h2>
+        <p>Undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi
+          dentevil vultus comedat cerebella viventium.</p>
+          <p id="timestamp">Created at: Sat Apr 04 2020 23:02:26 </p>
+          <section class='comments-list'>
+            <div class='comment'>
+              <p>Love this post!</p>
+              <p>Posted by: user_a</p>
+            </div>
+            <div class='comment'>
+              <p>This post sucks!</p>
+              <p>Posted by: user_b</p>
+            </div>
+          </section>
+      </div>
+    </div>
+  </div>
+>>>>>>> ba2cabc9b770948bc78702a4012ec2efcffb2431
   <!-- <div class="pin-container">
     <div class="box">
       <img src="https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif">

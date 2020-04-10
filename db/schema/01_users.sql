@@ -27,7 +27,8 @@ CREATE TABLE pins (
   thumbnail_url VARCHAR(255) NOT NULL DEFAULT './public/images/default_pin_thumbnail_url.png',
   category_id INTEGER REFERENCES categories(id),
   user_id INTEGER REFERENCES users(id),
-  created_at TIMESTAMP
+  created_at TIMESTAMP,
+  pin_url TEXT NOT NULL
 );
 
 CREATE TABLE likes (

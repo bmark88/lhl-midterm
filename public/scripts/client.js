@@ -51,6 +51,7 @@ const addNewPin = () => {
   $('#add-pin-button').on('click', (e) => {
     e.preventDefault();
 
+    pin.url = $('#new-pin-url').val();
     pin.name = $('#new-pin-name').val();
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
@@ -63,6 +64,7 @@ const addNewPin = () => {
       dataType: 'json',
       data: pin
     });
+    $('#new-pin-url').val('');
     $('#new-pin-name').val('');
     $('#new-pin-description').val('');
     $('#new-pin-image').val('');
@@ -146,10 +148,10 @@ function renderPins() {
         $('#pins-container')
           .prepend(`
         <div class="pin-container">
-        <!-- <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}"> -->
+        <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
           <div class="box">
             <img src="${pin.thumbnail_url}">
-            <h2>${pin.title}</h2>
+            <a href=${pin.pin_url} target="_blank"><h2>${pin.title}</h2></a>
              <p>${pin.description}</p>
              <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
             <form
@@ -208,8 +210,9 @@ function renderPins() {
             <div class="modal-content">
               <div class="box">
                 <img src="${pin.thumbnail_url}">
-                <h2>${pin.title}</h2>
+                <a href=${pin.pin_url} target="_blank"><h2>${pin.title}</h2></a>
                 <p>${pin.description}</p>
+
                 <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
                 <form id="new-comment-form">
                   <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
@@ -269,8 +272,11 @@ function renderPins() {
 //change nightmode preference
 const addLike = () => {
   $(this).on('click', (e) => {
-    if ($(e.target)[0] === $('.like-checkbox')[0]) {
-      const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
+    // if ($(e.target)[0] === $('.like-checkbox')[0]) {
+      if ($(e.target).attr('class') === 'like-checkbox') {
+        const pin_id = $(e.target).parents('.pin-container').children('.pin_id')[0].value;
+      // const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
+      console.log('clicked!')
 
       $.ajax({
         url: '/like',
@@ -278,7 +284,7 @@ const addLike = () => {
         data: {
           pin_id: pin_id
         }
-      });
+      })
     }
   });
-}
+};

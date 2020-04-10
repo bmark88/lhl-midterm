@@ -174,6 +174,8 @@ const getUserWithUsername = (username) => {
     VALUES ($1, $2, $3, $4, $5, $6);
     `;
 
+
+    console.log('hello from addPintoDb()')
     return pool
       .query(queryString, values)
       .then(res => {
@@ -204,6 +206,8 @@ const getUserWithUsername = (username) => {
 
         const queryParams = [pinObject.pin_id];
 
+        // console.log('queryParams for deletePinFromDB()', queryParams)
+        // console.log('pinObject for deletePinFromDB()', pinObject)
         return pool
           .query(queryString, queryParams)
           .then(res => {
@@ -211,8 +215,6 @@ const getUserWithUsername = (username) => {
           })
           .catch(e => console.error('query error ====>', e.stack));
         }
-
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb, deletePinFromDB };
 
 //SETTINGS
 
@@ -372,6 +374,5 @@ module.exports = {
   changeNightMode,
   addLikeToDb,
   catChildPins,
-  insertCatToDB,
   addRatingtoDb
 };

@@ -24,7 +24,7 @@ module.exports = function(router) {
   });
 
   router.post('/pins', (req, res) => {
-    // console.log('FORM DATA =====>', req.body);
+    console.log('FORM DATA =====>', req.body);
     // console.log('THIS IS THE SESSION COOKIE USER ID =====>',req.session.user_id);
     const userID = req.session.user_id;
 

@@ -161,12 +161,14 @@ const getUserWithUsername = (username) => {
     }
 
     const addPinToDb = (pinObject, ownerOfPin) => {
-    const values = [pinObject.name, pinObject.description, pinObject.image, ownerOfPin, pinObject.created_at];
+    const values = [pinObject.name, pinObject.description, pinObject.image, 1, ownerOfPin, pinObject.created_at, pinObject.url];
     const queryString = `
-    INSERT INTO pins (title, description, thumbnail_url, user_id, created_at)
-    VALUES ($1, $2, $3, $4, $5);
+    INSERT INTO pins (title, description, thumbnail_url, category_id, user_id, created_at, pin_url)
+    VALUES ($1, $2, $3, $4, $5, $6, $7);
     `;
 
+
+    console.log('hello from addPintoDb()')
     return pool
       .query(queryString, values)
       .then(res => {
@@ -202,8 +204,8 @@ const getUserWithUsername = (username) => {
 
         const queryParams = [pinObject.pin_id];
 
-        console.log('queryParams for deletePinFromDB()', queryParams)
-        console.log('pinObject for deletePinFromDB()', pinObject)
+        // console.log('queryParams for deletePinFromDB()', queryParams)
+        // console.log('pinObject for deletePinFromDB()', pinObject)
         return pool
           .query(queryString, queryParams)
           .then(res => {
@@ -212,8 +214,6 @@ const getUserWithUsername = (username) => {
           })
           .catch(e => console.error('query error ====>', e.stack));
         }
-
-module.exports = { getUserWithEmail, getUserLikes, getUserPins, getCategory, getPinComments, getUserWithUsername, addCommentToDb, getCategories, getAllPins, addPinToDb, addCategoryToDb, deletePinFromDB };
 
 //SETTINGS
 

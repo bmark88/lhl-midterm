@@ -13,10 +13,10 @@ VALUES ('Dogs', 'https://picsum.photos/200/300'),
 ('Science', 'https://picsum.photos/200/300');
 
 -- PINS
-INSERT INTO pins (title, description, thumbnail_url, category_id, user_id, created_at)
-VALUES ('Derp Dog', 'description', 'https://picsum.photos/200', 1, 1, '2018-1-20'),
-('Bigger Dog', 'description', 'https://picsum.photos/200', 1, 3, '2018-2-21'),
-('Blue Doge', 'description', 'https://picsum.photos/200', 2, 3, '2018-3-15');
+INSERT INTO pins (title, description, thumbnail_url, category_id, user_id, created_at, pin_url)
+VALUES ('Derp Dog', 'description', 'https://picsum.photos/200', 1, 1, '2018-1-20', 'https://www.cdc.gov/'),
+('Bigger Dog', 'description', 'https://picsum.photos/200', 1, 3, '2018-2-21', 'https://www.amazon.com/'),
+('Blue Doge', 'description', 'https://picsum.photos/200', 2, 3, '2018-3-15', 'https://www.youtube.com/');
 
 -- LIKES
 INSERT INTO likes (user_id, pin_id)

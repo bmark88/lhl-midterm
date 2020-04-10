@@ -52,6 +52,7 @@ const addNewPin = () => {
   $('#add-pin-button').on('click', (e) => {
     e.preventDefault();
 
+    pin.url = $('#new-pin-url').val();
     pin.name = $('#new-pin-name').val();
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
@@ -63,6 +64,7 @@ const addNewPin = () => {
       dataType: 'json',
       data: pin
     });
+    $('#new-pin-url').val('');
     $('#new-pin-name').val('');
     $('#new-pin-description').val('');
     $('#new-pin-image').val('');
@@ -154,6 +156,7 @@ function renderPins() {
             <img src="${pin.thumbnail_url}">
             <h2>${pin.title}</h2>
              <p>${pin.description}</p>
+             <p><a href="url"> ${pin.pin_url}</a></p>
              <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
             <form
               action="/pins/${pin.id}/comments"
@@ -213,6 +216,8 @@ function renderPins() {
                 <img src="${pin.thumbnail_url}">
                 <h2>${pin.title}</h2>
                 <p>${pin.description}</p>
+                <p><a href="url">${pin.pin_url}</a></p>
+
                 <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
                 <form id="new-comment-form">
                   <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>

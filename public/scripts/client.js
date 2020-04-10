@@ -154,9 +154,8 @@ function renderPins() {
         <!-- <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}"> -->
           <div class="box">
             <img src="${pin.thumbnail_url}">
-            <h2>${pin.title}</h2>
+            <a href=${pin.pin_url} target="_blank"><h2>${pin.title}</h2></a>
              <p>${pin.description}</p>
-             <p><a href="url"> ${pin.pin_url}</a></p>
              <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
             <form
               action="/pins/${pin.id}/comments"
@@ -214,9 +213,8 @@ function renderPins() {
             <div class="modal-content">
               <div class="box">
                 <img src="${pin.thumbnail_url}">
-                <h2>${pin.title}</h2>
+                <a href=${pin.pin_url} target="_blank"><h2>${pin.title}</h2></a>
                 <p>${pin.description}</p>
-                <p><a href="url">${pin.pin_url}</a></p>
 
                 <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
                 <form id="new-comment-form">

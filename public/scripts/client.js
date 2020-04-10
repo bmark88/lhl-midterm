@@ -39,6 +39,8 @@ const addNewPin = () => {
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0, 25);
+    pin.category = $('#category').val();
+    console.log(pin);
 
     $.ajax({
       url: '/pins',

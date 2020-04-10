@@ -160,10 +160,12 @@ const getUserWithUsername = (username) => {
     }
 
     const addPinToDb = (pinObject, ownerOfPin) => {
-    const values = [pinObject.name, pinObject.description, pinObject.image, ownerOfPin, pinObject.created_at];
+    const values = [pinObject.name, pinObject.description, pinObject.image, ownerOfPin, pinObject.created_at,
+    pinObject.category_id
+    ];
     const queryString = `
     INSERT INTO pins (title, description, thumbnail_url, user_id, created_at)
-    VALUES ($1, $2, $3, $4, $5);
+    VALUES ($1, $2, $3, $4, $5, $6);
     `;
 
     return pool

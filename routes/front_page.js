@@ -3,6 +3,13 @@ const dbQuery = require('../public/scripts/database')
 
 
 module.exports = function(router) {
+  router.get('/ratings', (req, res) => {
+    dbQuery.getAllRatings()
+    .then(data => {
+      return data.rows;
+    }).catch(e => e.stack);
+  })
+
   router.get('/testing', (req, res) => {
     return res.json({ message: "Hey Adrian" });
   });

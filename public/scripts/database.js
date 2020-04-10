@@ -310,7 +310,7 @@ const addLikeToDb = (userid, pin_id) => {
     .then(result => {
       if (result.rowCount) {
         return pool.query(`
-          DELETE FROM likes 
+          DELETE FROM likes
           WHERE user_id = $1
           AND pin_id = $2
         `, [userid, pin_id])
@@ -361,6 +361,12 @@ const addRatingtoDb = (rating, userID, pinID) => {
   }).catch(e => e.stack);
 }
 
+const getAllRatings = () => {
+  return pool.query(`
+  SELECT pin_id, ROUND(AVG(score), 2) AS average
+  FROM ratings
+  GROUP BY pin_id;`);
+}
 module.exports = {
   getUserWithEmail,
   getUserLikes,
@@ -381,5 +387,6 @@ module.exports = {
   changeNightMode,
   addLikeToDb,
   catChildPins,
-  addRatingtoDb
+  addRatingtoDb,
+  getAllRatings
 };

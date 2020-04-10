@@ -1,3 +1,5 @@
+import { format } from "morgan";
+
 $(() => {
   renderPins();
   scrollToTop();
@@ -7,12 +9,30 @@ $(() => {
   addLike();
   updateNightMode();
   addRating();
+  showRatings();
 });
+
+const showRatings = () => {
+
+//   $.get({
+//     type: 'GET',
+//     url: '/ratings',
+//   }).then(data => {
+//     console.log(data);
+//     data.forEach(result => {
+//       console.log(result);
+//       // if ($('form.rating').data('pin_id') === pin.pin_id) {
+//       //   $('form.rating').append()
+//       // }
+//     })
+//   })
+// }
 
 const addRating = () => {
   $(this).on('click', function(e) {
     if ($(e.target).attr('type') === 'radio') {
       const pin_id = $(e.target).parents('form').siblings('form').data('pin_id');
+      console.log('pin_id is: ===> ', pin_id)
       $.ajax({
         url: '/rating',
         method: 'POST',
@@ -99,26 +119,29 @@ const addNewCategory = () => {
 //show comments on a pin
 const addComment = () => {
   $(this).on('submit', (e) => {
+
     if ($(e.target).attr('class') === 'new-comment-form') {
       // only prevent default if the target is the new-comment-form class
       // this allows other functions to still be called
-      e.preventDefault()
-    const content = $(e.target).children('.new-comment-form textarea').val();
-    const pin_id = $(e.target).data("pin_id")
-    $.ajax({
-      // url: `/pins/${pin_id}comments`, ==> this is the same as e.target.action (just for reference)
-      url: e.target.action,
-      method: 'POST',
-      dataType: 'json',
-      data: {
-        // user_id,
-        content,
-        pin_id,
-      }
-    })
+      e.preventDefault();
+
+      const content = $(e.target).children('.new-comment-form textarea').val();
+      const pin_id = $(e.target).data("pin_id");
+
+      $.ajax({
+        // url: `/pins/${pin_id}comments`, ==> this is the same as e.target.action (just for reference)
+        url: e.target.action,
+        method: 'POST',
+        dataType: 'json',
+        data: {
+          content,
+          pin_id,
+        }
+      });
+
       //append comments to comment-list
       //safeguard agains XSS, escape userEnteredText
-      const escape =  function(str) {
+      const escape = function (str) {
         let p = document.createElement('p');
         p.appendChild(document.createTextNode(str));
         return p.innerHTML;
@@ -212,7 +235,6 @@ function renderPins() {
                 <img src="${pin.thumbnail_url}">
                 <a href=${pin.pin_url} target="_blank"><h2>${pin.title}</h2></a>
                 <p>${pin.description}</p>
-
                 <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
                 <form id="new-comment-form">
                   <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>

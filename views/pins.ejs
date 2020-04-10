@@ -8,8 +8,8 @@
   <!-- EXTERNAL CSS -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+  <!-- Bootstrap CSS -->
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
   <!-- CSS STYLES -->
   <!-- <link rel="stylesheet" href="/styles/navbar.css" type="text/css" /> -->
@@ -38,7 +38,7 @@
     <label>URL to Resource</label>
     <input type="text" id="new-pin-url" name="new-pin-url" placeholder="Link to Resource" required>
     <label>Pin image:</label>
-    <input id="new-pin-image" type="text" required/>
+    <input id="new-pin-image" type="text" required />
     <label for="category">Category:</label>
     <input type="text" name="category" id="category" placeholder="Category Name" required>
     <button form="new-pin" id="add-pin-button">Submit Pin</button>
@@ -46,76 +46,25 @@
 
 
   <div id="pins-container">
-  <div class="pin-container">
-    <div class="box">
-      <img src="https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif">
-      <h2>Title goes here</h2>
-      <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-        quaeritis.</p>
-        <p class="timestamp">Created at: Sat Apr 04 2020 23:02:26 </p>
-        <form id="new-comment-form">
-          <textarea placeholder= "Comment here" name="text" id="comment-text" required></textarea>
-          <button type="submit">Add Comment</button>
-        </form>
-        <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
-        <form action='/pins' method='POST'>
-          <input class="like-checkbox" type="checkbox">Like</input>
-        </form>
-        <span class="comment-options">
-        <button class="edit-comment">Edit</button>
-        <button class="delete-comment">Delete</button>
-      </span>
-
-
-
-
-
-      <div id="simpleModal" class="modal">
-        <div class="modal-content">
-          <div class="box">
-            <img src="https://www.google.com/logos/doodles/2020/stay-home-save-lives-6753651837108752-law.gif">
-            <h2>Title goes here</h2>
-            <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-              quaeritis.</p>
-              <p id="timestamp">Created at: Sat Apr 04 2020 23:02:26 </p>
-              <p>Rating: <span class="rating-1">⭐</span><span class="rating-2">⭐</span><span class="rating-3">⭐</span><span class="rating-4">⭐</span><span class="rating-5">⭐</span></p>
-              <input type="checkbox">Like</input>
-              <span class="comment-options">
-              <button class="edit-comment">Edit</button>
-              <button class="delete-comment">Delete</button>
-            </span>
-              <p class="user-comment">Sample user commented:</p>
-              <p class="comment">cerebro. De carne lumbering animata corpora
-                quaeritis.Zombie ipsum reversa
-                q </p>
-                <p class="user-comment">Sample user commented:</p>
-              <p class="comment">cerebro. De carne lumbering animata corpora
-                quaeritis.Zombie ipsum reversus ab viral inferno, nam rick grimes malum cena
-                q </p>
-                <p class="user-comment">Sample user commented:</p>
-              <p class="comment">cerebro. De carne lumbering animata corpora
-                quaeritis.Zombie ipsum
-                q </p>
-          </div>
-          </div>
-          <span class="close-button">Close Pin</span>
-        </div>
-      </div>
-
-
-
-    <div>
-      <section class='comments-list'>
-        <div class='comment'>
-          <p>Love this post!</p>
-          <p>Posted by: user_a</p>
-        </div>
-        <div class='comment'>
-          <p>This post sucks!</p>
-          <p>Posted by: user_b</p>
-        </div>
-      </section>
+    <div class="pin-container">
+      <!-- Load Pins Here-->
     </div>
+  </div>
+
+
+
+  <div>
+    <section class='comments-list'>
+      <div class='comment'>
+        <p>Love this post!</p>
+        <p>Posted by: user_a</p>
+      </div>
+      <div class='comment'>
+        <p>This post sucks!</p>
+        <p>Posted by: user_b</p>
+      </div>
+    </section>
+    <!-- </div>
 
     <div class="box">
       <img
@@ -133,10 +82,10 @@
             <p>This post sucks!</p>
             <p>Posted by: user_b</p>
           </div>
-        </section>
-    </div>
+        </section> -->
   </div>
-</div>
+  </div>
+  </div>
 
   <button class="scroll-top"
     style="height: 200px; width: 200px; background-color: red; border-radius: 50%; font-size: 20px; font-weight: bold; float: right; margin: 3em;">Press
@@ -146,16 +95,16 @@
 
 
 
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
 </body>
 
 </html>

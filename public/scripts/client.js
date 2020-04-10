@@ -7,9 +7,22 @@ $(() => {
   addLike();
   updateNightMode();
   addRating();
-  // searchForPins();
+  searchForPins();
   // deletePin();
 });
+
+const searchForPins = () => {
+  console.log("search for pins....")
+  $('#search-button').on('click', (e) => {
+    e.preventDefault();
+    console.log($('#search-value').val());
+    // $.ajax({
+    //   url: '/pins/search',
+    //   type: 'GET',
+    //   data: 
+    // })
+  })
+}
 
 const addRating = () => {
   $(this).on('click', function(e) {
@@ -298,7 +311,6 @@ const addLike = () => {
   });
 };
 
-
 // const deletePin = () => {
 //   $(this).on('submit', (e) => {
 //     e.preventDefault();
@@ -316,6 +328,6 @@ const addLike = () => {
 //   });
 // };
 
-const renderComments = () => {
+// const renderComments = () => {
 
-};
+// };

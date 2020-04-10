@@ -152,13 +152,8 @@ const addCommentToDb = (pinID, commenter, content) => {
 };
 
 const addPinToDb = (pinObject, ownerOfPin) => {
-<<<<<<< HEAD
   const values = [pinObject.name, pinObject.description, pinObject.image, Number(pinObject.category_id), ownerOfPin, pinObject.created_at, pinObject.url];
-  console.log(pinObject.category)
-  console.log('pinObject', pinObject)
-=======
-  const values = [pinObject.name, pinObject.description, pinObject.image, pinObject.category_id, ownerOfPin, pinObject.created_at, pinObject.url];
->>>>>>> 419baa8d6f6759c9cc82c505616dba060bb13385
+
   const queryString = `
     INSERT INTO pins (title, description, thumbnail_url, category_id, user_id, created_at, pin_url)
     VALUES ($1, $2, $3, $4, $5, $6, $7);
@@ -179,12 +174,11 @@ const addCategoryToDb = (categoryObject) => {
       VALUES ($1, $2);
       `;
 
-  return pool.query(queryString, values);
-    // .then(res => {
-    //   console.log("res.rows ------> ", res.rows)
-    //   return res.rows;
-    // })
-    // .catch(e => e.stack);
+  return pool.query(queryString, values)
+    .then(res => {
+      return res.rows;
+    })
+    .catch(e => e.stack);
 };
 const deletePinFromDB = (pinObject, ownerOfPin) => {
   const queryString = `
@@ -345,16 +339,26 @@ const addRatingtoDb = (rating, userID, pinID) => {
     INSERT INTO ratings(pin_id, user_id, score)
     VALUES ($1, $2, $3);
     `;
-      return pool.query(queryString, queryParams);
-    }).catch(e => e.stack);
+      return pool
+        .query(queryString, queryParams)
+        .catch(e => e.stack);
+    });
 };
 
-// const getSearchedPins = (searchWord) => {
-//   return pool.query(`
-//   SELECT *
-//   FROM pins
-//   WHERE `)
-// };
+const getSearchedPins = (searchWord) => {
+  const queryParams = [searchWord];
+  const queryString = `
+  SELECT *
+  FROM categories
+  JOIN pins ON pins.category_id = categories.id
+  WHERE pins.title 
+  LIKE '%$1%';
+`;
+
+  return pool
+    .query(queryString, queryParams)
+    .catch(e => e.stack);
+};
 
 module.exports = {
   getUserWithEmail,
@@ -376,5 +380,6 @@ module.exports = {
   changeNightMode,
   addLikeToDb,
   catChildPins,
-  addRatingtoDb
+  addRatingtoDb,
+  getSearchedPins
 };

@@ -31,6 +31,7 @@ module.exports = function(router) {
       .getCategory(category)
       .then(data => {
         // if empty => not in DB
+        console.log(data);
         if (data.length === 0) {
           const newCat = {
             name: category,
@@ -78,7 +79,8 @@ module.exports = function(router) {
 
   router.post('/pins/delete', (req, res) => {
     dbQuery.deletePinFromDB(req.body)
-      .then(() => {
+      .then((result) => {
+        console.log(result);
 
         return res.redirect('/pins');
       })
@@ -93,7 +95,7 @@ module.exports = function(router) {
       .catch(e => e.stack);
   });
 
-  router.get('/testinglol', (req, res) => {
+  router.get('/category/display', (req, res) => {
     const catName = Object.keys(req.query)[0];
 
     dbQuery

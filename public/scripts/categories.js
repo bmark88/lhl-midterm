@@ -4,7 +4,7 @@ $(document).ready(() => {
 
     $.ajax({
       type: 'GET',
-      url: '/testinglol',
+      url: '/category/display',
       data: catName
     }).done(data => {
       $('#pins-container').empty();
@@ -39,10 +39,7 @@ function renderData(pin) {
         <button class="delete-comment">Delete</button>
         </form>
       </div>
-
-
-
-
+      <!-- Modal content below -->
       <div id="simpleModal" class="modal">
     <div class="modal-content">
       <div class="box">

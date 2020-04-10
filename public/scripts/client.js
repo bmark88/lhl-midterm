@@ -7,6 +7,7 @@ $(() => {
   addLike();
   updateNightMode();
   addRating();
+  // deletePin();
 });
 
 const addRating = () => {
@@ -49,6 +50,7 @@ const updateNightMode = () => {
 const addNewPin = () => {
   let pin = {};
   $('#add-pin-button').on('click', (e) => {
+    //bug exists here, need to fix async promise issue in POST request on form submission (can only use click for now...)
     e.preventDefault();
 
     pin.url = $('#new-pin-url').val();
@@ -57,6 +59,12 @@ const addNewPin = () => {
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0, 25);
     pin.category = $('#category').val();
+
+    // if statements hacky fix for now to resolve async bug in POST request
+    if(pin.url === '' || pin.name === '' || pin.description === '' || pin.image === '' || pin.category === '') {
+      alert('missing field!');
+      return;
+    }
 
     $.ajax({
       url: '/pins',
@@ -202,7 +210,7 @@ function renderPins() {
             </form>
           <div class="comment-options">
           <button class="edit-comment">Edit</button>
-          <form action="/pins/delete" method="POST">
+          <form class="delete-pin" action="/pins/delete" method="POST">
             <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
             <button class="delete-comment">Delete</button>
           </form>
@@ -288,6 +296,23 @@ const addLike = () => {
     }
   });
 };
+
+// const deletePin = () => {
+//   $(this).on('submit', (e) => {
+//     e.preventDefault();
+
+//     if ($(e.target).attr('class') === 'delete-pin') {
+//       $.ajax({
+//         url: '/pins/delete',
+//         type: 'DELETE'
+//       })
+//       .then(res => {
+//         console.log(res)
+//         return res;
+//       });
+//     }
+//   });
+// };
 
 const renderComments = () => {
 

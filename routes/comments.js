@@ -24,13 +24,5 @@ module.exports = function(router) {
       });
   });
 
-  // router.get('/pins/:pin_id/comments', (req, res) => {
-  //   getPinComments(req.body.pin_id)
-  //   .done(data => {
-  //     console.log('this is the data ===>', data);
-  //     return data;
-  //   });
-  // });
-
   return router;
 };

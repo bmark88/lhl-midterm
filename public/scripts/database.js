@@ -152,7 +152,9 @@ const addCommentToDb = (pinID, commenter, content) => {
 };
 
 const addPinToDb = (pinObject, ownerOfPin) => {
-  const values = [pinObject.name, pinObject.description, pinObject.image, 1, ownerOfPin, pinObject.created_at, pinObject.url];
+  const values = [pinObject.name, pinObject.description, pinObject.image, Number(pinObject.category_id), ownerOfPin, pinObject.created_at, pinObject.url];
+  console.log(pinObject.category)
+  console.log('pinObject', pinObject)
   const queryString = `
     INSERT INTO pins (title, description, thumbnail_url, category_id, user_id, created_at, pin_url)
     VALUES ($1, $2, $3, $4, $5, $6, $7);
@@ -342,6 +344,13 @@ const addRatingtoDb = (rating, userID, pinID) => {
       return pool.query(queryString, queryParams);
     }).catch(e => e.stack);
 };
+
+// const getSearchedPins = (searchWord) => {
+//   return pool.query(`
+//   SELECT *
+//   FROM pins
+//   WHERE `)
+// };
 
 module.exports = {
   getUserWithEmail,

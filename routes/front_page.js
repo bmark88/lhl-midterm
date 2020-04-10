@@ -36,7 +36,7 @@ module.exports = function(router) {
           const newCat = {
             name: category,
             thumbnail_url: 'https://picsum.photos/200'
-          };
+          }
           dbQuery.addCategoryToDb(newCat)
             .then(() => {
               dbQuery
@@ -48,7 +48,7 @@ module.exports = function(router) {
                     category_id: catID
                   };
                   dbQuery.addPinToDb(pinObject, userID).then(() => {
-                    res.redirect('/pins');
+                     res.redirect('/pins');
                   });
                 });
             });
@@ -62,7 +62,7 @@ module.exports = function(router) {
                 category_id: catID
               };
               dbQuery.addPinToDb(pinObject, userID).then(() => {
-                res.redirect('/pins');
+                 res.redirect('/pins');
               });
             });
         }
@@ -120,12 +120,20 @@ module.exports = function(router) {
       }).catch(e => e.stack);
   });
 
-  router.get('/pins/:pin_id/comments', (req, res) => {
-    dbQuery.getPinComments(req.body.pin_id)
-      .done(data => {
-        console.log('this is the data ===>', data);
-        return data;
-      });
-  });
+  // router.get('/pins/:pin_id/comments', (req, res) => {
+  //   dbQuery.getPinComments(req.body.pin_id)
+  //     .done(data => {
+  //       console.log('this is the data ===>', data);
+  //       return data;
+  //     });
+  // });
+
+  // router.get('/pins/display/:search_word', (req, res) => {
+  //   dbQuery.()
+  //   .then(data => {
+  //     return res.json(data);
+  //   })
+  //   .catch(e => e.stack);
+  // })
   return router;
 };

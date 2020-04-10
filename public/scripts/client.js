@@ -7,6 +7,7 @@ $(() => {
   addLike();
   updateNightMode();
   addRating();
+  // searchForPins();
   // deletePin();
 });
 
@@ -61,10 +62,10 @@ const addNewPin = () => {
     pin.category = $('#category').val();
 
     // if statements hacky fix for now to resolve async bug in POST request
-    if(pin.url === '' || pin.name === '' || pin.description === '' || pin.image === '' || pin.category === '') {
-      alert('missing field!');
-      return;
-    }
+    // if(pin.url === '' || pin.name === '' || pin.description === '' || pin.image === '' || pin.category === '') {
+    //   alert('missing field!');
+    //   return;
+    // }
 
     $.ajax({
       url: '/pins',
@@ -72,6 +73,8 @@ const addNewPin = () => {
       dataType: 'json',
       data: pin
     });
+
+    // renderPins();
     $('#new-pin-url').val('');
     $('#new-pin-name').val('');
     $('#new-pin-description').val('');
@@ -116,7 +119,7 @@ const addComment = () => {
       const pin_id = $(e.target).data("pin_id");
       $.ajax({
         url: e.target.action,
-        method: 'POST',
+        method: 'GET',
         dataType: 'json',
         data: {
           content,
@@ -134,14 +137,12 @@ const addComment = () => {
       const markup = `
         <div class='comment'>
           <span>${escape(content)}</span>
-        <div>
+        </div>
         `;
 
-      const contentTarget = $(e.target).siblings('#simpleModal').children('.modal-content').children('.box').children('.comments-list').children('p')[0];
+      const contentTarget = $(e.target).siblings('#simpleModal').children('.modal-content').children('.box').children('.comments-list');
 
-      contentTarget.append(markup);
-      // $('section.comments-list').append(markup);
-
+      contentTarget.append(markup)
       $(e.target).children('.new-comment-form textarea').val('');
     }
   });
@@ -209,7 +210,7 @@ function renderPins() {
               <input class="like-checkbox" type="checkbox">Like</input>
             </form>
           <div class="comment-options">
-          <button class="edit-comment">Edit</button>
+          <!-- <button class="edit-comment">Edit</button> -->
           <form class="delete-pin" action="/pins/delete" method="POST">
             <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
             <button class="delete-comment">Delete</button>
@@ -295,25 +296,4 @@ const addLike = () => {
       });
     }
   });
-};
-
-// const deletePin = () => {
-//   $(this).on('submit', (e) => {
-//     e.preventDefault();
-
-//     if ($(e.target).attr('class') === 'delete-pin') {
-//       $.ajax({
-//         url: '/pins/delete',
-//         type: 'DELETE'
-//       })
-//       .then(res => {
-//         console.log(res)
-//         return res;
-//       });
-//     }
-//   });
-// };
-
-const renderComments = () => {
-
 };

@@ -45,7 +45,8 @@ const getUserLikes = function(id) {
   return pool.query(`
   SELECT *
   FROM likes
-  WHERE user_id = $1;
+  JOIN pins ON (pins.id = likes.pin_id)
+  WHERE likes.user_id = $1;
   `, values)
     .then(res => res.rows);
 };
@@ -161,45 +162,28 @@ const getUserWithUsername = (username) => {
 
     const addPinToDb = (pinObject, ownerOfPin) => {
     const values = [
-    pinObject.name, pinObject.description, pinObject.image,
+    pinObject.name,
+    pinObject.description,
+    pinObject.image,
+    pinObject.category_id,
     ownerOfPin,
-    pinObject.created_at,
-    pinObject.category_id
+    pinObject.created_at
     ];
     const queryString = `
-    INSERT INTO pins (title, description, thumbnail_url, user_id, created_at)
+    INSERT INTO pins (title, description, thumbnail_url, category_id, user_id, created_at)
     VALUES ($1, $2, $3, $4, $5, $6);
     `;
 
     return pool
       .query(queryString, values)
       .then(res => {
-        // console.log("Succesful DB insert",res.rows)
         return res.rows;
       })
       .catch(e => console.error('query error ====>', e.stack));
     }
 
-    // rewriting insert function
-    function insertCatToDB(categoryObject) {
-      const values = [categoryObject.name, categoryObject.thumbnail_url];
-
-      const queryString = `
-      INSERT INTO categories (name, thumbnail_url)
-      VALUES ($1, $2);
-      `;
-
-      console.log('Querying INSERT...');
-      return pool
-        .query(queryString, values)
-        .then(res => {
-          console.log('@@@ RES', res);
-        });
-    }
-
     const addCategoryToDb = (categoryObject) => {
       const values = [categoryObject.name, categoryObject.thumbnail_url];
-      console.log("object ======= > ", categoryObject)
       const queryString = `
       INSERT INTO categories (name, thumbnail_url)
       VALUES ($1, $2);
@@ -208,14 +192,11 @@ const getUserWithUsername = (username) => {
       return pool
         .query(queryString, values)
         .then(res => {
-          console.log("Succesful DB insert",res.rows)
           return res.rows;
         })
         .catch(e => console.error('ERROR WITH CATEGORY DB ====>', e.stack));
       }
       const deletePinFromDB = (pinObject, ownerOfPin) => {
-        // const values = [pinObject.name, pinObject.description, pinObject.image, ownerOfPin, pinObject.created_at];
-        // console.log('deleted pin object ======>', pinObject);
         const queryString = `
         DELETE FROM pins
         WHERE id = $1;
@@ -223,12 +204,9 @@ const getUserWithUsername = (username) => {
 
         const queryParams = [pinObject.pin_id];
 
-        console.log('queryParams for deletePinFromDB()', queryParams)
-        console.log('pinObject for deletePinFromDB()', pinObject)
         return pool
           .query(queryString, queryParams)
           .then(res => {
-            console.log("Succesful DB pin deletion",res.rows)
             return res.rows;
           })
           .catch(e => console.error('query error ====>', e.stack));
@@ -246,11 +224,9 @@ const changeUsername = (userID, newUsername) => {
     return getUserWithUsername(input)
     .then(user => {
       if (user.id) {
-        //this email is already in the db
-        console.log("isNewUsername = false");
+        //this email is already in the db;
         return false;
       }
-      console.log("isNewUsername = true")
       return true;
     })
   }
@@ -275,16 +251,13 @@ const changeEmail = (userID, email) => {
     .then(user => {
       if (user.id) {
         //this email is already in the db
-        console.log("isNewEmail = false");
         return false;
       }
-      console.log("isNewEmail = true");
       return true;
     }).catch(e =>  e.stack)
   }
   return isNewEmail(email)
   .then(isNew => {
-    // console.log("isNew is -----> ", isNew)
     if (!isNew) {
       res.send({error: "email taken"});
       return;
@@ -298,7 +271,6 @@ const changeEmail = (userID, email) => {
 }
 
 const changeAvatar = (userID, avatar) => {
-  console.log('userid ------->', userID, 'avatar --------> ', avatar)
   return pool.query(`
   UPDATE users
   SET avatar_url = $1
@@ -307,7 +279,6 @@ const changeAvatar = (userID, avatar) => {
 }
 
 const changePassword = (userID, password) => {
-  console.log('userid ------->', userID, 'password --------> ', password)
   return pool.query(`
   UPDATE users
   SET password = $1
@@ -333,13 +304,10 @@ const changeNightMode = (userid) => {
 
 //get the users current night-mode preference and set to opposite
 const addLikeToDb = (userid, pin_id) => {
-  console.log('addLike is being called')
-  console.log('userID ====>', userid)
   return pool.query(`
   INSERT INTO likes (user_id, pin_id)
   VALUES ($1, $2);`, [userid, pin_id])
   .then(res => {
-    // console.log('res rows for addlike', res);
     return pool.query(`
     UPDATE users
     SET dark_mode = $1
@@ -360,6 +328,29 @@ const catChildPins = function (data) {
     .query(queryString)
     .then(res => res.rows);
 };
+const addRatingtoDb = (rating, userID, pinID) => {
+  //check if this user has already rated this post
+  return pool.query(`
+  SELECT id
+  FROM ratings
+  WHERE user_id = $1 AND pin_id = $2;`, [userID, pinID])
+  .then(result => {
+    if (result.rowCount) {
+      //if this user already rated this post, updat their rating
+      return pool.query(`
+      UPDATE ratings
+      SET score = $1
+      WHERE user_id = $2 AND pin_id = $3;`, [rating, userID, pinID])
+    }
+    //if user has not rated this post, add new row
+    const queryParams = [pinID, userID, rating];
+    const queryString = `
+    INSERT INTO ratings(pin_id, user_id, score)
+    VALUES ($1, $2, $3);
+    `
+    return pool.query(queryString, queryParams)
+  }).catch(e => e.stack);
+}
 
 module.exports = {
   getUserWithEmail,
@@ -381,5 +372,6 @@ module.exports = {
   changeNightMode,
   addLikeToDb,
   catChildPins,
-  insertCatToDB
+  insertCatToDB,
+  addRatingtoDb
 };

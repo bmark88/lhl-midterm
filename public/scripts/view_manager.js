@@ -22,7 +22,10 @@ $(document).ready(() => {
         .append(newThumbnail);
       $('#categories-container')
         .prepend(newDiv);
-    });
+    })
+  }).catch(e => {
+    console.log(e)
+    return e.stack
   });
 });
 

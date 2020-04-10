@@ -10,21 +10,37 @@
 
 <nav class="nav-container">
   <ul class="list-container">
-    <li class="li-home"><a href="/categories">HOME</a></li>
-    <li class="li-pins"><a href="/pins">MY PINS</a></li>
-    <li class="li-likes"><a href="/likes">MY LIKES</a></li>
+    <% if (isLoggedIn) {%>
+      Logged In as <%= username %>
+      <li class="li-logout"><form method="POST" action="/logout"><button class="btn btn-primary" type="submit">Logout</button></form></li>
+      <li class="li-pins"><a href="/pins">MY PINS</a></li>
+      <li class="li-likes"><a href="/likes">MY LIKES</a></li>
+      <li class="li-settings"><form method="GET" action="/settings"><button class="btn btn-primary" type="submit">Settings</button></form></li>
+      <li class="li-home"><a href="/categories">HOME</a></li>
     <li class="li-search">
       <form method="POST" action="/categories">
         <div class="search-container">
-          <input id="search-value" placeholder="What's on your mind?" type="search" name="search" autocomplete="off">
+          <input id="search-value" placeholder="What'll you learn today?" type="search" name="search" autocomplete="off">
           <button id="search-button" class="btn btn-primary" type="submit">SEARCH
           </button>
         </div>
       </form>
-    </li>
-    <li class="li-settings"><a href="/settings">SETTINGS</a></li>
-    <!-- <li class="li-contact"><a href="/contact">CONTACT US</a></li> -->
 
-    <li class="li-login"><a href="/login">LOG IN / LOG OUT</a></li>
+    <% } else {%>
+      <p>
+        <li class="li-login"><form method="GET" action="/login"><button class="btn btn-primary" type="submit">Login</button></form></li>
+        <li class="li-register"><form method="GET" action="/register"><button class="btn btn-primary" type="submit">Register</button></form></li>
+        <li class="li-home"><a href="/categories">HOME</a></li>
+        <li class="li-search">
+          <form method="POST" action="/categories">
+            <div class="search-container">
+              <input id="search-value" placeholder="What'll you learn today?" type="search" name="search" autocomplete="off">
+              <button id="search-button" class="btn btn-primary" type="submit">SEARCH
+              </button>
+            </div>
+          </form>
+        </li>
+      </p>
+    <% } %>
   </ul>
 </nav>

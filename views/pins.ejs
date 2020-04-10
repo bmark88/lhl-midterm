@@ -31,16 +31,16 @@
   <h1 class="categories-header">My Pins</h1>
 
   <form id="new-pin" action="/pins" method="POST">
-    <label>Create a new pin!</label>
-    <input type="text" id="new-pin-name" name="new-pin-name" placeholder="Title of Pin" required>
-    <label>Description</label>
-    <textarea placeholder="Type the description of your pin" id="new-pin-description" required></textarea>
-    <label>URL to Resource</label>
-    <input type="text" id="new-pin-url" name="new-pin-url" placeholder="Link to Resource" required>
+    <label class="form-title">Create a new pin!</label>
+    <input autocomplete="off" type="text" id="new-pin-name" name="new-pin-name" placeholder="Title of Pin" required>
+    <label>Description:</label>
+    <textarea autocomplete="off" placeholder="Type the description of your pin" id="new-pin-description" required></textarea>
+    <label>URL:</label>
+    <input autocomplete="off" type="text" id="new-pin-url" name="new-pin-url" placeholder="Link to Resource" required>
     <label>Pin image:</label>
-    <input id="new-pin-image" type="text" required />
+    <input autocomplete="off" id="new-pin-image" type="text" placeholder="IMG URL" required />
     <label for="category">Category:</label>
-    <input type="text" name="category" id="category" placeholder="Category Name" required>
+    <input autocomplete="off" type="text" name="category" id="category" placeholder="Category Name" required>
     <button form="new-pin" id="add-pin-button">Submit Pin</button>
   </form>
 
@@ -67,13 +67,6 @@
   </div>
   </div>
   </div>
-
-  <button class="scroll-top"
-    style="height: 200px; width: 200px; background-color: red; border-radius: 50%; font-size: 20px; font-weight: bold; float: right; margin: 3em;"></button>
-
-
-
-
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -139,8 +139,10 @@
   background: #fffffd;
   box-shadow: inset 6px 6px 22px #858584,
               inset -6px -6px 22px #ffffff;
+}
 
-
+.burger:hover {
+  background-color: salmon;
 }
 
 .burger-line {

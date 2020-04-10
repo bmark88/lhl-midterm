@@ -32,10 +32,7 @@ const auth = require('./routes/auth');
 /////////////////////////////////////
 //when page is rendered, header will change if logged in or out
 const renderWithHeader = (req, res, route) => {
-  // console.log("req.session.user_id ====> ", req.session.user_id)
-  console.log(`@@@@@@@ renderWithHeader: ${route}`)
   let userID = req.session && req.session.user_id;
-  console.log("userid -------> ", userID)
   if (userID) {
     return db.query(`
     SELECT *
@@ -47,12 +44,10 @@ const renderWithHeader = (req, res, route) => {
         return res.render(route, templateVars);
       }
       const {username, avatar_url} = result.rows[0];
-      console.log("username ----> ", username, "avatar -------> ", avatar_url)
       const templateVars = { isLoggedIn: true, username, avatar_url }
       return res.render(route, templateVars);
       })
       .catch(e => {
-        console.log(e)
         return e.stack
       });
   }
@@ -82,11 +77,6 @@ app.use(front_page(router));
 app.use(settings(router));
 app.use(auth(router));
 app.use(comments(router));
-// app.use(cookieSession({
-//   name: 'session',
-//   keys: ['user_id'],
-//   }));
-
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -118,7 +108,6 @@ app.get("/pins", (req, res) => {
 app.get("/settings", (req, res) => {
 
   if (req.session.user_id) {
-    console.log("rendering settings......")
     return renderWithHeader(req, res, 'settings');
   }
   return res.redirect('/');
@@ -142,10 +131,6 @@ app.get('/comments', (req, res) => {
   }
   return res.redirect('/');
 });
-
-// app.get("/unregistered", (req, res) => {
-//   return res.json("pins/display");
-// })
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);

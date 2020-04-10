@@ -27,9 +27,7 @@ router.use(cookieSession({
 /////////////////////////////////////
 //when page is rendered, header will change if logged in or out
 const renderWithHeader = (req, res, route) => {
-  // console.log("req.session.user_id ====> ", req.session.user_id)
   let userID = req.session && req.session.user_id;
-  console.log("userid -------> ", userID)
   if (userID) {
     return pool.query(`
     SELECT *
@@ -41,12 +39,10 @@ const renderWithHeader = (req, res, route) => {
         return res.render(route, templateVars);
       }
       const {username, avatar_url} = result.rows[0];
-      console.log("username ----> ", username, "avatar -------> ", avatar_url)
       const templateVars = { isLoggedIn: true, username, avatar_url }
       return res.render(route, templateVars);
       })
       .catch(e => {
-        console.log(e)
         return e.stack
       });
   } else {
@@ -73,7 +69,6 @@ module.exports = function () {
     }
     login(email, password)
       .then(user => {
-        console.log(user);
         if (!user) {
           return res.send("Email or password is incorrect!");
         }
@@ -96,7 +91,6 @@ module.exports = function () {
     .then(
       (values) => {
         if (values[0] && values[1]) {
-          console.log(values)
           // if neither username or email matches any in db, create new user
               const queryString = `
               INSERT INTO users (username, email, password)

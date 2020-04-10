@@ -27,15 +27,50 @@ module.exports = function(router) {
     console.log('FORM DATA =====>', req.body);
     // console.log('THIS IS THE SESSION COOKIE USER ID =====>',req.session.user_id);
     const userID = req.session.user_id;
+    console.log('Data from Create New pin form =>', req.body)
+    const category = req.body.category;
 
-    // console.log('THIS IS THE SESSION COOKIE USER ID =====>',userID)
-    dbQuery.addPinToDb(req.body, userID)
-      .then(() => {
-        // console.log('Redirecting to /pins...')
-        return res.redirect('/pins');
+    // check if category exists in DB
+    dbQuery
+      .getCategory(category)
+      .then(data => {
+        // if empty => not in DB
+        if (data.length === 0) {
+          const newCat = {
+            name: category,
+            thumbnail_url: 'https://picsum.photos/200'
+          };
+          dbQuery.addCategoryToDb(newCat)
+            .then(() => {
+              dbQuery
+                .getCategory(category)
+                .then(data => {
+                  const catID = data[0].id;
+                  const pinObject = {
+                    ...req.body,
+                    category_id: catID
+                  };
+                  dbQuery.addPinToDb(pinObject, userID).then(() => {
+                    res.redirect('/pins');
+                  });
+                });
+            });
+        } else {
+          dbQuery
+            .getCategory(category)
+            .then(data => {
+              const catID = data[0].id;
+              const pinObject = {
+                ...req.body,
+                category_id: catID
+              };
+              dbQuery.addPinToDb(pinObject, userID).then(() => {
+                res.redirect('/pins');
+              });
+            });
+        }
       })
-      .catch(e => console.error('ERROR: ', e.stack));
-    });
+  });
 
   router.post('/categories', (req, res) => {
     // console.log('FORM DATA =====>', req.body);
@@ -66,6 +101,17 @@ module.exports = function(router) {
         return res.redirect('/pins');
       })
     .catch(e => e.stack);
+  });
+
+  router.get('/testinglol', (req, res) => {
+    const catName = Object.keys(req.query)[0];
+    console.log(catName);
+
+    dbQuery
+      .catChildPins(catName)
+      .then(data => {
+        res.json(data);
+      });
   });
 
   // router.get('/likes', (req, res) => {

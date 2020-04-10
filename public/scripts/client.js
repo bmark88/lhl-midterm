@@ -13,7 +13,6 @@ const addRating = () => {
   $(this).on('click', function(e) {
     if ($(e.target).attr('type') === 'radio') {
       const pin_id = $(e.target).parents('form').siblings('form').data('pin_id');
-      console.log('pin_id is: ===> ', pin_id)
       $.ajax({
         url: '/rating',
         method: 'POST',
@@ -57,6 +56,7 @@ const addNewPin = () => {
     pin.description = $('#new-pin-description').val();
     pin.image = $('#new-pin-image').val();
     pin.created_at = new Date(Date.now()).toString().slice(0, 25);
+    pin.category = $('#category').val();
 
     $.ajax({
       url: '/pins',
@@ -99,29 +99,26 @@ const addNewCategory = () => {
 //show comments on a pin
 const addComment = () => {
   $(this).on('submit', (e) => {
-
     if ($(e.target).attr('class') === 'new-comment-form') {
       // only prevent default if the target is the new-comment-form class
       // this allows other functions to still be called
-      e.preventDefault();
-
-      const content = $(e.target).children('.new-comment-form textarea').val();
-      const pin_id = $(e.target).data("pin_id");
-
-      $.ajax({
-        // url: `/pins/${pin_id}comments`, ==> this is the same as e.target.action (just for reference)
-        url: e.target.action,
-        method: 'POST',
-        dataType: 'json',
-        data: {
-          content,
-          pin_id,
-        }
-      });
-
+      e.preventDefault()
+    const content = $(e.target).children('.new-comment-form textarea').val();
+    const pin_id = $(e.target).data("pin_id")
+    $.ajax({
+      // url: `/pins/${pin_id}comments`, ==> this is the same as e.target.action (just for reference)
+      url: e.target.action,
+      method: 'POST',
+      dataType: 'json',
+      data: {
+        // user_id,
+        content,
+        pin_id,
+      }
+    })
       //append comments to comment-list
       //safeguard agains XSS, escape userEnteredText
-      const escape = function (str) {
+      const escape =  function(str) {
         let p = document.createElement('p');
         p.appendChild(document.createTextNode(str));
         return p.innerHTML;

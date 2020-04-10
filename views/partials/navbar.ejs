@@ -13,16 +13,18 @@
 <nav class="nav-container">
   <ul class="list-container">
     <% if (isLoggedIn) {%>
-      Logged In as <%= username %>
-      <li class="li-logout"><form method="POST" action="/logout"><button class="btn btn-primary" type="submit">Logout</button></form></li>
-      <li class="li-pins"><a href="/pins">MY PINS</a></li>
-      <li class="li-likes"><a href="/likes">MY LIKES</a></li>
-      <li class="li-settings"><form method="GET" action="/settings"><button class="btn btn-primary" type="submit">Settings</button></form></li>
-      <li class="li-home"><a href="/categories">HOME</a></li>
+      <%=console.log('../.'.concat(avatar_url))%>
+      <h3>LOGGED IN AS: <strong><%= username %></strong></h3>
+      <img src= <%= ('../.'.concat(avatar_url)) %> />
+      <li class="li-logout"><form method="POST" action="/logout"><button class="btn btn-primary" type="submit">LOG OUT</button></form></li>
+      <li class="li-pins"><form method="GET" action="/pins"><button class="btn btn-primary" type="submit">MY PINS</button></form></li>
+      <li class="li-likes"><form method="GET" action="/likes"><button class="btn btn-primary" type="submit">MY LIKES</button></form></li>
+      <li class="li-settings"><form method="GET" action="/settings"><button class="btn btn-primary" type="submit">SETTINGS</button></form></li>
+      <li class="li-home"><form method="GET" action="/categories"><button class="btn btn-primary" type="submit">ALL PINS</button></form></li>
     <li class="li-search">
-      <form method="GET" action="/pins/display/:search_word">
+      <form id="search-form" method="GET" action="/pins/display/:search_word">
         <div class="search-container">
-          <input id="search-value" placeholder="What'll you learn today?" type="search" name="search" autocomplete="off">
+          <input id="search-value" placeholder="What'll you learn today?" type="text" name="search" autocomplete="off">
           <button id="search-button" class="btn btn-primary" type="submit">SEARCH
           </button>
         </div>
@@ -30,11 +32,12 @@
 
     <% } else {%>
       <p>
+        <h3>HELLO, NEW USER!</h3>
         <li class="li-login"><form method="GET" action="/login"><button class="btn btn-primary" type="submit">Login</button></form></li>
         <li class="li-register"><form method="GET" action="/register"><button class="btn btn-primary" type="submit">Register</button></form></li>
-        <li class="li-home"><a href="/categories">HOME</a></li>
+        <li class="li-home"><form method="GET" action="/categories"><button class="btn btn-primary" type="submit">ALL PINS</button></form></li>
         <li class="li-search">
-          <form method="POST" action="/categories">
+          <form id="search-form" method="GET" action="/pins/display/:search_word">
             <div class="search-container">
               <input id="search-value" placeholder="What'll you learn today?" type="search" name="search" autocomplete="off">
               <button id="search-button" class="btn btn-primary" type="submit">SEARCH

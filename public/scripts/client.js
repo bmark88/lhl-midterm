@@ -7,9 +7,28 @@ $(() => {
   addLike();
   updateNightMode();
   addRating();
-  // searchForPins();
+  searchForPins();
   // deletePin();
 });
+
+const searchForPins = () => {
+  console.log("search for pins....")
+  $(this).on('submit', (e) => {
+    e.preventDefault();
+    if ($(e.target).attr('id') === 'search-form') {
+    $('#search-form').on('submit', (e) => {
+      const searchWord = $(e.target).children().children('#search-value').val();
+      console.log(searchWord);
+      // e.preventDefault();
+      $.ajax({
+        url: '/pins/display/:search_word',
+        type: 'GET',
+        data: { searchWord }
+
+      });
+    })}
+});
+}
 
 const addRating = () => {
   $(this).on('click', function(e) {
@@ -22,7 +41,7 @@ const addRating = () => {
           value: e.target.value,
           pin: pin_id
         }
-      });
+      })
     }
   });
 };
@@ -296,3 +315,24 @@ const addLike = () => {
     }
   });
 };
+
+// const deletePin = () => {
+//   $(this).on('submit', (e) => {
+//     e.preventDefault();
+
+//     if ($(e.target).attr('class') === 'delete-pin') {
+//       $.ajax({
+//         url: '/pins/delete',
+//         type: 'DELETE'
+//       })
+//       .then(res => {
+//         console.log(res)
+//         return res;
+//       });
+//     }
+//   });
+// };
+
+// const renderComments = () => {
+
+// };

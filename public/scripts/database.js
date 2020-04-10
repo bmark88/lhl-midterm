@@ -180,8 +180,7 @@ const addCategoryToDb = (categoryObject) => {
       VALUES ($1, $2);
       `;
 
-  return pool
-    .query(queryString, values)
+  return pool.query(queryString, values)
     .then(res => {
       return res.rows;
     })
@@ -346,16 +345,31 @@ const addRatingtoDb = (rating, userID, pinID) => {
     INSERT INTO ratings(pin_id, user_id, score)
     VALUES ($1, $2, $3);
     `;
-      return pool.query(queryString, queryParams);
-    }).catch(e => e.stack);
+      return pool
+        .query(queryString, queryParams)
+        .catch(e => e.stack);
+    });
 };
 
-// const getSearchedPins = (searchWord) => {
-//   return pool.query(`
-//   SELECT *
-//   FROM pins
-//   WHERE `)
-// };
+const getSearchedPins = (searchWord) => {
+  console.log('searchWord', searchWord);
+  const queryParams = [searchWord];
+  const queryString = `
+  SELECT *
+  FROM categories
+  JOIN pins ON pins.category_id = categories.id
+  WHERE pins.title
+  LIKE '%$1%';
+`;
+
+  return pool
+    .query(queryString, queryParams)
+    .then(result => {
+      console.log('result at database.js', result);
+      return result;
+    })
+    .catch(e => console.error('error at database.js ====>', e.stack));
+};
 
 module.exports = {
   getUserWithEmail,
@@ -377,5 +391,6 @@ module.exports = {
   changeNightMode,
   addLikeToDb,
   catChildPins,
-  addRatingtoDb
+  addRatingtoDb,
+  getSearchedPins
 };

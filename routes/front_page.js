@@ -31,7 +31,7 @@ module.exports = function(router) {
       .getCategory(category)
       .then(data => {
         // if empty => not in DB
-        console.log(data);
+
         if (data.length === 0) {
           const newCat = {
             name: category,
@@ -51,7 +51,7 @@ module.exports = function(router) {
                      res.redirect('/pins');
                   });
                 });
-            });
+            }).catch(e => e.stack);
         } else {
           dbQuery
             .getCategory(category)
@@ -128,12 +128,23 @@ module.exports = function(router) {
   //     });
   // });
 
-  // router.get('/pins/display/:search_word', (req, res) => {
-  //   dbQuery.()
-  //   .then(data => {
-  //     return res.json(data);
-  //   })
-  //   .catch(e => e.stack);
-  // })
+  router.post('/pins/display/:search_word', (req, res) => {
+    console.log('req.body ====>', req.body);
+    dbQuery.getSearchedPins(req.body.searchWord)
+    .then(data => {
+      console.log("data at router post ------> ", data);
+      return res.json(data);
+    })
+    .catch(e => console.error('error at front_page.js ===>', e.stack));
+  })
+
+  router.get('/pins/display/:search_word', (req, res) => {
+    const searchWord = req.body.searchWord;
+    dbQuery.getAllPins(searchWord)
+      .then(data => {
+        return res.json(data);
+      })
+      .catch(e => e.stack);
+  });
   return router;
 };

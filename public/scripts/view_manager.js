@@ -24,7 +24,6 @@ $(document).ready(() => {
         .prepend(newDiv);
     })
   }).catch(e => {
-    console.log(e)
     return e.stack
   });
 });

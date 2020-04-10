@@ -68,6 +68,7 @@ const addNewPin = () => {
     $('#new-pin-name').val('');
     $('#new-pin-description').val('');
     $('#new-pin-image').val('');
+    $('#category').val('');
     renderPins();
   });
 };

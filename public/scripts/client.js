@@ -89,7 +89,8 @@ const addNewCategory = () => {
       <h2>${category.name}</h2>
       <p>${category.description}</p>
       <p id="timestamp">Created at: ${category.created_at}</p>
-      <form class="new-comment-form">
+      <form class="new-
+      -form">
         <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
         <button type="submit">Add Comment</button>
       </form>
@@ -101,9 +102,10 @@ const addNewCategory = () => {
 const addComment = () => {
   $(this).on('submit', (e) => {
     if ($(e.target).attr('class') === 'new-comment-form') {
-      e.preventDefault()
+      e.preventDefault();
+      console.log($(e.target).children('.new-comment-form textarea'))
     const content = $(e.target).children('.new-comment-form textarea').val();
-    const pin_id = $(e.target).data("pin_id")
+    const pin_id = $(e.target).data("pin_id");
     $.ajax({
       url: e.target.action,
       method: 'POST',
@@ -112,7 +114,7 @@ const addComment = () => {
         content,
         pin_id,
       }
-    })
+    });
       //append comments to comment-list
       //safeguard agains XSS, escape userEnteredText
       const escape =  function(str) {

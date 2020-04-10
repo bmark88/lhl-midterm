@@ -314,18 +314,29 @@ const changeNightMode = (userid) => {
 const addLikeToDb = (userid, pin_id) => {
   console.log('addLike is being called')
   console.log('userID ====>', userid)
+
   return pool.query(`
-  INSERT INTO likes (user_id, pin_id)
-  VALUES ($1, $2);`, [userid, pin_id])
-  .then(res => {
-    // console.log('res rows for addlike', res);
-    return pool.query(`
-    UPDATE users
-    SET dark_mode = $1
-    WHERE id = $2;`, [newPref, userid]);
-  })
-  .catch(e => e.stack);
-}
+    SELECT * FROM likes
+    WHERE user_id = $1
+    AND pin_id = $2;
+  `, [userid, pin_id])
+    .then(result => {
+      if (result.rowCount) {
+        return pool.query(`
+          DELETE FROM likes 
+          WHERE user_id = $1
+          AND pin_id = $2
+        `, [userid, pin_id])
+      }
+
+      return pool.query(`
+        INSERT INTO likes (user_id, pin_id)
+        VALUES ($1, $2);`, [userid, pin_id])
+    })
+    .then(result => {
+      return result;
+    })
+};
 
 const addRatingtoDb = (rating, userID, pinID) => {
   //check if this user has already rated this post

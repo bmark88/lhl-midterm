@@ -149,7 +149,7 @@ function renderPins() {
         $('#pins-container')
           .prepend(`
         <div class="pin-container">
-        <!-- <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}"> -->
+        <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
           <div class="box">
             <img src="${pin.thumbnail_url}">
             <h2>${pin.title}</h2>
@@ -272,8 +272,11 @@ function renderPins() {
 //change nightmode preference
 const addLike = () => {
   $(this).on('click', (e) => {
-    if ($(e.target)[0] === $('.like-checkbox')[0]) {
-      const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
+    // if ($(e.target)[0] === $('.like-checkbox')[0]) {
+      if ($(e.target).attr('class') === 'like-checkbox') {
+        const pin_id = $(e.target).parents('.pin-container').children('.pin_id')[0].value;
+      // const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
+      console.log('clicked!')
 
       $.ajax({
         url: '/like',
@@ -281,7 +284,7 @@ const addLike = () => {
         data: {
           pin_id: pin_id
         }
-      });
+      })
     }
   });
-}
+};

@@ -29,8 +29,11 @@
 .list-container {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  column-gap: 10px;
   margin: 0 auto;
-  background-color: white;
+  background-color: gainsboro;
+  padding: 10px;
+  box-shadow: 0 0 5px black;
 }
 
 .list-container > li {

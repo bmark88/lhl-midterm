@@ -14,33 +14,32 @@ $(() => {
     imageAPI(searchValue);
     imageAPI(searchValue);
     imageAPI(searchValue);
-  })
+  });
 });
 
 // randomInt should go into helpers folder
 const randomInt = (max) => {
   return Math.floor(Math.random() * Math.floor(max));
-}
+};
 
 const imageAPI = (search) => {
   const API_KEY = '15882418-eb2d4329ee8c6bbbbc2d87a8c';
-  const URL = "https://pixabay.com/api/?key="+API_KEY+"&q="+encodeURIComponent(search);
-  $.getJSON(URL, function(data,){
-  if (parseInt(data.totalHits) > 0) {
+  const URL = "https://pixabay.com/api/?key=" + API_KEY + "&q=" + encodeURIComponent(search);
+  $.getJSON(URL, function(data,) {
+    if (parseInt(data.totalHits) > 0) {
     // makes an ajax request, and adds the image to the new category submission
-    $( "<div>", {
-      "class": "new-pin-container",
-      html: `<div class="box">
+      $("<div>", {
+        "class": "new-pin-container",
+        html: `<div class="box">
       <img src=${data.hits[randomInt(20)].previewURL}>
       <h2>Name of Pin</h2>
       <p>Sample pin description ipsum</p>
       <p id="timestamp">Created at: Today's date</p>
       </div>`
-    }).appendTo( ".pin-container" );
-  }
-  else
-    console.log('No hits');
-  })
+      }).appendTo(".pin-container");
+    } else
+      console.log('No hits');
+  });
 };
 
 // module.exports = { imageAPI };

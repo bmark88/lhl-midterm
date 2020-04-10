@@ -4,13 +4,13 @@ $(() => {
 
 function renderLikes() {
   $.ajax({
-      type: 'GET',
-      url: '/likes/display'
-    })
+    type: 'GET',
+    url: '/likes/display'
+  })
     .done(data => {
       $('#pins-container').empty();
       data.forEach(pin => {
-        console.log('a pin exists')
+        console.log('a pin exists');
         $('#pins-container')
           .prepend(`
         <div class="pin-container">
@@ -86,4 +86,4 @@ function renderLikes() {
         `);
       });
     });
-};
+}

@@ -22,9 +22,9 @@ $(document).ready(() => {
         .append(newThumbnail);
       $('#categories-container')
         .prepend(newDiv);
-    })
+    });
   }).catch(e => {
-    return e.stack
+    return e.stack;
   });
 });
 

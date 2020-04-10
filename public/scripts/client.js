@@ -7,6 +7,8 @@ $(() => {
   addLike();
   updateNightMode();
   addRating();
+  // searchForPins();
+  // deletePin();
 });
 
 const addRating = () => {
@@ -20,10 +22,10 @@ const addRating = () => {
           value: e.target.value,
           pin: pin_id
         }
-      })
+      });
     }
-  })
-}
+  });
+};
 // scrolls to the top of the page
 const scrollToTop = () => {
   $('.scroll-top').on('click', (e) => {
@@ -41,14 +43,15 @@ const updateNightMode = () => {
     $.ajax({
       url: '/nightmode',
       method: 'POST',
-    })
-  })
+    });
+  });
 };
 
 // adds a new pin
 const addNewPin = () => {
   let pin = {};
   $('#add-pin-button').on('click', (e) => {
+    //bug exists here, need to fix async promise issue in POST request on form submission (can only use click for now...)
     e.preventDefault();
 
     pin.url = $('#new-pin-url').val();
@@ -58,12 +61,20 @@ const addNewPin = () => {
     pin.created_at = new Date(Date.now()).toString().slice(0, 25);
     pin.category = $('#category').val();
 
+    // if statements hacky fix for now to resolve async bug in POST request
+    // if(pin.url === '' || pin.name === '' || pin.description === '' || pin.image === '' || pin.category === '') {
+    //   alert('missing field!');
+    //   return;
+    // }
+
     $.ajax({
       url: '/pins',
       method: 'POST',
       dataType: 'json',
       data: pin
     });
+
+    // renderPins();
     $('#new-pin-url').val('');
     $('#new-pin-name').val('');
     $('#new-pin-description').val('');
@@ -80,7 +91,7 @@ const addNewCategory = () => {
     category.name = $('#new-category-name').val();
     category.description = $('#new-category-description').val();
     category.image = $('#new-category-image').val();
-    category.created_at = new Date(Date.now()).toString().slice(0, 25)
+    category.created_at = new Date(Date.now()).toString().slice(0, 25);
 
     $('.pin-container').html(`<div class="box">
       <img src='https://images.hgmsites.net/hug/2018-mclaren-720s_100652805_h.jpg'>
@@ -88,34 +99,32 @@ const addNewCategory = () => {
       <h2>${category.name}</h2>
       <p>${category.description}</p>
       <p id="timestamp">Created at: ${category.created_at}</p>
-      <form class="new-comment-form">
+      <form class="new-
+      -form">
         <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
         <button type="submit">Add Comment</button>
       </form>
-      </div>`)
-  })
+      </div>`);
+  });
 };
 
 //show comments on a pin
 const addComment = () => {
   $(this).on('submit', (e) => {
     if ($(e.target).attr('class') === 'new-comment-form') {
-      // only prevent default if the target is the new-comment-form class
-      // this allows other functions to still be called
-      e.preventDefault()
-    const content = $(e.target).children('.new-comment-form textarea').val();
-    const pin_id = $(e.target).data("pin_id")
-    $.ajax({
-      // url: `/pins/${pin_id}comments`, ==> this is the same as e.target.action (just for reference)
-      url: e.target.action,
-      method: 'POST',
-      dataType: 'json',
-      data: {
-        // user_id,
-        content,
-        pin_id,
-      }
-    })
+      e.preventDefault();
+
+      const content = $(e.target).children('.new-comment-form textarea').val();
+      const pin_id = $(e.target).data("pin_id");
+      $.ajax({
+        url: e.target.action,
+        method: 'GET',
+        dataType: 'json',
+        data: {
+          content,
+          pin_id,
+        }
+      });
       //append comments to comment-list
       //safeguard agains XSS, escape userEnteredText
       const escape =  function(str) {
@@ -127,11 +136,12 @@ const addComment = () => {
       const markup = `
         <div class='comment'>
           <span>${escape(content)}</span>
-          <!-- <span>$(commenter)</span> -->
-        <div>
+        </div>
         `;
-      $('section.comments-list').append(markup);
 
+      const contentTarget = $(e.target).siblings('#simpleModal').children('.modal-content').children('.box').children('.comments-list');
+
+      contentTarget.append(markup)
       $(e.target).children('.new-comment-form textarea').val('');
     }
   });
@@ -139,9 +149,9 @@ const addComment = () => {
 
 function renderPins() {
   $.ajax({
-      type: 'GET',
-      url: '/pins/display'
-    })
+    type: 'GET',
+    url: '/pins/display'
+  })
     .done(data => {
       $('#pins-container').empty();
       data.forEach(pin => {
@@ -199,8 +209,8 @@ function renderPins() {
               <input class="like-checkbox" type="checkbox">Like</input>
             </form>
           <div class="comment-options">
-          <button class="edit-comment">Edit</button>
-          <form action="/pins/delete" method="POST">
+          <!-- <button class="edit-comment">Edit</button> -->
+          <form class="delete-pin" action="/pins/delete" method="POST">
             <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
             <button class="delete-comment">Delete</button>
           </form>
@@ -260,6 +270,7 @@ function renderPins() {
                 </span>
 
                 <section class="comments-list">
+                  <p></p>
                 </section>
               </div>
             </div>
@@ -267,16 +278,13 @@ function renderPins() {
         `);
       });
     });
-};
+}
 
 //change nightmode preference
 const addLike = () => {
   $(this).on('click', (e) => {
-    // if ($(e.target)[0] === $('.like-checkbox')[0]) {
-      if ($(e.target).attr('class') === 'like-checkbox') {
-        const pin_id = $(e.target).parents('.pin-container').children('.pin_id')[0].value;
-      // const pin_id = $(e.target).parent().siblings('.comment-options').children('form')[0][0].value;
-      console.log('clicked!')
+    if ($(e.target).attr('class') === 'like-checkbox') {
+      const pin_id = $(e.target).parents('.pin-container').children('.pin_id')[0].value;
 
       $.ajax({
         url: '/like',
@@ -284,7 +292,7 @@ const addLike = () => {
         data: {
           pin_id: pin_id
         }
-      })
+      });
     }
   });
 };

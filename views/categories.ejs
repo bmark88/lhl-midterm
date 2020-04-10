@@ -23,8 +23,8 @@
   <header>
     <%- include('partials/navbar') %>
   </header>
-  <h1>Categories (Home Page)</h1>
-
+  <h1 class="categories-header">Categories</h1>
+  <!--
   <form id="new-category" method="POST" action="/categories">
     <label>Create a new category!</label>
     <input type="text" id="new-category-name" name="name" placeholder="Title of Category" required>
@@ -32,13 +32,12 @@
     <input id="new-category-image" type="text" name="thumbnail_url"/>
   </form>
   <button form="new-category" id="add-category-button">Submit Category</button>
-
+  -->
   <div id="categories-container"></div>
   <div id="pins-container"></div>
 
   <button class="scroll-top"
-    style="height: 200px; width: 200px; background-color: red; border-radius: 50%; font-size: 20px; font-weight: bold; float: right; margin: 3em;">Press
-    me to scroll top!</button>
+    style="height: 200px; width: 200px; background-color: red; border-radius: 50%; font-size: 20px; font-weight: bold; float: right; margin: 3em;"></button>
 </body>
 
 </html>

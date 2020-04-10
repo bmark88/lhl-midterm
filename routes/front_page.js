@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const dbQuery = require('../public/scripts/database')
+const dbQuery = require('../public/scripts/database');
 
 
 module.exports = function(router) {
@@ -31,11 +31,12 @@ module.exports = function(router) {
       .getCategory(category)
       .then(data => {
         // if empty => not in DB
+        console.log(data);
         if (data.length === 0) {
           const newCat = {
             name: category,
             thumbnail_url: 'https://picsum.photos/200'
-          };
+          }
           dbQuery.addCategoryToDb(newCat)
             .then(() => {
               dbQuery
@@ -47,7 +48,7 @@ module.exports = function(router) {
                     category_id: catID
                   };
                   dbQuery.addPinToDb(pinObject, userID).then(() => {
-                    res.redirect('/pins');
+                     res.redirect('/pins');
                   });
                 });
             });
@@ -61,11 +62,11 @@ module.exports = function(router) {
                 category_id: catID
               };
               dbQuery.addPinToDb(pinObject, userID).then(() => {
-                res.redirect('/pins');
+                 res.redirect('/pins');
               });
             });
         }
-      })
+      });
   });
 
   router.post('/categories', (req, res) => {
@@ -78,7 +79,8 @@ module.exports = function(router) {
 
   router.post('/pins/delete', (req, res) => {
     dbQuery.deletePinFromDB(req.body)
-      .then(() => {
+      .then((result) => {
+        console.log(result);
 
         return res.redirect('/pins');
       })
@@ -90,10 +92,10 @@ module.exports = function(router) {
       .then(() => {
         return res.redirect('/pins');
       })
-    .catch(e => e.stack);
+      .catch(e => e.stack);
   });
 
-  router.get('/testinglol', (req, res) => {
+  router.get('/category/display', (req, res) => {
     const catName = Object.keys(req.query)[0];
 
     dbQuery
@@ -109,13 +111,29 @@ module.exports = function(router) {
         return res.json(data);
       })
       .catch(e => e.stack);
-    })
+  });
 
   router.post('/rating', (req, res) => {
     dbQuery.addRatingtoDb(req.body.value, req.session.user_id, req.body.pin)
-    .then(() => {
-      return res.redirect('/pins')
-    }).catch(e => e.stack);
-  })
+      .then(() => {
+        return res.redirect('/pins');
+      }).catch(e => e.stack);
+  });
+
+  // router.get('/pins/:pin_id/comments', (req, res) => {
+  //   dbQuery.getPinComments(req.body.pin_id)
+  //     .done(data => {
+  //       console.log('this is the data ===>', data);
+  //       return data;
+  //     });
+  // });
+
+  // router.get('/pins/display/:search_word', (req, res) => {
+  //   dbQuery.()
+  //   .then(data => {
+  //     return res.json(data);
+  //   })
+  //   .catch(e => e.stack);
+  // })
   return router;
 };

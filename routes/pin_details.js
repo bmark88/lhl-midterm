@@ -33,24 +33,24 @@ const renderWithHeader = (req, res, route) => {
     SELECT *
     FROM users
     WHERE id = $1;`, [userID])
-    .then(result => {
-      if (result.rows.length === 0) {
-        const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+      .then(result => {
+        if (result.rows.length === 0) {
+          const templateVars = { isLoggedIn: false, username: null, avatar_url: null };
+          return res.render(route, templateVars);
+        }
+        const {username, avatar_url} = result.rows[0];
+        const templateVars = { isLoggedIn: true, username, avatar_url };
         return res.render(route, templateVars);
-      }
-      const {username, avatar_url} = result.rows[0];
-      const templateVars = { isLoggedIn: true, username, avatar_url }
-      return res.render(route, templateVars);
       })
       .catch(e => {
-        return e.stack
+        return e.stack;
       });
   } else {
-    const templateVars = { isLoggedIn: false, username: null, avatar_url: null }
+    const templateVars = { isLoggedIn: false, username: null, avatar_url: null };
     return res.render(route, templateVars);
   }
-}
-module.exports = function () {
+};
+module.exports = function() {
 
   //log in
   /**
@@ -88,21 +88,21 @@ module.exports = function () {
     } = req.body;
     // let alreadyExists = false;
     Promise.all([isNewEmail(email), isNewUsername(username)])
-    .then(
-      (values) => {
-        if (values[0] && values[1]) {
+      .then(
+        (values) => {
+          if (values[0] && values[1]) {
           // if neither username or email matches any in db, create new user
-              const queryString = `
+            const queryString = `
               INSERT INTO users (username, email, password)
               VALUES ($1, $2, $3)
               `;
-              const queryParams = [username, email, password]
-              pool.query(queryString, queryParams);
-              return renderWithHeader(req, res, 'login');
-        } else {
-          return res.send("user or email has been taken")
-        }
-      })
+            const queryParams = [username, email, password];
+            pool.query(queryString, queryParams);
+            return renderWithHeader(req, res, 'login');
+          } else {
+            return res.send("user or email has been taken");
+          }
+        });
   });
 
   return router;

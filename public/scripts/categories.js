@@ -4,20 +4,20 @@ $(document).ready(() => {
 
     $.ajax({
       type: 'GET',
-      url: '/testinglol',
+      url: '/category/display',
       data: catName
     }).done(data => {
       $('#pins-container').empty();
       data.forEach(pin => {
         renderData(pin);
-      })
+      });
     });
   });
 });
 
 function renderData(pin) {
   $('#pins-container')
-        .prepend(`
+    .prepend(`
         <div class="pin-container">
          <div class="box">
           <img src="${pin.thumbnail_url}" alt="${[pin.title]}">
@@ -39,10 +39,7 @@ function renderData(pin) {
         <button class="delete-comment">Delete</button>
         </form>
       </div>
-
-
-
-
+      <!-- Modal content below -->
       <div id="simpleModal" class="modal">
     <div class="modal-content">
       <div class="box">

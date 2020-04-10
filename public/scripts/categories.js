@@ -1,6 +1,5 @@
 $(document).ready(() => {
   $('#categories-container').on('click', '*', (e) => {
-    console.log($(e.target).data('name'))
     const catName = $(e.target).data('name');
 
     $.ajax({
@@ -8,7 +7,7 @@ $(document).ready(() => {
       url: '/testinglol',
       data: catName
     }).done(data => {
-      console.log(data);
+      $('#pins-container').empty();
       data.forEach(pin => {
         renderData(pin);
       })

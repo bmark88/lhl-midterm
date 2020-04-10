@@ -296,9 +296,6 @@ const addLike = () => {
       });
     }
   });
-<<<<<<< HEAD
-};
-=======
 };
 
 // const deletePin = () => {
@@ -321,4 +318,3 @@ const addLike = () => {
 const renderComments = () => {
 
 };
->>>>>>> navbar-and-fix-addPin

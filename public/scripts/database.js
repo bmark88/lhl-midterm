@@ -152,13 +152,7 @@ const addCommentToDb = (pinID, commenter, content) => {
 };
 
 const addPinToDb = (pinObject, ownerOfPin) => {
-<<<<<<< HEAD
-  const values = [pinObject.name, pinObject.description, pinObject.image, Number(pinObject.category_id), ownerOfPin, pinObject.created_at, pinObject.url];
-  console.log(pinObject.category)
-  console.log('pinObject', pinObject)
-=======
   const values = [pinObject.name, pinObject.description, pinObject.image, pinObject.category_id, ownerOfPin, pinObject.created_at, pinObject.url];
->>>>>>> navbar-and-fix-addPin
   const queryString = `
     INSERT INTO pins (title, description, thumbnail_url, category_id, user_id, created_at, pin_url)
     VALUES ($1, $2, $3, $4, $5, $6, $7);

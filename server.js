@@ -143,8 +143,8 @@ app.get('/comments', (req, res) => {
   return res.redirect('/');
 });
 
-// app.get("/modal", (req, res) => {
-//   return res.render("modal");
+// app.get("/unregistered", (req, res) => {
+//   return res.json("pins/display");
 // })
 
 app.listen(PORT, () => {

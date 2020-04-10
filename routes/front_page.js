@@ -7,13 +7,13 @@ module.exports = function(router) {
     return res.json({ message: "Hey Adrian" });
   });
 
-  // router.get('/unregistered', (req, res) => {
-  //   dbQuery.getCategories() // can take an int for limit
-  //     .then(data => {
-  //       // res.json(data);
-  //       res.redirect('/categories'); //
-  //     });
-  // });
+  router.get('/unregistered', (req, res) => {
+    dbQuery.getCategories() // can take an int for limit
+      .then(data => {
+        res.json(data);
+        // res.redirect('/categories'); //
+      });
+  });
 
   router.get('/pins/display', (req, res) => {
     dbQuery.getAllPins()
@@ -110,7 +110,7 @@ module.exports = function(router) {
     dbQuery
       .catChildPins(catName)
       .then(data => {
-        res.json(data);
+        return res.json(data);
       });
   });
 

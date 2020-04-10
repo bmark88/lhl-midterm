@@ -103,7 +103,6 @@ const addComment = () => {
   $(this).on('submit', (e) => {
     if ($(e.target).attr('class') === 'new-comment-form') {
       e.preventDefault();
-      // console.log($(e.target).children('.new-comment-form textarea'))
 
     const content = $(e.target).children('.new-comment-form textarea').val();
     const pin_id = $(e.target).data("pin_id");

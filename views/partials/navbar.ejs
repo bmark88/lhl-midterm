@@ -14,8 +14,7 @@
   <ul class="list-container">
     <% if (isLoggedIn) {%>
       <%=console.log('../.'.concat(avatar_url))%>
-      <h3>LOGGED IN AS: <strong><%= username %></strong></h3>
-      <img src= <%= ('../.'.concat(avatar_url)) %> />
+      <h3 style="text-align: center;">LOGGED IN AS: <strong><%= username %></strong></h3>
       <li class="li-logout"><form method="POST" action="/logout"><button class="btn btn-primary" type="submit">LOG OUT</button></form></li>
       <li class="li-pins"><form method="GET" action="/pins"><button class="btn btn-primary" type="submit">MY PINS</button></form></li>
       <li class="li-likes"><form method="GET" action="/likes"><button class="btn btn-primary" type="submit">MY LIKES</button></form></li>

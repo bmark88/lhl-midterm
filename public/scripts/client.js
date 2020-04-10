@@ -103,7 +103,8 @@ const addComment = () => {
   $(this).on('submit', (e) => {
     if ($(e.target).attr('class') === 'new-comment-form') {
       e.preventDefault();
-      console.log($(e.target).children('.new-comment-form textarea'))
+      // console.log($(e.target).children('.new-comment-form textarea'))
+
     const content = $(e.target).children('.new-comment-form textarea').val();
     const pin_id = $(e.target).data("pin_id");
     $.ajax({
@@ -126,10 +127,13 @@ const addComment = () => {
       const markup = `
         <div class='comment'>
           <span>${escape(content)}</span>
-          <!-- <span>$(commenter)</span> -->
         <div>
         `;
-      $('section.comments-list').append(markup);
+
+        const contentTarget = $(e.target).siblings('#simpleModal').children('.modal-content').children('.box').children('.comments-list').children('p')[0];
+
+        contentTarget.append(markup)
+      // $('section.comments-list').append(markup);
 
       $(e.target).children('.new-comment-form textarea').val('');
     }
@@ -259,6 +263,7 @@ function renderPins() {
                 </span>
 
                 <section class="comments-list">
+                  <p></p>
                 </section>
               </div>
             </div>

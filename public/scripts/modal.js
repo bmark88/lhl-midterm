@@ -9,8 +9,6 @@ $(() => {
   //   outsideClick(e);
   // });
   displayModal();
-  ratingScore();
-  checkIfLiked();
 });
 
 const modal = $('#simpleModal');

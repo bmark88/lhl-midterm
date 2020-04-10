@@ -288,3 +288,7 @@ const addLike = () => {
     }
   });
 };
+
+const renderComments = () => {
+
+};

@@ -122,7 +122,7 @@ const getPinComments = function (id) {
   return pool.query(`
   SELECT *
   FROM comments
-  JOIN pins ON comments.pin_id = $1
+  WHERE pin_id = $1;
   `)
     .then(res => res.rows);
 };

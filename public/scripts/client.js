@@ -209,7 +209,7 @@ function renderPins() {
               <input class="like-checkbox" type="checkbox">Like</input>
             </form>
           <div class="comment-options">
-          <button class="edit-comment">Edit</button>
+          <!-- <button class="edit-comment">Edit</button> -->
           <form class="delete-pin" action="/pins/delete" method="POST">
             <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
             <button class="delete-comment">Delete</button>

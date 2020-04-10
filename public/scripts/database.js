@@ -152,7 +152,7 @@ const addCommentToDb = (pinID, commenter, content) => {
 };
 
 const addPinToDb = (pinObject, ownerOfPin) => {
-  const values = [pinObject.name, pinObject.description, pinObject.image, 1, ownerOfPin, pinObject.created_at, pinObject.url];
+  const values = [pinObject.name, pinObject.description, pinObject.image, pinObject.category_id, ownerOfPin, pinObject.created_at, pinObject.url];
   const queryString = `
     INSERT INTO pins (title, description, thumbnail_url, category_id, user_id, created_at, pin_url)
     VALUES ($1, $2, $3, $4, $5, $6, $7);
@@ -173,12 +173,12 @@ const addCategoryToDb = (categoryObject) => {
       VALUES ($1, $2);
       `;
 
-  return pool
-    .query(queryString, values)
-    .then(res => {
-      return res.rows;
-    })
-    .catch(e => e.stack);
+  return pool.query(queryString, values);
+    // .then(res => {
+    //   console.log("res.rows ------> ", res.rows)
+    //   return res.rows;
+    // })
+    // .catch(e => e.stack);
 };
 const deletePinFromDB = (pinObject, ownerOfPin) => {
   const queryString = `
@@ -292,7 +292,7 @@ const addLikeToDb = (userid, pin_id) => {
     .then(result => {
       if (result.rowCount) {
         return pool.query(`
-          DELETE FROM likes 
+          DELETE FROM likes
           WHERE user_id = $1
           AND pin_id = $2
         `, [userid, pin_id]);

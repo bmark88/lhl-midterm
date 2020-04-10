@@ -128,13 +128,14 @@ module.exports = function(router) {
   //     });
   // });
 
-  router.get('/pins/display/:search_word', (req, res) => {
+  router.post('/pins/display/:search_word', (req, res) => {
+    console.log('req.body ====>', req.body);
     dbQuery.getSearchedPins(req.body.searchWord)
     .then(data => {
-      console.log(data);
+      console.log("data at router post ------> ", data);
       return res.json(data);
     })
-    .catch(e => e.stack);
+    .catch(e => console.error('error at front_page.js ===>', e.stack));
   })
   return router;
 };

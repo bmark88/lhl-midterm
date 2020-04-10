@@ -13,15 +13,20 @@ $(() => {
 
 const searchForPins = () => {
   console.log("search for pins....")
-  $('#search-button').on('submit', (e) => {
-    // e.preventDefault();
-    console.log("search value -----> ", $('#search-value').val());
-    $.ajax({
-      url: '/pins/search',
-      type: 'GET',
-      // data: 
+  $(this).on('submit', (e) => {
+    e.preventDefault();
+    if ($(e.target).attr('id') === 'search-form') {
+    $('#search-form').on('submit', (e) => {
+      const searchWord = $(e.target).children().children('#search-value').val();
+      console.log(searchWord);
+      // e.preventDefault();
+      $.ajax({
+        url: '/pins/display/:search_word',
+        type: 'POST',
+        data: { searchWord }
+      })
     })
-  })
+  }})
 }
 
 const addRating = () => {
@@ -34,6 +39,136 @@ const addRating = () => {
         data: {
           value: e.target.value,
           pin: pin_id
+        }
+      })
+      .done(data => {
+        $('#pins-container').empty();
+        if (data.rows) {
+          data.forEach(pin => {
+            $('#pins-container')
+              .prepend(`
+            <div class="pin-container">
+            <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
+              <div class="box">
+                <img src="${pin.thumbnail_url}">
+                <a href=${pin.pin_url} target="_blank"><h2>${pin.title}</h2></a>
+                 <p>${pin.description}</p>
+                 <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
+                <form
+                  action="/pins/${pin.id}/comments"
+                  method="POST"
+                  class="new-comment-form"
+                  data-pin_id="${pin.id}"
+                  >
+                    <textarea placeholder= "Comment here" name="content" id="comment-text"></textarea>
+                  <button class="new-comment" type="submit">Add Comment</button>
+                </form>
+                <form class="rating">
+                  <label>
+                    <input type="radio" name="stars" value="1" />
+                    <span class="icon">★</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="stars" value="2" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="stars" value="3" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="stars" value="4" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="stars" value="5" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                  </label>
+                </form>
+                <form action='/like' method='POST'>
+                  <input class="like-checkbox" type="checkbox">Like</input>
+                </form>
+              <div class="comment-options">
+              <!-- <button class="edit-comment">Edit</button> -->
+              <form class="delete-pin" action="/pins/delete" method="POST">
+                <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
+                <button class="delete-comment">Delete</button>
+              </form>
+              </div>
+              <!-- Modal starts here -->
+              <div id="simpleModal" class="modal">
+                <div class="modal-content">
+                  <div class="box">
+                    <img src="${pin.thumbnail_url}">
+                    <a href=${pin.pin_url} target="_blank"><h2>${pin.title}</h2></a>
+                    <p>${pin.description}</p>
+    
+                    <p id="timestamp">Created at: ${pin.created_at.slice(0,10)}</p>
+                    <form id="new-comment-form">
+                      <textarea placeholder= "Comment here" name="text" id="comment-text"></textarea>
+                      <button type="submit">Add Comment</button>
+                    </form>
+                    <form class="rating">
+                      <label>
+                        <input type="radio" name="stars" value="1" />
+                        <span class="icon">★</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="stars" value="2" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="stars" value="3" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="stars" value="4" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="stars" value="5" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                      </label>
+                    </form>
+                    <input type="checkbox">Like</input>
+                    <span class="comment-options">
+                      <button class="edit-comment">Edit</button>
+                      <form action="/pins/delete" method="POST">
+                        <input type="hidden" class="pin_id" name="pin_id" value="${pin.id}">
+                        <button class="delete-comment">Delete</button>
+                      </form>
+                    </span>
+    
+                    <section class="comments-list">
+                      <p></p>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            `);
+          });
+        } else {
+
         }
       });
     }

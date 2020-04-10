@@ -346,6 +346,7 @@ const addRatingtoDb = (rating, userID, pinID) => {
 };
 
 const getSearchedPins = (searchWord) => {
+  console.log('searchWord', searchWord);
   const queryParams = [searchWord];
   const queryString = `
   SELECT *
@@ -357,7 +358,11 @@ const getSearchedPins = (searchWord) => {
 
   return pool
     .query(queryString, queryParams)
-    .catch(e => e.stack);
+    .then(result => {
+      console.log('result at database.js', result);
+      return result;
+    })
+    .catch(e => console.error('error at database.js ====>', e.stack));
 };
 
 module.exports = {

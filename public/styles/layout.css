@@ -4,6 +4,7 @@ body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(black, grey, white);
   box-sizing: border-box;
+  min-height: 100vh;
 }
 
 #pins-container {

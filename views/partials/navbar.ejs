@@ -1,4 +1,9 @@
 <head>
+  <!-- Bootstrap Styles -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"
+  >
+  
   <link rel="stylesheet" href="/styles/nav_bar.css" type="text/css">
   <script type="text/javascript" src="/scripts/nav_bar.js" defer></script>
   <script src="/scripts/categories.js" defer></script>
@@ -15,11 +20,35 @@
     <% if (isLoggedIn) {%>
       <%=console.log('../.'.concat(avatar_url))%>
       <h3 style="text-align: center;">LOGGED IN AS: <strong><%= username %></strong></h3>
-      <li class="li-logout"><form method="POST" action="/logout"><button class="btn btn-primary" type="submit">LOG OUT</button></form></li>
-      <li class="li-pins"><form method="GET" action="/pins"><button class="btn btn-primary" type="submit">MY PINS</button></form></li>
-      <li class="li-likes"><form method="GET" action="/likes"><button class="btn btn-primary" type="submit">MY LIKES</button></form></li>
-      <li class="li-settings"><form method="GET" action="/settings"><button class="btn btn-primary" type="submit">SETTINGS</button></form></li>
-      <li class="li-home"><form method="GET" action="/categories"><button class="btn btn-primary" type="submit">ALL PINS</button></form></li>
+      <li class="li-logout">
+        <form method="POST" action="/logout">
+          <button class="btn btn-primary" type="submit">LOG OUT</button>
+        </form>
+      </li>
+      <li class="li-pins">
+        <form method="GET" action="/pins">
+          <!-- <button class="btn btn-primary" type="submit">MY PINS</button> -->
+          <a href="/pins" class="btn btn-primary">CREATE A NEW PIN</a>
+        </form>
+      </li>
+      <li class="li-likes">
+        <form method="GET" action="/likes">
+          <!-- <button class="btn btn-primary" type="submit">MY LIKES</button> -->
+          <a href="/likes" class="btn btn-primary">MY LIKES</a>
+        </form>
+      </li>
+      <li class="li-settings">
+        <form method="GET" action="/settings">
+          <!-- <button class="btn btn-primary" type="submit">SETTINGS</button> -->
+          <a href="/settings" class="btn btn-primary">SETTINGS</a>
+        </form>
+      </li>
+      <li class="li-home">
+        <form method="GET" action="/">
+          <!-- <button class="btn btn-primary" type="submit">ALL PINS</button> -->
+          <a href="/" class="btn btn-primary">ALL PINS</a>
+        </form>
+      </li>
     <li class="li-search">
       <form id="search-form" method="GET" action="/pins/display/:search_word">
         <div class="search-container">
